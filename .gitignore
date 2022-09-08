@@ -2,6 +2,10 @@
 /amplify
 /.vscode
 install.cmd
+.eslintignore
+.graphqlconfig.yml
+src/graphql
+src/models
 # dependencies
 /node_modules
 /.pnp
