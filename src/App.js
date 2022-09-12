@@ -7,12 +7,10 @@ import {
   createNote as createNoteMutation,
   deleteNote as deleteNoteMutation,
 } from "./graphql/mutations";
-import { DataStore } from "@aws-amplify/datastore";
-import { Note } from "./models";
 
 const initialFormState = { name: "", description: "" };
 
-function App({ signOut }) {
+function App({ signOut, user }) {
   const [notes, setNotes] = useState([]);
   const [formData, setFormData] = useState(initialFormState);
 
@@ -94,9 +92,12 @@ function App({ signOut }) {
       </div>
 
       <Button onClick={signOut}>Sign Out</Button>
-      <withAuthenticator />
     </div>
   );
 }
 
-export default withAuthenticator(App);
+export default withAuthenticator(App, 
+//   {
+//   socialProviders:['google', 'apple', 'facebook']
+// }
+);
