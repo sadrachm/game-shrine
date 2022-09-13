@@ -3,9 +3,9 @@ import Image from "./image";
 const Project = (props) => {
   return (
     <>
-      <div className="col-md mb-5">
+      <div class="col mb-5">
         <a className="removeDec" href={props.url}>
-          <h1 className="display-4 ">{props.name}</h1>
+          <p className="display-4 ">{props.name}</p>
           <div className="imageHover">
             <Image name={props.imageName} />
           </div>

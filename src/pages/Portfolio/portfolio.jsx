@@ -1,19 +1,19 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Project from "../components/project";
-
+import Project from "./components/project";
+import "./portfolio.css"
 const Portfolio = () => {
   return (
     <>
-      <div className="container ">
+      <div className="container">
         <motion.p
           animate={{ opacity: [0, 1] }}
           transition={{ duration: 3 }}
-          className="display-1 title "
+          className="display-1 portTitle "
         >
           Hello
         </motion.p>
-        <div className="row homeContent">
+        <div className="homeContent row">
           <motion.div
             animate={{ y: [500, 0] }}
             transition={{ type: "spring", duration: 2.2 }}
@@ -21,7 +21,7 @@ const Portfolio = () => {
           >
             <img
               className="img-fluid image rounded-circle"
-              src={process.env.PUBLIC_URL + "/img/me.jpg"}
+              src="https://gameshrinebucket02330-staging.s3.us-west-1.amazonaws.com/public/portfolio/me.jpg"
             />
           </motion.div>
           <motion.div
@@ -39,7 +39,7 @@ const Portfolio = () => {
           <u>Projects</u>
         </h1>
         <div className="container">
-          <div className="row subtitle ">
+          <div className="imgRow row subtitle ">
             <Project
               url="http://sadrachreviews.herokuapp.com/"
               name="Sadrach Reviews"
@@ -51,7 +51,7 @@ const Portfolio = () => {
               imageName="list"
             />
           </div>
-          <div className="row subtitle ">
+          <div className="imgRow row subtitle " style={{}}>
             <Project
               url="https://vast-lake-43602.herokuapp.com/"
               name="CoachLink"
@@ -61,7 +61,7 @@ const Portfolio = () => {
         </div>
       </div>
 
-      <div style={{ height: "100px" }}></div>
+      {/* <div style={{ height: "100px" }}></div>
       <div id="aboutMe">
         <motion.h1
           className="display-1 title"
@@ -79,8 +79,8 @@ const Portfolio = () => {
             I just recently graduated from UCI as a Software Engineer
           </p>
         </div>
-      </div>
-      <div style={{ height: "100px" }}></div>
+      </div> */}
+      {/* <div style={{ height: "100px" }}></div> */}
     </>
   );
 };
