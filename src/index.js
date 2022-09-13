@@ -11,9 +11,9 @@ Amplify.configure(config);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AmplifyProvider>
+  // <AmplifyProvider>
     <App />
-  </AmplifyProvider>
+  // </AmplifyProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

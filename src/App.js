@@ -1,30 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { withAuthenticator, Button } from "@aws-amplify/ui-react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-// import Test from "./pages/test";
 
-function App({ signOut, user }) {
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Portfolio from "./pages/portfolio";
+import SignOut from "./components/signOut";
+import Login from "./components/login";
+import Home from "./pages/Home/home";
+import { Auth } from "aws-amplify";
+// import Test from './pages/test'
+
+function App() {
+  const [user, setuser] = useState(null);
+  
+  // Only admins need an account
+  useEffect(() => {
+    Auth.currentAuthenticatedUser({
+      bypassCache: false, // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+    })
+      .then((user) => setuser(user))
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <>
-      {/* <Test></Test> */}
-      <Button name="asd">asd</Button>
-      <Container>
-        <Row>
-          <Col>1 of 1</Col>
-          <Col>2 of 3</Col>
-          <Col>3 of 3</Col>
-        </Row>
-      </Container>
+      {/* {!user && <Login setuser={setuser} />}
+      {user && <SignOut setuser={setuser} />} */}
+      <Router>
+        <Routes>
+          <Route exact path="/portfolio" element={<Portfolio />}></Route>
+          <Route exact path="/home" element={<Home></Home>}></Route>
+        </Routes>
+      </Router>
     </>
   );
 }
 
-export default withAuthenticator(
-  App
-  //   {
-  //   socialProviders:['google', 'apple', 'facebook']
-  // }
-);
+export default App;

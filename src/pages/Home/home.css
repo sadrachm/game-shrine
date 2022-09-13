@@ -1,0 +1,21 @@
+
+.button {
+    height: 100%;
+    width: 100%;
+    color: #EEEEEE;
+    background-color: #393E46;
+    border-width: 0.01;
+    border-color: #222831;
+    font-size: 1.5rem;
+}
+.button:hover {
+    background-color: #393e46b3;
+}
+.title {
+    text-align:center;
+    justify-content:center;
+    margin:auto;
+    font-size: 2rem;
+    line-height: 10vh;
+    height: 10vh;
+}
