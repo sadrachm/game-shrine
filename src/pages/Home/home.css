@@ -1,4 +1,4 @@
-.button {
+.button1 {
   height: 100%;
   width: 100%;
   color: #eeeeee;
@@ -7,8 +7,8 @@
   border-color: #222831;
   font-size: 2rem;
 }
-.button:hover {
-  background-color: #393e46b3;
+.button1:hover {
+  background-color: #585e68f6;
 }
 .title {
   text-align: center;

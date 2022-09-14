@@ -14,14 +14,14 @@ const Home = () => {
         <div class="homeRow row" >
           <div class="homeCol col" >
             <Link target="_blank" to="/gameshrine">
-              <Button class="button" name="Game Shrine">
+              <Button class="button1" name="Game Shrine">
                 Game Shrine
               </Button>
             </Link>
           </div>
           <div class="homeCol col" >
-            <a target="_blank" href="https://sadrachreviews.herokuapp.com/">
-              <Button class="button" name="asd">
+            <a target="_blank" class="button" href="https://sadrachreviews.herokuapp.com/">
+              <Button class="button1" name="Sadrach Reviews">
                 Sadrach Reviews
                 <p class="small">Takes a while</p>
               </Button>
@@ -31,7 +31,7 @@ const Home = () => {
         <div class="homeRow row">
           <div class="homeCol col" >
             <a target="_blank" href="https://vast-lake-43602.herokuapp.com/ ">
-              <Button class="button" name="asd">
+              <Button class="button1" name="Grocery List">
                 Grocery List
                 <p class="small">Takes a while</p>
               </Button>
@@ -39,7 +39,7 @@ const Home = () => {
           </div>
           <div class="homeCol col" >
             <Link target="_blank" to="/portfolio">
-              <Button class="button" name="asd">
+              <Button class="button1" name="Portfolio">
                 Portfolio
               </Button>
             </Link>

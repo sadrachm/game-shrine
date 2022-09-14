@@ -21,6 +21,7 @@ const Portfolio = () => {
           >
             <img
               className="img-fluid image rounded-circle"
+              alt="Sadrach in front of fountain"
               src="https://gameshrinebucket02330-staging.s3.us-west-1.amazonaws.com/public/portfolio/me.jpg"
             />
           </motion.div>
@@ -42,18 +43,21 @@ const Portfolio = () => {
           <div className="imgRow row subtitle ">
             <Project
               url="http://sadrachreviews.herokuapp.com/"
+              altText="Typewriter with review typed on paper"
               name="Sadrach Reviews"
               imageName="review"
             />
             <Project
               url="https://vast-lake-43602.herokuapp.com/"
-              name="Todo List"
+              altText="Notebook with Check List"
+              name="Grocery List"
               imageName="list"
             />
           </div>
           <div className="imgRow row subtitle " style={{}}>
             <Project
               url="https://vast-lake-43602.herokuapp.com/"
+              altText="Doctor using his phone"
               name="CoachLink"
               imageName="coachlink"
             />
@@ -61,7 +65,7 @@ const Portfolio = () => {
         </div>
       </div>
 
-      {/* <div style={{ height: "100px" }}></div>
+      <div style={{ height: "100px" }}></div>
       <div id="aboutMe">
         <motion.h1
           className="display-1 title"
@@ -79,8 +83,8 @@ const Portfolio = () => {
             I just recently graduated from UCI as a Software Engineer
           </p>
         </div>
-      </div> */}
-      {/* <div style={{ height: "100px" }}></div> */}
+      </div>
+      <div style={{ height: "100px" }}></div>
     </>
   );
 };
