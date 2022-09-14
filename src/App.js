@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { withAuthenticator, Button } from "@aws-amplify/ui-react";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Portfolio from "./pages/Portfolio/portfolio";
 import Home from "./pages/Home/home";
 import GameShrine from "./pages/GameShrine/gameshrine";
-import SignOut from "./components/signOut";
-import Login from "./components/login";
 import { Auth } from "aws-amplify";
 // import Test from './pages/test'
 
@@ -30,7 +26,8 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/home" element={<Home></Home>}></Route>
-          <Route exact path="/gameshrine" element={<GameShrine></GameShrine>}></Route>
+          {/* <Route exact path="/gameshrine" element={<GameShrine></GameShrine>}></Route> */}
+          <Route exact path="/" element={<GameShrine></GameShrine>}></Route>
           <Route exact path="/portfolio" element={<Portfolio />}></Route>
 
         </Routes>

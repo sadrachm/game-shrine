@@ -11,7 +11,7 @@ const SignOut = ({setuser}) => {
           console.log("error signing out: ", error);
         }
       }
-    return <Button onClick={signOut}>Sign Out</Button>
+    return <Button style={{marginRight:'20px'}} onClick={signOut}>Sign Out</Button>
 }
 
 export default SignOut;

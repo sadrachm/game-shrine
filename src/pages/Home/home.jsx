@@ -8,12 +8,12 @@ import "./home.css";
 const Home = () => {
   return (
     <>
-      <h1 class="title">Sadrach Square</h1>
+      <h1 class="homeTitle">Sadrach Square</h1>
 
       <div class="container">
         <div class="homeRow row" >
           <div class="homeCol col" >
-            <Link target="_blank" to="/gameshrine">
+            <Link target="_blank" to="/">
               <Button class="button1" name="Game Shrine">
                 Game Shrine
               </Button>

@@ -10,7 +10,8 @@
 .button1:hover {
   background-color: #585e68f6;
 }
-.title {
+.homeTitle {
+  background-color: #3A3845;
   text-align: center;
   justify-content: center;
   margin: auto;

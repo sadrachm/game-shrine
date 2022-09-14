@@ -4,8 +4,8 @@ import Project from "./components/project";
 import "./portfolio.css"
 const Portfolio = () => {
   return (
-    <>
-      <div className="container">
+    <div style={{backgroundColor:"#3A3845"}} >
+      <div  className="container">
         <motion.p
           animate={{ opacity: [0, 1] }}
           transition={{ duration: 3 }}
@@ -68,7 +68,8 @@ const Portfolio = () => {
       <div style={{ height: "100px" }}></div>
       <div id="aboutMe">
         <motion.h1
-          className="display-1 title"
+        //TODO: Change class to local class
+          className="display-1 homeTitle"
           whileInView={{ opacity: [0, 0.9] }}
           transition={{ duration: 5 }}
         >
@@ -85,7 +86,7 @@ const Portfolio = () => {
         </div>
       </div>
       <div style={{ height: "100px" }}></div>
-    </>
+    </div>
   );
 };
 

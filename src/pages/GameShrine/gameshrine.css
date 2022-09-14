@@ -1,0 +1,7 @@
+.loginModal {
+    color:black;
+}
+body {
+    
+    background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important;
+}
