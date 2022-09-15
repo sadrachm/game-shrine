@@ -59,6 +59,7 @@ export const createPost = /* GraphQL */ `
       trailer
       content
       homeDes
+      published
       id
       createdOn
       updatedOn
@@ -78,6 +79,7 @@ export const updatePost = /* GraphQL */ `
       trailer
       content
       homeDes
+      published
       id
       createdOn
       updatedOn
@@ -97,6 +99,7 @@ export const deletePost = /* GraphQL */ `
       trailer
       content
       homeDes
+      published
       id
       createdOn
       updatedOn

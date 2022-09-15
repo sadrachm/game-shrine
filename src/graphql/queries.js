@@ -42,6 +42,7 @@ export const getPost = /* GraphQL */ `
       trailer
       content
       homeDes
+      published
       id
       createdOn
       updatedOn
@@ -63,6 +64,7 @@ export const listPosts = /* GraphQL */ `
         trailer
         content
         homeDes
+        published
         id
         createdOn
         updatedOn

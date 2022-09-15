@@ -47,6 +47,7 @@ export const onCreatePost = /* GraphQL */ `
       trailer
       content
       homeDes
+      published
       id
       createdOn
       updatedOn
@@ -63,6 +64,7 @@ export const onUpdatePost = /* GraphQL */ `
       trailer
       content
       homeDes
+      published
       id
       createdOn
       updatedOn
@@ -79,6 +81,7 @@ export const onDeletePost = /* GraphQL */ `
       trailer
       content
       homeDes
+      published
       id
       createdOn
       updatedOn
