@@ -6,7 +6,7 @@ import Home from "./pages/Home/home";
 import GameShrine from "./pages/GameShrine/gameshrine";
 import { Auth } from "aws-amplify";
 // import Test from './pages/test'
-import Admin from "./pages/Admin/admin";
+import Admin from "./pages/GameShrine/Admin/admin";
 
 function App() {
   const [user, setuser] = useState(null);

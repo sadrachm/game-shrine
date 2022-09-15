@@ -1,9 +1,9 @@
 import { Col, Container, Row } from "react-bootstrap";
 
-const ArticleSample = () => {
+const ArticleSample = ({content, title}) => {
   return (
     <>
-      <Container style={{ marginBottom:"20px"}}>
+      <Container>
         <Row>
           <Col xs={4}>
           {/* Take in image url and add it to styles */}
@@ -11,7 +11,10 @@ const ArticleSample = () => {
           </Col>
           <Col style={{padding:"5% 0"}}>
             <Row>
-              <Col>Shognjgfmnhgfdmghjm ghjm ghjmgj mjm gjm gjfmt descriptasfdsgfsdg sdfg dfg dfgh ion about something that is very importnat</Col>
+              <Col><h2>{title}</h2></Col>
+            </Row>
+            <Row>
+              <Col>{content}</Col>
             </Row>
           </Col>
         </Row>

@@ -6,6 +6,9 @@ import { Auth } from "aws-amplify";
 import ArticleSample from "./Components/articleSample";
 import { Col, Container, Row } from "react-bootstrap";
 
+const placeholder = "Shognjgfmnhgfdmghjm ghjm ghjmgj mjm gjm gjfmt descriptasfdsgfsdg sdfg dfg dfgh ion about something that is very importnat"
+const titlePlaceholder = ""
+
 const GameShrine = () => {
   const [user, setuser] = useState(null);
   useEffect(() => {
@@ -24,22 +27,22 @@ const GameShrine = () => {
       <Container
         style={{ width: "70%", marginLeft: "auto", marginRight: "auto" }}
       >
-        <Row>
+        <Row style={{marginBottom:"20px"}}>
           <Col>
             <h1>The Left side</h1>
-            <ArticleSample></ArticleSample>
+            <ArticleSample title={titlePlaceholder} content={placeholder}></ArticleSample>
           </Col>
           <Col>
             <h1>The Right side</h1>
-            <ArticleSample></ArticleSample>
+            <ArticleSample title={titlePlaceholder} content={placeholder}></ArticleSample>
           </Col>
         </Row>
         <Row>
           <Col>
-            <ArticleSample></ArticleSample>
+            <ArticleSample title={titlePlaceholder} content={placeholder}></ArticleSample>
           </Col>
           <Col>
-            <ArticleSample></ArticleSample>
+            <ArticleSample title={titlePlaceholder} content={placeholder}></ArticleSample>
           </Col>
         </Row>
         <Row className="mt-5">
