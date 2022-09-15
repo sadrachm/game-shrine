@@ -6,6 +6,7 @@ import Home from "./pages/Home/home";
 import GameShrine from "./pages/GameShrine/gameshrine";
 import { Auth } from "aws-amplify";
 // import Test from './pages/test'
+import Admin from "./pages/Admin/admin";
 
 function App() {
   const [user, setuser] = useState(null);
@@ -29,6 +30,7 @@ function App() {
           {/* <Route exact path="/gameshrine" element={<GameShrine></GameShrine>}></Route> */}
           <Route exact path="/" element={<GameShrine></GameShrine>}></Route>
           <Route exact path="/portfolio" element={<Portfolio />}></Route>
+          <Route exact path="/admin" element={<Admin />}></Route>
 
         </Routes>
       </Router>

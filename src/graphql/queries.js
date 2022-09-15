@@ -32,3 +32,42 @@ export const listNotes = /* GraphQL */ `
     }
   }
 `;
+export const getPost = /* GraphQL */ `
+  query GetPost($id: ID!) {
+    getPost(id: $id) {
+      title
+      homeImg
+      mainImg
+      lastImg
+      trailer
+      content
+      homeDes
+      id
+      createdOn
+      updatedOn
+    }
+  }
+`;
+export const listPosts = /* GraphQL */ `
+  query ListPosts(
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        title
+        homeImg
+        mainImg
+        lastImg
+        trailer
+        content
+        homeDes
+        id
+        createdOn
+        updatedOn
+      }
+      nextToken
+    }
+  }
+`;
