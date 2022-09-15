@@ -1,12 +1,10 @@
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-// import { Button } from "@aws-amplify/ui-react";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { Auth } from "aws-amplify";
 import { FormControl } from "react-bootstrap";
-import "../gameshrine.css"
-
+import "../gameshrine.css";
 
 const Login = ({ setuser }) => {
   const [username, setusername] = useState("");
@@ -38,51 +36,55 @@ const Login = ({ setuser }) => {
   }
   return (
     <>
-      <Button variant="light" style={{marginRight:'20px', backgroundColor:"#CCFF00", borderWidth:"0"}} onClick={preSignIn}>
+      <Button
+        variant="light"
+        style={{
+          marginRight: "20px",
+          borderWidth: "0",
+        }}
+        onClick={preSignIn}
+      >
         Login
       </Button>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header  closeButton>
-            <Modal.Title class="loginModal">Log In</Modal.Title>
-          </Modal.Header>
-          <Modal.Body class="loginModal" onKeyDown={handleKey}>
-            <Form>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  placeholder="example123"
-                  autoFocus
-                  value={username}
-                  onChange={(event) => setusername(event.target.value)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  placeholder="*****"
-                  type="password"
-                  value={password}
-                  onChange={(event) => setpass(event.target.value)}
-                />
-              </Form.Group>
-              {wrong && <Form.Label>Incorrect Username or Password</Form.Label>}
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={signIn}>
-              Login
-            </Button>
-          </Modal.Footer>
-        </Modal>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title class="loginModal">Log In</Modal.Title>
+        </Modal.Header>
+        <Modal.Body class="loginModal" onKeyDown={handleKey}>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                placeholder="example123"
+                autoFocus
+                value={username}
+                onChange={(event) => setusername(event.target.value)}
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                placeholder="*****"
+                type="password"
+                value={password}
+                onChange={(event) => setpass(event.target.value)}
+              />
+            </Form.Group>
+            {wrong && <Form.Label>Incorrect Username or Password</Form.Label>}
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={signIn}>
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

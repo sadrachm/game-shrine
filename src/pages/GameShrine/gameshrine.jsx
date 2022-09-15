@@ -3,7 +3,8 @@ import SignOut from "./Components/signOut";
 import Login from "./Components/login";
 import Navbar from "./Components/navbar";
 import { Auth } from "aws-amplify";
-
+import ArticleSample from "./Components/articleSample";
+import { Col, Container, Row } from "react-bootstrap";
 
 const GameShrine = () => {
   const [user, setuser] = useState(null);
@@ -15,10 +16,51 @@ const GameShrine = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <>
-    <Navbar setuser={setuser} user={user}></Navbar>
-
-    </>
+    <div class="shrineHome">
+      <Navbar setuser={setuser} user={user}></Navbar>
+      <div class="headDiv"></div>
+      <div class="gameStartingImg"></div>
+      <div style={{ height: "50px" }}></div>
+      <Container
+        style={{ width: "70%", marginLeft: "auto", marginRight: "auto" }}
+      >
+        <Row>
+          <Col>
+            <h1>The Left side</h1>
+            <ArticleSample></ArticleSample>
+          </Col>
+          <Col>
+            <h1>The Right side</h1>
+            <ArticleSample></ArticleSample>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <ArticleSample></ArticleSample>
+          </Col>
+          <Col>
+            <ArticleSample></ArticleSample>
+          </Col>
+        </Row>
+        <Row className="mt-5">
+          <Col>
+            <h1>Video of the Week</h1>
+            <div style={{ textAlign: "center",}}>
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/iHfJRON3b-w"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+      <div style={{ height: "100px" }}></div>
+    </div>
   );
 };
 

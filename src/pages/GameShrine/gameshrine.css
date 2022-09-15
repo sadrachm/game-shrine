@@ -1,7 +1,44 @@
 .loginModal {
-    color:black;
+  color: black;
 }
 body {
-    
-    background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important;
+  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.contentImg {
+  background-image: url("https://www.stevensegallery.com/640/360");
+  background-repeat: none;
+  background-size: cover;
+  background-position: center center;
+  min-height: 150px;
+  border-radius: 10%;
+}
+
+.gameStartingImg {
+  background-image: url("https://www.stevensegallery.com/640/360");
+  background-repeat: none;
+  background-size: cover;
+  background-position: center center;
+  height: 480px;
+}
+
+.headDiv {
+  height: 50px;
+  border-width: 1px 0 0 0;
+  border-color: rgb(136, 136, 136);
+  border-style: solid;
+  background-image: linear-gradient(
+    rgba(220, 220, 220, 0.558),
+    rgba(255, 255, 255, 0.626)
+  );
+}
+
+.sampleContainer {
+  color: "black";
+  width: "70%";
+  margin-left: auto;
+  margin-right: auto;
+}
+.shrineHome {
+    color:black
 }

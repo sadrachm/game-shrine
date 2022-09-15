@@ -9,7 +9,7 @@ import SignOut from "./signOut";
 
 function Navhub({ setuser, user }) {
   return (
-    <Navbar style={{backgroundColor:"#CCFF00"}}  expand="lg">
+    <Navbar  bg="light"  expand="md">
       <Container>
         <Navbar.Brand href="/" style={{marginLeft:"5%"}}>Game Shrine</Navbar.Brand>
 
