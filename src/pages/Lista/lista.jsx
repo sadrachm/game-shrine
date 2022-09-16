@@ -10,9 +10,10 @@ import {
   Row,
 } from "react-bootstrap";
 import "./lista.css";
-import { createList } from "../../graphql/mutations";
-import { listLists } from "../../graphql/queries";
+import { createList, createProductos } from "../../graphql/mutations";
+import { listLists, listProductos } from "../../graphql/queries";
 import { API } from "aws-amplify";
+import Card from "./Components/Card";
 
 const Lista = () => {
   const [store, setStore] = useState(0);
@@ -33,7 +34,8 @@ const Lista = () => {
     );
   }
   useEffect(() => {
-    start()
+    start();
+    consol();
   }, []);
 
   async function switchStore(val, storeName) {
@@ -50,22 +52,27 @@ const Lista = () => {
     );
   }
   async function consol() {
-    // const apiData = await API.graphql({ query: listLists });
-    // const notesFromAPI = apiData.data.listLists.items;
-    //   await Promise.all(
-    //     notesFromAPI.map(async (note) => {
-    //       if (note.image) {
-    //         const image = await Storage.get(note.image);
-    //         note.image = image;
-    //       }
-    //       return note;
-    //     })
-    //   );
-    //   setNotes(apiData.data.listNotes.items);
-    console.log(listID);
+    const apiData = await API.graphql({ query: listProductos });
+    const notesFromAPI = apiData.data.listProductos.items;
+    var x = [];
+    await Promise.all(
+      notesFromAPI.map(async (item) => {
+        if (item.productosListId === listID.id) {
+          x.push(item);
+        }
+      })
+    );
+    setList(x);
+    console.log(x);
     console.log(entry);
   }
-  async function createItem() {}
+  async function createItem() {
+    await API.graphql({
+      query: createProductos,
+      variables: { input: { name: "Pina", productosListId: listID.id } },
+    });
+  }
+
   async function createLista() {
     // await API.graphql({
     //   query: createList,
@@ -164,7 +171,11 @@ const Lista = () => {
           />
         </Row>
         <Button onClick={consol}>Console</Button>
-        <Button onClick={createLista}>Create List</Button>
+        <Button onClick={createItem}>Create Item</Button>
+        
+        {list.map((item)=> {
+            return <Card name={item.name} />
+        })}
       </Container>
     </div>
   );
