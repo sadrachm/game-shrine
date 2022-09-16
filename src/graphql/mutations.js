@@ -106,3 +106,102 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
+export const createProductos = /* GraphQL */ `
+  mutation CreateProductos(
+    $input: CreateProductosInput!
+    $condition: ModelProductosConditionInput
+  ) {
+    createProductos(input: $input, condition: $condition) {
+      name
+      list {
+        listName
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      productosListId
+    }
+  }
+`;
+export const updateProductos = /* GraphQL */ `
+  mutation UpdateProductos(
+    $input: UpdateProductosInput!
+    $condition: ModelProductosConditionInput
+  ) {
+    updateProductos(input: $input, condition: $condition) {
+      name
+      list {
+        listName
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      productosListId
+    }
+  }
+`;
+export const deleteProductos = /* GraphQL */ `
+  mutation DeleteProductos(
+    $input: DeleteProductosInput!
+    $condition: ModelProductosConditionInput
+  ) {
+    deleteProductos(input: $input, condition: $condition) {
+      name
+      list {
+        listName
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      productosListId
+    }
+  }
+`;
+export const createList = /* GraphQL */ `
+  mutation CreateList(
+    $input: CreateListInput!
+    $condition: ModelListConditionInput
+  ) {
+    createList(input: $input, condition: $condition) {
+      listName
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateList = /* GraphQL */ `
+  mutation UpdateList(
+    $input: UpdateListInput!
+    $condition: ModelListConditionInput
+  ) {
+    updateList(input: $input, condition: $condition) {
+      listName
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteList = /* GraphQL */ `
+  mutation DeleteList(
+    $input: DeleteListInput!
+    $condition: ModelListConditionInput
+  ) {
+    deleteList(input: $input, condition: $condition) {
+      listName
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;

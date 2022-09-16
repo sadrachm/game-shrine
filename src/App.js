@@ -5,6 +5,7 @@ import Portfolio from "./pages/Portfolio/portfolio";
 import Home from "./pages/Home/home";
 import GameShrine from "./pages/GameShrine/gameshrine";
 import { Auth } from "aws-amplify";
+import Lista from "./pages/Lista/lista";
 // import Test from './pages/test'
 import Admin from "./pages/GameShrine/Admin/admin";
 
@@ -31,6 +32,8 @@ function App() {
           <Route exact path="/" element={<GameShrine></GameShrine>}></Route>
           <Route exact path="/portfolio" element={<Portfolio />}></Route>
           <Route exact path="/admin" element={<Admin />}></Route>
+          <Route exact path="/543/lista" element={<Lista />}></Route>
+          
 
         </Routes>
       </Router>

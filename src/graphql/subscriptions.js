@@ -88,3 +88,84 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
+export const onCreateProductos = /* GraphQL */ `
+  subscription OnCreateProductos {
+    onCreateProductos {
+      name
+      list {
+        listName
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      productosListId
+    }
+  }
+`;
+export const onUpdateProductos = /* GraphQL */ `
+  subscription OnUpdateProductos {
+    onUpdateProductos {
+      name
+      list {
+        listName
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      productosListId
+    }
+  }
+`;
+export const onDeleteProductos = /* GraphQL */ `
+  subscription OnDeleteProductos {
+    onDeleteProductos {
+      name
+      list {
+        listName
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      productosListId
+    }
+  }
+`;
+export const onCreateList = /* GraphQL */ `
+  subscription OnCreateList {
+    onCreateList {
+      listName
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateList = /* GraphQL */ `
+  subscription OnUpdateList {
+    onUpdateList {
+      listName
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteList = /* GraphQL */ `
+  subscription OnDeleteList {
+    onDeleteList {
+      listName
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;

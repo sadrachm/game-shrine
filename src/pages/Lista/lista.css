@@ -1,0 +1,48 @@
+.content {
+    /* border-style: solid; */
+    /* border-width: 0 .5px; */
+    /* border-color: black; */
+}
+
+.listaBody {
+    background-image: url("https://www.transparenttextures.com/patterns/argyle.png");
+    background-color: #292929;
+    min-height: 100vh;
+    color:"black"
+}
+
+.listaCol {
+    padding:0;
+    /* border-style: solid; */
+    /* border-bottom-width: 1px; */
+    /* border-width: 0 .5px 1px .5px; */
+    /* border-width: 1px; */
+    /* border-color: black; */
+}
+.listaContainer {
+    /* border-radius: 5%; */
+}
+h1 {
+    color:black;
+    /* padding:0px !important; */
+}
+
+.listaButtons {
+    width:100%;
+    font-size: large;
+    background-color: inherit;
+    color: black;
+    border-radius: 0%;
+    border-width: 0;
+    
+}
+.listaButtons:focus {
+    outline: none;
+    box-shadow: none;
+  }
+.listaButtons:hover {
+    background-color: grey;
+}
+.listaTitle {
+    text-align: center;
+}
