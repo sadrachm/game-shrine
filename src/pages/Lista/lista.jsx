@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  Row,
-} from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./lista.css";
 import { createProductos } from "../../graphql/mutations";
 import { listLists, listProductos } from "../../graphql/queries";
 import { API } from "aws-amplify";
 import Card from "./Components/Card";
-import SendIcon from '@mui/icons-material/Send';
+import SendIcon from "@mui/icons-material/Send";
 
 //TODO: Sort values returned from db to chronological
 
@@ -20,6 +14,7 @@ const Lista = () => {
   const [list, setList] = useState([]);
   const [listID, setListID] = useState("");
   const [entry, setEntry] = useState("");
+  const [erase, setErase] = useState(false);
 
   async function start() {
     const apiData = await API.graphql({ query: listLists });
@@ -41,7 +36,7 @@ const Lista = () => {
 
   function keyDown(ev) {
     if (ev.key === "Enter") {
-      createItem()
+      createItem();
     }
   }
 
@@ -168,13 +163,30 @@ const Lista = () => {
             <Button className="listaButtons">Super</Button>
           </Col> */}
         </Row>
+        <Row>
+          <Col>
+            <Form.Check
+              style={{ color: "black", textAlign: "end", margin:"5px 5% 5px 0" }}
+              reverse
+              type="switch"
+              id="custom-switch"
+              onClick={() => setErase(!erase)}
+            />
+          </Col>
+        </Row>
         {list.map((item) => {
           return (
-            <Card list={list} setList={setList} name={item.name} id={item.id} />
+            <Card
+              list={list}
+              erase={erase}
+              setList={setList}
+              name={item.name}
+              id={item.id}
+            />
           );
         })}
         <Row className="content mt-4 mb-4">
-          <Col xs={8} style={{padding:"0"}}>
+          <Col xs={8} style={{ padding: "0" }}>
             <Form.Control
               style={{ width: "85%", margin: "0 auto", fontSize: "1rem" }}
               type="text"
@@ -185,7 +197,9 @@ const Lista = () => {
             />
           </Col>
           <Col>
-            <Button onClick={createItem} style={{fontSize: "1rem"}}><SendIcon/></Button>
+            <Button onClick={createItem} style={{ fontSize: "1rem" }}>
+              <SendIcon />
+            </Button>
           </Col>
         </Row>
         {/* <Button onClick={consol}>Console</Button>

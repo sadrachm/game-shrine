@@ -23,7 +23,7 @@ const Card = (props) => {
             <p style={{color:"black", fontSize:"1.5rem", marginBottom:'0'}}> {props.name}</p>
           </Col>
           <Col>
-            <Button variant ="primary" onClick={remove}><DeleteIcon style={{color:"white"}}/></Button>
+            <Button disabled={!props.erase} variant ="primary" onClick={remove}><DeleteIcon style={{color:"white"}}/></Button>
           </Col>
         </Row>
       </Container>
