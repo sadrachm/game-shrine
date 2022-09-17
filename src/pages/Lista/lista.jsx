@@ -4,16 +4,16 @@ import {
   Col,
   Container,
   Form,
-  Nav,
-  Navbar,
-  NavDropdown,
   Row,
 } from "react-bootstrap";
 import "./lista.css";
-import { createList, createProductos } from "../../graphql/mutations";
+import { createProductos } from "../../graphql/mutations";
 import { listLists, listProductos } from "../../graphql/queries";
 import { API } from "aws-amplify";
 import Card from "./Components/Card";
+import SendIcon from '@mui/icons-material/Send';
+
+//TODO: Sort values returned from db to chronological
 
 const Lista = () => {
   const [store, setStore] = useState(0);
@@ -29,14 +29,21 @@ const Lista = () => {
       notesfromAPI.map(async (item) => {
         if (item.listName === "Costco") {
           setListID(item);
+          x = item;
         }
       })
     );
+    fetchItems(x);
   }
   useEffect(() => {
     start();
-    consol();
   }, []);
+
+  function keyDown(ev) {
+    if (ev.key === "Enter") {
+      createItem()
+    }
+  }
 
   async function switchStore(val, storeName) {
     setStore(val);
@@ -47,17 +54,23 @@ const Lista = () => {
       notesfromAPI.map(async (item) => {
         if (item.listName === storeName) {
           setListID(item);
+          x = item;
         }
       })
     );
+    fetchItems(x);
   }
-  async function consol() {
+  function consol() {
+    console.log(list);
+  }
+  async function fetchItems(storeObject) {
+    console.log("listID:", storeObject.id);
     const apiData = await API.graphql({ query: listProductos });
     const notesFromAPI = apiData.data.listProductos.items;
     var x = [];
     await Promise.all(
       notesFromAPI.map(async (item) => {
-        if (item.productosListId === listID.id) {
+        if (item.productosListId === storeObject.id) {
           x.push(item);
         }
       })
@@ -69,19 +82,24 @@ const Lista = () => {
   async function createItem() {
     await API.graphql({
       query: createProductos,
-      variables: { input: { name: "Pina", productosListId: listID.id } },
+      variables: { input: { name: entry, productosListId: listID.id } },
+    }).then((data) => {
+      var short = data.data.createProductos;
+      var c = {
+        name: short.name,
+        productosListId: short.productosListId,
+        createdAt: short.createdAt,
+        updatedAt: short.updatedAt,
+        id: short.id,
+      };
+      setList([...list, c]);
     });
+
+    setEntry("");
   }
 
-  async function createLista() {
-    // await API.graphql({
-    //   query: createList,
-    //   variables: { input: {listName: "Otro"} },
-    // });
-  }
   return (
     <div className="listaBody pt-5">
-      {/* <h1 class="display-1 pt-5 listaTitle">Lista</h1> */}
       <Container
         className="listaContainer"
         style={{
@@ -93,7 +111,7 @@ const Lista = () => {
       >
         <Row className="mx-0">
           <Col className="listaCol">
-            {store == 0 && (
+            {store === 0 && (
               <Button
                 style={{ backgroundColor: "grey", color: "white" }}
                 className="listaButtons"
@@ -101,7 +119,7 @@ const Lista = () => {
                 Costco
               </Button>
             )}
-            {store != 0 && (
+            {store !== 0 && (
               <Button
                 onClick={() => switchStore(0, "Costco")}
                 className="listaButtons"
@@ -111,7 +129,7 @@ const Lista = () => {
             )}
           </Col>
           <Col className="listaCol">
-            {store == 1 && (
+            {store === 1 && (
               <Button
                 style={{ backgroundColor: "grey", color: "white" }}
                 className="listaButtons"
@@ -119,7 +137,7 @@ const Lista = () => {
                 Super
               </Button>
             )}
-            {store != 1 && (
+            {store !== 1 && (
               <Button
                 onClick={() => switchStore(1, "Super")}
                 className="listaButtons"
@@ -129,7 +147,7 @@ const Lista = () => {
             )}
           </Col>
           <Col className="listaCol">
-            {store == 2 && (
+            {store === 2 && (
               <Button
                 style={{ backgroundColor: "grey", color: "white" }}
                 className="listaButtons"
@@ -137,7 +155,7 @@ const Lista = () => {
                 Otro
               </Button>
             )}
-            {store != 2 && (
+            {store !== 2 && (
               <Button
                 onClick={() => switchStore(2, "Otro")}
                 className="listaButtons"
@@ -150,35 +168,40 @@ const Lista = () => {
             <Button className="listaButtons">Super</Button>
           </Col> */}
         </Row>
-        <Row className="content mx-0 pt-4">
-          <h1>Something</h1>
-        </Row>
-        <Row className="content mx-0 pt-4">
-          <h1>Something</h1>
-        </Row>
-        <Row className="content mx-0 pt-4">
-          <h1>Something</h1>
-        </Row>
-        <Row className="content mx-0 pt-4">
-          <h1>Something</h1>
-        </Row>
-        <Row className="content mx-0 pt-4">
-          <Form.Control
-            type="text"
-            value={entry}
-            onChange={(ev) => setEntry(ev.target.value)}
-            placeholder="Nuevo Producto"
-          />
-        </Row>
-        <Button onClick={consol}>Console</Button>
-        <Button onClick={createItem}>Create Item</Button>
-        
-        {list.map((item)=> {
-            return <Card name={item.name} />
+        {list.map((item) => {
+          return (
+            <Card list={list} setList={setList} name={item.name} id={item.id} />
+          );
         })}
+        <Row className="content mt-4 mb-4">
+          <Col xs={8} style={{padding:"0"}}>
+            <Form.Control
+              style={{ width: "85%", margin: "0 auto", fontSize: "1rem" }}
+              type="text"
+              value={entry}
+              onChange={(ev) => setEntry(ev.target.value)}
+              onKeyDown={keyDown}
+              placeholder="Nuevo Producto"
+            />
+          </Col>
+          <Col>
+            <Button onClick={createItem} style={{fontSize: "1rem"}}><SendIcon/></Button>
+          </Col>
+        </Row>
+        {/* <Button onClick={consol}>Console</Button>
+        <Button  onClick={createItem}>Create Item</Button> */}
+
+        <div style={{ height: "50px" }}></div>
       </Container>
     </div>
   );
 };
 
 export default Lista;
+
+// async function createLista() {
+//   // await API.graphql({
+//   //   query: createList,
+//   //   variables: { input: {listName: "Otro"} },
+//   // });
+// }
