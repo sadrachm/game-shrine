@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 const ArticleSample = ({content, title}) => {
   return (
     <>
-      <Container>
+      <Container className="mb-5">
         <Row>
           <Col xs={4}>
           {/* Take in image url and add it to styles */}

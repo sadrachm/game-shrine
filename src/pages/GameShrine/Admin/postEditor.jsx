@@ -1,8 +1,22 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import { updatePost } from "../../../graphql/mutations";
+import { API } from "aws-amplify";
 
-const PostEditor = ({setFormData, formData}) =>{
+const PostEditor = ({setEdit, setFormData, formData, fetchNotes}) =>{
+  function consol() {
+    console.log(formData);
+  }
+  async function handleSave() {
+    if (!formData.title || !formData.homeDes || !formData.content) return;
+
+    const x = await API.graphql({
+      query: updatePost,
+      variables: { input: formData },
+    }).then((data)=> setEdit(false));
+    fetchNotes()
+  }
     return<>
         <h1 class="display-1" style={{textAlign:"center"}}>Post Editor</h1>
         <Container>
@@ -73,13 +87,13 @@ const PostEditor = ({setFormData, formData}) =>{
       </Form>
       <Container>
         <Row style={{ width: "85%", margin: "30px auto" }}>
-          {/* <Col onClick={handleSave} style={{ textAlign: "center" }}>
+          <Col onClick={handleSave} style={{ textAlign: "center" }}>
             <Button variant="primary">Save</Button>
-          </Col> */}
+          </Col>
           <Col style={{ textAlign: "center" }}>
-            {/* <Button onClick={consol} variant="warning">
+            <Button onClick={consol} variant="warning">
               Publish
-            </Button> */}
+            </Button>
           </Col>
         </Row>
       </Container>

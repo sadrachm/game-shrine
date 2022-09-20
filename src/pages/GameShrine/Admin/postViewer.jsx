@@ -22,25 +22,16 @@ const PostViewer = () => {
     console.log(posts);
   }
 
-  function change(event, title, desc, content) {
-    console.log(title)
+  function change(event,id,  title, desc, content) {
+    console.log(id)
     console.log(desc)
-    setFormData({ homeDes:desc, content:content, title: title });
+    setFormData({id:id, homeDes:desc, content:content, title: title });
     setEdit(true);
   }
 
   async function fetchNotes() {
     const apiData = await API.graphql({ query: listPosts });
     const notesFromAPI = apiData.data.listPosts.items;
-    //     await Promise.all(
-    //       notesFromAPI.map(async (note) => {
-    //         // if (note.image) {
-    //         //   const image = await Storage.get(note.image);
-    //         //   note.image = image;
-    //         // }
-    //         return note;
-    //       })
-    //     );
     setPosts(notesFromAPI);
   }
   useEffect(() => {
@@ -58,8 +49,7 @@ const PostViewer = () => {
             <Container style={{ marginTop: "20px" }}>
               {posts.map((el) => {
                 return (
-                  <Row>
-                    {/* <div class="mt-5"> */}
+                  <Row className="mb-4">
                     <Col xs={9}>
                       <ArticleSample
                         content={el.homeDes}
@@ -69,7 +59,7 @@ const PostViewer = () => {
                     <Col style={{ padding: "55px 0", textAlign: "end" }}>
                       <Button
                         onClick={(event) =>
-                          change(event, el.title, el.homeDes, el.content)
+                          change(event,el.id, el.title, el.homeDes, el.content)
                         }
                       >
                         <SettingsIcon></SettingsIcon>
@@ -86,7 +76,7 @@ const PostViewer = () => {
       {edit && (
         <>
           <Button onClick={()=> {setEdit(false)}}>Back</Button>
-          <PostEditor formData={formData} setFormData={setFormData}></PostEditor>
+          <PostEditor fetchNotes={fetchNotes} setEdit={setEdit} formData={formData} setFormData={setFormData}></PostEditor>
         </>
       )}
     </>

@@ -20,16 +20,6 @@ const PostCreation = () => {
       query: createPost,
       variables: { input: formData },
     });
-    // await API.graphql({
-    //   query: createNoteMutation,
-    //   variables: { input: formData },
-    // });
-    // if (formData.image) {
-    //   const image = await Storage.get(formData.image);
-    //   formData.image = image;
-    // }
-    // setNotes([...notes, formData]);
-    // setFormData(initialFormState);
   }
   return (
     <div style={{ color: "black" }}>

@@ -42,6 +42,7 @@ export const getPost = /* GraphQL */ `
       trailer
       content
       homeDes
+      createdAt
       published
       id
       createdOn
@@ -64,6 +65,7 @@ export const listPosts = /* GraphQL */ `
         trailer
         content
         homeDes
+        createdAt
         published
         id
         createdOn
@@ -130,6 +132,41 @@ export const listLists = /* GraphQL */ `
         id
         createdAt
         updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const todosByDate = /* GraphQL */ `
+  query TodosByDate(
+    $title: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    todosByDate(
+      title: $title
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        title
+        homeImg
+        mainImg
+        lastImg
+        trailer
+        content
+        homeDes
+        createdAt
+        published
+        id
+        createdOn
+        updatedOn
       }
       nextToken
     }
