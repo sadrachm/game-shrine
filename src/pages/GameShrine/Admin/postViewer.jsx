@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { listPosts } from "../../../graphql/queries";
+import { listPosts, listsByDate  } from "../../../graphql/queries";
 import { API } from "aws-amplify";
 import ArticleSample from "../Components/articleSample";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -30,8 +30,9 @@ const PostViewer = () => {
   }
 
   async function fetchNotes() {
-    const apiData = await API.graphql({ query: listPosts });
-    const notesFromAPI = apiData.data.listPosts.items;
+    const apiData = await API.graphql({ query: listsByDate ,
+      variables: {type:"article", sortDirection:"DESC"}});
+    const notesFromAPI = apiData.data.listsByDate.items;
     setPosts(notesFromAPI);
   }
   useEffect(() => {

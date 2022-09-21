@@ -41,6 +41,7 @@ export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost {
     onCreatePost {
       title
+      type
       homeImg
       mainImg
       lastImg
@@ -50,8 +51,7 @@ export const onCreatePost = /* GraphQL */ `
       createdAt
       published
       id
-      createdOn
-      updatedOn
+      updatedAt
     }
   }
 `;
@@ -59,6 +59,7 @@ export const onUpdatePost = /* GraphQL */ `
   subscription OnUpdatePost {
     onUpdatePost {
       title
+      type
       homeImg
       mainImg
       lastImg
@@ -68,8 +69,7 @@ export const onUpdatePost = /* GraphQL */ `
       createdAt
       published
       id
-      createdOn
-      updatedOn
+      updatedAt
     }
   }
 `;
@@ -77,6 +77,7 @@ export const onDeletePost = /* GraphQL */ `
   subscription OnDeletePost {
     onDeletePost {
       title
+      type
       homeImg
       mainImg
       lastImg
@@ -86,8 +87,7 @@ export const onDeletePost = /* GraphQL */ `
       createdAt
       published
       id
-      createdOn
-      updatedOn
+      updatedAt
     }
   }
 `;

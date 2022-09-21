@@ -6,7 +6,7 @@ import { API } from "aws-amplify";
 import { listPosts } from "../../../graphql/queries";
 import { createPost } from "../../../graphql/mutations";
 
-const initialFormState = { title: "", homeDes: "", content: "", published: false };
+const initialFormState = { title: "", homeDes: "", content: "", published: false, type:"article" };
 
 const PostCreation = () => {
   function consol() {
