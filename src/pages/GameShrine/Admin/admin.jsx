@@ -10,7 +10,7 @@ const Admin = () => {
   return (
     <div style={{color:"black"}}>
       <Button onClick={()=>{setView(!view)}}>Switch</Button>
-      {view && <PostCreation></PostCreation>}
+      {view && <PostCreation setView={setView}></PostCreation>}
       {!view && <PostViewer></PostViewer>}
     </div>
   );

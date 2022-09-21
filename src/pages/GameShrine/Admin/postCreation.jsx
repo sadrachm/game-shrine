@@ -8,7 +8,7 @@ import { createPost } from "../../../graphql/mutations";
 
 const initialFormState = { title: "", homeDes: "", content: "", published: false, type:"article" };
 
-const PostCreation = () => {
+const PostCreation = ({setView}) => {
   function consol() {
     console.log(formData);
   }
@@ -19,7 +19,7 @@ const PostCreation = () => {
     await API.graphql({
       query: createPost,
       variables: { input: formData },
-    });
+    }).then(()=>{setView(false)});
   }
   return (
     <div style={{ color: "black" }}>

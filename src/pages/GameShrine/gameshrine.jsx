@@ -13,18 +13,17 @@ const placeholder =
 const titlePlaceholder = "";
 
 const GameShrine = () => {
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
   async function fetchNotes() {
     const apiData = await API.graphql({ query: listPosts });
     const notesFromAPI = apiData.data.listPosts.items;
     setPosts(notesFromAPI);
   }
   function consol() {
-    console.log(posts)
+    console.log(posts);
   }
   const [user, setuser] = useState(null);
   useEffect(() => {
-    
     fetchNotes();
     Auth.currentAuthenticatedUser({
       bypassCache: false, // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
@@ -34,35 +33,95 @@ const GameShrine = () => {
   }, []);
   return (
     <div class="shrineHome">
-    
-    <Button onClick={consol} style={{color:"black"}}>button</Button>
+      <Button onClick={consol} style={{ color: "black" }}>
+        button
+      </Button>
       <Navbar setuser={setuser} user={user}></Navbar>
       <div class="headDiv"></div>
-     
+
       <div style={{ height: "50px" }}></div>
       <Container
         style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}
       >
-      <Row style={{ backgroundColor: "black"}}>
-        <Col>
-      <h1 className="display-1 " style={{ backgroundColor: "black", padding: "70px 0", color:'white', textAlign:'center' }}>
-        God of War Ragnarok 
-      </h1>
-        </Col>
-      <Col>
-      <img style={{maxWidth:"100%", maxHeight:'400px', padding:"50px 0"}} src="https://www.nme.com/wp-content/uploads/2022/07/God-Of-War-Ragnarok-preorders-2000x1270-1.jpg"></img>
-        <div class="gameStartingImg"></div>
-
-      </Col>
-      </Row>
-      <Row>
-        <h2 className="display-2 mt-3 mb-5" style={{textAlign:"center"}}>Featured Articles</h2>
-      </Row>
-      <div style={{width:'75%', margin:"0 auto"}}>
-      {posts.map((elem)=> {
-        return <ArticleSample title={elem.title} content ={elem.homeDes}></ArticleSample>
-      })}
+        <Row style={{ backgroundColor: "black" }}>
+          <Col>
+            <h1
+              className="display-1 "
+              style={{
+                backgroundColor: "black",
+                padding: "70px 0",
+                color: "white",
+                textAlign: "center",
+              }}
+            >
+              God of War Ragnarok
+            </h1>
+          </Col>
+          <Col>
+            <img
+              style={{
+                maxWidth: "100%",
+                maxHeight: "400px",
+                padding: "50px 0",
+              }}
+              src="https://www.nme.com/wp-content/uploads/2022/07/God-Of-War-Ragnarok-preorders-2000x1270-1.jpg"
+            ></img>
+            <div class="gameStartingImg"></div>
+          </Col>
+        </Row>
+        <Row>
+          <h2 className="display-2 mt-3 mb-5" style={{ textAlign: "center" }}>
+            Featured Articles
+          </h2>
+        </Row>
+        <div style={{ width: "75%", margin: "0 auto" }}>
+          {posts.map((elem) => {
+            return (
+              <ArticleSample
+                title={elem.title}
+                content={elem.homeDes}
+              ></ArticleSample>
+            );
+          })}
         </div>
+        <Row>
+          <h2 className="display-2 mt-3 mb-5" style={{ textAlign: "center" }}>
+            Upcoming Games
+          </h2>
+        </Row>
+        <Row>
+          <Col style={{padding:"50px 0"}}>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/hfJ4Km46A-0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe>
+            <h3 className="display-3" style={{textAlign:"center", }}>God of War</h3>
+            <h4 className="display-4" style={{textAlign:"center"}}>November 9</h4>           
+          </Col>
+          <Col>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/r72GP1PIZa0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture fullscreen"></iframe>
+            <h3 className="display-3" style={{textAlign:"center"}}>Modern Warfare 2</h3>
+            <h4 className="display-4" style={{textAlign:"center"}}>October 20</h4>           
+          </Col>
+          <Col>
+            <h3 className="display-3" style={{textAlign:"center"}}>Hogwarts Legacy</h3>
+            <h4 className="display-4" style={{textAlign:"center"}}>February 10</h4>           
+          </Col>
+        </Row>
+        
+        <Row>
+          <h2 className="display-2 mt-3 mb-5" style={{ textAlign: "center" }}>
+            Recent Articles
+          </h2>
+        </Row>
+        <div style={{ width: "75%", margin: "0 auto" }}>
+          {posts.map((elem) => {
+            return (
+              <ArticleSample
+                title={elem.title}
+                content={elem.homeDes}
+              ></ArticleSample>
+            );
+          })}
+        </div>
+        
         {/* <Row style={{marginBottom:"20px"}}>
           <Col>
             <h1>The Left side</h1>
