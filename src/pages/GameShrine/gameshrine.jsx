@@ -8,19 +8,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import { listPosts, listGames } from "../../graphql/queries";
 import { API } from "aws-amplify";
 import Upcoming from "./Components/upcoming";
-const placeholder = [
-  { title: "God of War Ragnarok", date: "November 9", src: "hfJ4Km46A-0" },
 
-  { title: "Modern Warfare 2", date: "October 20", src: "r72GP1PIZa0" },
-
-  { title: "Hogwarts Legacy", date: "February 10", src: "s4dBlDCw_2Q" },
-
-  { title: "Starfield", date: "2023", src: "pYqyVpCV-3c" },
-
-  { title: "TLZ: Breath of the Wild 2", date: "May 12", src: "Pi-MRZBP91I" },
-
-  { title: "Atomic Heart", date: "Upcoming Winter", src: "jLmukRHiXUE" },
-];
 const GameShrine = () => {
   const [posts, setPosts] = useState([]);
   const [games, setGames] = useState([])
@@ -95,7 +83,7 @@ const GameShrine = () => {
             );
           })}
         </div>
-        <Row className="upcoming">
+        <Row id="Upcoming" className="upcoming">
           <h2 className="display-2 mt-3 mb-5" style={{ textAlign: "center" }}>
             Upcoming Games
           </h2>
@@ -109,7 +97,7 @@ const GameShrine = () => {
           {/* <div style={{height:"100px"}}></div> */}
         </div>
 
-        <Row>
+        <Row id="Recent">
           <h2 className="display-2 mt-3 mb-5" style={{ textAlign: "center" }}>
             Recent Articles
           </h2>
