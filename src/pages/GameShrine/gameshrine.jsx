@@ -5,19 +5,34 @@ import Navbar from "./Components/navbar";
 import { Auth } from "aws-amplify";
 import ArticleSample from "./Components/articleSample";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { listPosts } from "../../graphql/queries";
+import { listPosts, listGames } from "../../graphql/queries";
 import { API } from "aws-amplify";
+import Upcoming from "./Components/upcoming";
+const placeholder = [
+  { title: "God of War Ragnarok", date: "November 9", src: "hfJ4Km46A-0" },
 
-const placeholder =
-  "Shognjgfmnhgfdmghjm ghjm ghjmgj mjm gjm gjfmt descriptasfdsgfsdg sdfg dfg dfgh ion about something that is very importnat";
-const titlePlaceholder = "";
+  { title: "Modern Warfare 2", date: "October 20", src: "r72GP1PIZa0" },
 
+  { title: "Hogwarts Legacy", date: "February 10", src: "s4dBlDCw_2Q" },
+
+  { title: "Starfield", date: "2023", src: "pYqyVpCV-3c" },
+
+  { title: "TLZ: Breath of the Wild 2", date: "May 12", src: "Pi-MRZBP91I" },
+
+  { title: "Atomic Heart", date: "Upcoming Winter", src: "jLmukRHiXUE" },
+];
 const GameShrine = () => {
   const [posts, setPosts] = useState([]);
+  const [games, setGames] = useState([])
   async function fetchNotes() {
     const apiData = await API.graphql({ query: listPosts });
     const notesFromAPI = apiData.data.listPosts.items;
     setPosts(notesFromAPI);
+  }
+  async function fetchGames() {
+    await API.graphql({
+      query: listGames,
+    }).then((data) => setGames(data.data.listGames.items));
   }
   function consol() {
     console.log(posts);
@@ -25,6 +40,7 @@ const GameShrine = () => {
   const [user, setuser] = useState(null);
   useEffect(() => {
     fetchNotes();
+    fetchGames();
     Auth.currentAuthenticatedUser({
       bypassCache: false, // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     })
@@ -33,22 +49,17 @@ const GameShrine = () => {
   }, []);
   return (
     <div class="shrineHome">
-      <Button onClick={consol} style={{ color: "black" }}>
-        button
-      </Button>
       <Navbar setuser={setuser} user={user}></Navbar>
       <div class="headDiv"></div>
 
-      <div style={{ height: "50px" }}></div>
       <Container
         style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}
       >
-        <Row style={{ backgroundColor: "black" }}>
+        <Row className="shrineStart">
           <Col>
             <h1
               className="display-1 "
               style={{
-                backgroundColor: "black",
                 padding: "70px 0",
                 color: "white",
                 textAlign: "center",
@@ -84,28 +95,20 @@ const GameShrine = () => {
             );
           })}
         </div>
-        <Row>
+        <Row className="upcoming">
           <h2 className="display-2 mt-3 mb-5" style={{ textAlign: "center" }}>
             Upcoming Games
           </h2>
         </Row>
-        <Row>
-          <Col style={{padding:"50px 0"}}>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/hfJ4Km46A-0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe>
-            <h3 className="display-3" style={{textAlign:"center", }}>God of War</h3>
-            <h4 className="display-4" style={{textAlign:"center"}}>November 9</h4>           
-          </Col>
-          <Col>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/r72GP1PIZa0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture fullscreen"></iframe>
-            <h3 className="display-3" style={{textAlign:"center"}}>Modern Warfare 2</h3>
-            <h4 className="display-4" style={{textAlign:"center"}}>October 20</h4>           
-          </Col>
-          <Col>
-            <h3 className="display-3" style={{textAlign:"center"}}>Hogwarts Legacy</h3>
-            <h4 className="display-4" style={{textAlign:"center"}}>February 10</h4>           
-          </Col>
-        </Row>
-        
+        <div className="upcoming pb-5 mb-3">
+          <Row style={{ width: "90%", margin: "0 auto" }}>
+            {games.map((el) => {
+              return <Upcoming title={el.title} src={el.src} date={el.date} />;
+            })}
+          </Row>
+          {/* <div style={{height:"100px"}}></div> */}
+        </div>
+
         <Row>
           <h2 className="display-2 mt-3 mb-5" style={{ textAlign: "center" }}>
             Recent Articles
@@ -121,39 +124,9 @@ const GameShrine = () => {
             );
           })}
         </div>
-        
-        {/* <Row style={{marginBottom:"20px"}}>
-          <Col>
-            <h1>The Left side</h1>
-            <ArticleSample title={titlePlaceholder} content={placeholder}></ArticleSample>
-          </Col>
-          <Col>
-            <h1>The Right side</h1>
-            <ArticleSample title={titlePlaceholder} content={placeholder}></ArticleSample>
-          </Col>
-        </Row> */}
-        {/* <Row>
-          <Col>
-            <ArticleSample title={titlePlaceholder} content={placeholder}></ArticleSample>
-          </Col>
-          <Col>
-            <ArticleSample title={titlePlaceholder} content={placeholder}></ArticleSample>
-          </Col>
-        </Row> */}
         <Row className="mt-5">
           <Col>
-            <h1>Video of the Week</h1>
-            <div style={{ textAlign: "center" }}>
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/iHfJRON3b-w"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-            </div>
+           
           </Col>
         </Row>
       </Container>

@@ -15,11 +15,10 @@ const PostCreation = ({setView}) => {
   const [formData, setFormData] = useState(initialFormState);
   async function handleSave() {
     if (!formData.title || !formData.homeDes || !formData.content) return;
-
     await API.graphql({
       query: createPost,
       variables: { input: formData },
-    }).then(()=>{setView(false)});
+    }).then(()=>{setView(0)});
   }
   return (
     <div style={{ color: "black" }}>

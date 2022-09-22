@@ -75,6 +75,37 @@ export const listPosts = /* GraphQL */ `
     }
   }
 `;
+export const getGames = /* GraphQL */ `
+  query GetGames($id: ID!) {
+    getGames(id: $id) {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listGames = /* GraphQL */ `
+  query ListGames(
+    $filter: ModelGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        title
+        date
+        src
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getProductos = /* GraphQL */ `
   query GetProductos($id: ID!) {
     getProductos(id: $id) {

@@ -109,6 +109,51 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
+export const createGames = /* GraphQL */ `
+  mutation CreateGames(
+    $input: CreateGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    createGames(input: $input, condition: $condition) {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateGames = /* GraphQL */ `
+  mutation UpdateGames(
+    $input: UpdateGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    updateGames(input: $input, condition: $condition) {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteGames = /* GraphQL */ `
+  mutation DeleteGames(
+    $input: DeleteGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    deleteGames(input: $input, condition: $condition) {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createProductos = /* GraphQL */ `
   mutation CreateProductos(
     $input: CreateProductosInput!

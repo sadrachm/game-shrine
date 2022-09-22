@@ -91,6 +91,42 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
+export const onCreateGames = /* GraphQL */ `
+  subscription OnCreateGames {
+    onCreateGames {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGames = /* GraphQL */ `
+  subscription OnUpdateGames {
+    onUpdateGames {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGames = /* GraphQL */ `
+  subscription OnDeleteGames {
+    onDeleteGames {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateProductos = /* GraphQL */ `
   subscription OnCreateProductos {
     onCreateProductos {

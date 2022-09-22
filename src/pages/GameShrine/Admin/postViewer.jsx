@@ -40,7 +40,7 @@ const PostViewer = () => {
   }, []);
   return (
     <>
-      <Button onClick={consol}>Consol</Button>
+      {/* <Button onClick={consol}>Consol</Button> */}
       {!edit && (
         <>
           <h1 class="display-1" style={{ textAlign: "center" }}>
