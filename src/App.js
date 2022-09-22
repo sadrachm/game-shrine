@@ -8,6 +8,7 @@ import { Auth } from "aws-amplify";
 import Lista from "./pages/Lista/lista";
 // import Test from './pages/test'
 import Admin from "./pages/GameShrine/Admin/admin";
+import Article from "./pages/GameShrine/article";
 
 function App() {
   const [user, setuser] = useState(null);
@@ -32,6 +33,7 @@ function App() {
           <Route exact path="/" element={<GameShrine></GameShrine>}></Route>
           <Route exact path="/portfolio" element={<Portfolio />}></Route>
           <Route exact path="/admin" element={<Admin />}></Route>
+          <Route exact path="/article" element={<Article />}></Route>
           <Route exact path="/543/lista" element={<Lista />}></Route>
           
 
