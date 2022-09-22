@@ -53,6 +53,7 @@ export const createPost = /* GraphQL */ `
   ) {
     createPost(input: $input, condition: $condition) {
       title
+      type
       homeImg
       mainImg
       lastImg
@@ -62,8 +63,7 @@ export const createPost = /* GraphQL */ `
       createdAt
       published
       id
-      createdOn
-      updatedOn
+      updatedAt
     }
   }
 `;
@@ -74,6 +74,7 @@ export const updatePost = /* GraphQL */ `
   ) {
     updatePost(input: $input, condition: $condition) {
       title
+      type
       homeImg
       mainImg
       lastImg
@@ -83,8 +84,7 @@ export const updatePost = /* GraphQL */ `
       createdAt
       published
       id
-      createdOn
-      updatedOn
+      updatedAt
     }
   }
 `;
@@ -95,6 +95,7 @@ export const deletePost = /* GraphQL */ `
   ) {
     deletePost(input: $input, condition: $condition) {
       title
+      type
       homeImg
       mainImg
       lastImg
@@ -104,8 +105,52 @@ export const deletePost = /* GraphQL */ `
       createdAt
       published
       id
-      createdOn
-      updatedOn
+      updatedAt
+    }
+  }
+`;
+export const createGames = /* GraphQL */ `
+  mutation CreateGames(
+    $input: CreateGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    createGames(input: $input, condition: $condition) {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateGames = /* GraphQL */ `
+  mutation UpdateGames(
+    $input: UpdateGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    updateGames(input: $input, condition: $condition) {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteGames = /* GraphQL */ `
+  mutation DeleteGames(
+    $input: DeleteGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    deleteGames(input: $input, condition: $condition) {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
     }
   }
 `;

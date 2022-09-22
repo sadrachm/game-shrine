@@ -6,20 +6,19 @@ import { API } from "aws-amplify";
 import { listPosts } from "../../../graphql/queries";
 import { createPost } from "../../../graphql/mutations";
 
-const initialFormState = { title: "", homeDes: "", content: "", published: false };
+const initialFormState = { title: "", homeDes: "", content: "", published: false, type:"article" };
 
-const PostCreation = () => {
+const PostCreation = ({setView}) => {
   function consol() {
     console.log(formData);
   }
   const [formData, setFormData] = useState(initialFormState);
   async function handleSave() {
     if (!formData.title || !formData.homeDes || !formData.content) return;
-
     await API.graphql({
       query: createPost,
       variables: { input: formData },
-    });
+    }).then(()=>{setView(0)});
   }
   return (
     <div style={{ color: "black" }}>

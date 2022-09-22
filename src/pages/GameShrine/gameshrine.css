@@ -22,6 +22,7 @@ body {
   /* min- */
 }
 
+
 .headDiv {
   height: 50px;
   border-width: 1px 0 0 0;
@@ -39,6 +40,13 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+.shrineStart {
+  background-color: rgba(0, 0, 0, 0.863);
+}
 .shrineHome {
     color:black
+}
+.upcoming {
+  background-color: rgba(0, 0, 0, 0.863);
+  color:white;
 }

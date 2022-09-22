@@ -1,25 +1,34 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { updatePost } from "../../../graphql/mutations";
+import { deletePost, updatePost } from "../../../graphql/mutations";
 import { API } from "aws-amplify";
 
-const PostEditor = ({setEdit, setFormData, formData, fetchNotes}) =>{
+const PostEditor = ({ setEdit, setFormData, formData, fetchNotes }) => {
   function consol() {
     console.log(formData);
   }
   async function handleSave() {
     if (!formData.title || !formData.homeDes || !formData.content) return;
-
     const x = await API.graphql({
       query: updatePost,
       variables: { input: formData },
-    }).then((data)=> setEdit(false));
-    fetchNotes()
+    }).then((data) => setEdit(false));
+    fetchNotes();
   }
-    return<>
-        <h1 class="display-1" style={{textAlign:"center"}}>Post Editor</h1>
-        <Container>
+  async function handleDelete() {
+    await API.graphql({
+      query: deletePost,
+      variables: { input: {id:formData.id} },
+    }).then(()=>{setEdit(false)});
+    fetchNotes();
+  }
+  return (
+    <>
+      <h1 class="display-1" style={{ textAlign: "center" }}>
+        Post Editor
+      </h1>
+      <Container>
         <Row
           style={{
             width: "90%",
@@ -90,6 +99,11 @@ const PostEditor = ({setEdit, setFormData, formData, fetchNotes}) =>{
           <Col onClick={handleSave} style={{ textAlign: "center" }}>
             <Button variant="primary">Save</Button>
           </Col>
+          <Col>
+            <Button onClick={handleDelete} variant="danger">
+              Delete
+            </Button>
+          </Col>
           <Col style={{ textAlign: "center" }}>
             <Button onClick={consol} variant="warning">
               Publish
@@ -97,8 +111,9 @@ const PostEditor = ({setEdit, setFormData, formData, fetchNotes}) =>{
           </Col>
         </Row>
       </Container>
-      <div style={{height:"100px"}}></div>
+      <div style={{ height: "100px" }}></div>
     </>
-}
+  );
+};
 
 export default PostEditor;

@@ -36,6 +36,7 @@ export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
       title
+      type
       homeImg
       mainImg
       lastImg
@@ -45,8 +46,7 @@ export const getPost = /* GraphQL */ `
       createdAt
       published
       id
-      createdOn
-      updatedOn
+      updatedAt
     }
   }
 `;
@@ -59,6 +59,7 @@ export const listPosts = /* GraphQL */ `
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         title
+        type
         homeImg
         mainImg
         lastImg
@@ -68,8 +69,38 @@ export const listPosts = /* GraphQL */ `
         createdAt
         published
         id
-        createdOn
-        updatedOn
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getGames = /* GraphQL */ `
+  query GetGames($id: ID!) {
+    getGames(id: $id) {
+      title
+      date
+      src
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listGames = /* GraphQL */ `
+  query ListGames(
+    $filter: ModelGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        title
+        date
+        src
+        id
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -137,17 +168,17 @@ export const listLists = /* GraphQL */ `
     }
   }
 `;
-export const todosByDate = /* GraphQL */ `
-  query TodosByDate(
-    $title: String!
+export const listsByDate = /* GraphQL */ `
+  query ListsByDate(
+    $type: POSTTYPE!
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelPostFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    todosByDate(
-      title: $title
+    listsByDate(
+      type: $type
       createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
@@ -156,6 +187,7 @@ export const todosByDate = /* GraphQL */ `
     ) {
       items {
         title
+        type
         homeImg
         mainImg
         lastImg
@@ -165,8 +197,7 @@ export const todosByDate = /* GraphQL */ `
         createdAt
         published
         id
-        createdOn
-        updatedOn
+        updatedAt
       }
       nextToken
     }
