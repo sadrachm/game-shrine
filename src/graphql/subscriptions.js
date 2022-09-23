@@ -43,8 +43,7 @@ export const onCreatePost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes
@@ -61,8 +60,7 @@ export const onUpdatePost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes
@@ -79,8 +77,7 @@ export const onDeletePost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes

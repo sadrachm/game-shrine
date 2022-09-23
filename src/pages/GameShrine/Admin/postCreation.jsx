@@ -33,24 +33,13 @@ const PostCreation = ({setView}) => {
             textAlign: "center",
           }}
         >
-          {/* <Col style={{ marginBottom: "10px" }}>
-            <input
-              type="file"
-              // onChange={onChange}
-            />
-          </Col>
           <Col style={{ marginBottom: "10px" }}>
             <input
               type="file"
+              placeholder="Upload"
               // onChange={onChange}
             />
           </Col>
-          <Col style={{ marginBottom: "10px" }}>
-            <input
-              type="file"
-              // onChange={onChange}
-            />
-          </Col> */}
         </Row>
       </Container>
 

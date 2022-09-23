@@ -38,8 +38,7 @@ export const getPost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes
@@ -61,8 +60,7 @@ export const listPosts = /* GraphQL */ `
         title
         type
         homeImg
-        mainImg
-        lastImg
+        images
         trailer
         content
         homeDes
@@ -189,8 +187,7 @@ export const listsByDate = /* GraphQL */ `
         title
         type
         homeImg
-        mainImg
-        lastImg
+        images
         trailer
         content
         homeDes
