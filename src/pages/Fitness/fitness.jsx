@@ -6,6 +6,7 @@ import PushDay from "./Component/pushDay";
 
 //TODO: Make a simpler way to order exercises to cut time during exercise
 
+
 const Fitness = () => {
   const [day, setDay] = useState("");
 
@@ -20,7 +21,7 @@ const Fitness = () => {
 
       {day === "push" && (
         <>
-          <PushDay />
+          <PushDay/>
         </>
       )}
 

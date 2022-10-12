@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { useMediaQuery } from "@mui/material";
-import { Form } from "react-bootstrap";
+import Inputs from "./inputs";
+import ChooseExercise from "./chooseExercise";
+import Timer from "./timer";
 const exercise = {
-    sets:0,
-    weight:35,
-    reps:[]
-}
+  sets: 0,
+  weight: 35,
+  reps: [],
+};
+
+const allEx = {};
 
 const PushDay = () => {
-  const matches = useMediaQuery("(min-width:680px)");
   function consol() {
-    console.log(exercise)
-  };
+    console.log(exercise);
+  }
   const [act, setAct] = useState("");
   const [set, setSet] = useState(0);
   const [reps, setRep] = useState(0);
@@ -26,110 +28,24 @@ const PushDay = () => {
   ]);
   return (
     <>
-      {act === "" &&
-        ex.map((el) => {
-          return (
-            <h1 style={{ textAlign: "center" }}>
-              {matches && (
-                <Button
-                  style={{ width: "40%", fontSize: "1.4rem" }}
-                  onClick={() => {
-                    setAct(ex);
-                  }}
-                >
-                  {el}
-                </Button>
-              )}
-              {!matches && (
-                <Button style={{ width: "80%", fontSize: "1.2rem" }}>
-                  {el}
-                </Button>
-              )}
-            </h1>
-          );
-        })}
+      {act === "" && <ChooseExercise ex={ex} setAct={setAct} />}
       {act !== "" && (
         <>
-          <div
-            className="mt-4"
-            style={{
-              height: "60vh",
-              maxHeight: "500px",
-              maxWidth: "100%",
-              aspectRatio: "1",
-              margin: "auto",
-              backgroundColor: "blue",
-              borderRadius: "100%",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-            }}
-            onClick={() => {
-              console.log("Start Timer");
-              exercise.reps.push(reps)
-              setSet(set+1)
-            }}
-          >
-            <h1 style={{ textAlign: "center", color: "white" }}>Start Rest</h1>
-          </div>
-          <Container>
-            <Row>
-              <Col>
-                <Form.Group
-                  style={{ width: "300px", margin: "auto" }}
-                  className="mb-5 mt-5"
-                  controlId="exampleForm.ControlInput1"
-                >
-                  <Form.Label style={{ color: "black" }}>Sets</Form.Label>
-                  <Form.Control
-                    style={{ textAlign: "center" }}
-                    value={set}                    
-                    disabled
-                    type="number"
-                    placeholder="0"
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group
-                  style={{ width: "300px", margin: "auto" }}
-                  className="mb-5 mt-5"
-                  controlId="exampleForm.ControlInput2"
-                >
-                  <Form.Label style={{ color: "black" }}>Weight</Form.Label>
-                  <Form.Control
-                    style={{ textAlign: "center" }}
-                    // value={exercise.weight}
-                    onChange={(el)=> exercise.weight = el.target.value}
-                    type="number"
-                    autoComplete="False"
-                    placeholder={exercise.weight}
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group
-                  style={{ width: "300px", margin: "auto" }}
-                  className="mb-5 mt-5"
-                  controlId="exampleForm.ControlInput3"
-                >
-                  <Form.Label style={{ color: "black" }}>Reps</Form.Label>
-                  <Form.Control
-                    style={{ textAlign: "center" }}
-                    type="number"
-                    value={reps}
-                    onChange={(el)=> setRep(el.target.value)}
-                    autoComplete="False"
-                    placeholder="0"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-          </Container>
-          <Button onClick={() => setAct("")}>Quit Exercise</Button>
-          <Button onClick={() => consol()}>Console</Button>
+          <h1 className="mt-3 mb-3" style={{ textAlign: "center" }}>
+            {act}
+          </h1>
+          <Timer exercise={exercise} reps={reps} setSet={setSet} set={set} setRep={setRep}/>
+          <Inputs set={set} exercise={exercise} reps={reps} setRep={setRep} />
+          <h1>
+            <Button className="mt-5" onClick={() => setAct("")}>
+              Done
+            </Button>
+          </h1>
         </>
       )}
+      <Button className="mt-5" onClick={() => consol()}>
+        Console
+      </Button>
     </>
   );
 };
