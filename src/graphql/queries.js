@@ -166,6 +166,103 @@ export const listLists = /* GraphQL */ `
     }
   }
 `;
+export const getExercise = /* GraphQL */ `
+  query GetExercise($id: ID!) {
+    getExercise(id: $id) {
+      act
+      rep
+      set
+      weight
+      time
+      id
+      createdAt
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const listExercises = /* GraphQL */ `
+  query ListExercises(
+    $filter: ModelExerciseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listExercises(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        act
+        rep
+        set
+        weight
+        time
+        id
+        createdAt
+        updatedAt
+        dayExercisesId
+      }
+      nextToken
+    }
+  }
+`;
+export const getDay = /* GraphQL */ `
+  query GetDay($id: ID!) {
+    getDay(id: $id) {
+      exercises {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const listDays = /* GraphQL */ `
+  query ListDays(
+    $filter: ModelDayFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDays(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        updatedAt
+        fitPersonDaysId
+      }
+      nextToken
+    }
+  }
+`;
+export const getFitPerson = /* GraphQL */ `
+  query GetFitPerson($id: ID!) {
+    getFitPerson(id: $id) {
+      name
+      days {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFitPeople = /* GraphQL */ `
+  query ListFitPeople(
+    $filter: ModelFitPersonFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFitPeople(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        name
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const listsByDate = /* GraphQL */ `
   query ListsByDate(
     $type: POSTTYPE!

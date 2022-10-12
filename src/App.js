@@ -9,6 +9,7 @@ import Lista from "./pages/Lista/lista";
 // import Test from './pages/test'
 import Admin from "./pages/GameShrine/Admin/admin";
 import Article from "./pages/GameShrine/article";
+import Fitness from "./pages/Fitness/fitness";
 
 function App() {
   const [user, setuser] = useState(null);
@@ -34,6 +35,7 @@ function App() {
           <Route exact path="/portfolio" element={<Portfolio />}></Route>
           <Route exact path="/admin" element={<Admin />}></Route>
           <Route exact path="/article" element={<Article />}></Route>
+          <Route exact path="/fitness" element={<Fitness />}></Route>          
           <Route exact path="/543/lista" element={<Lista />}></Route>
           
 

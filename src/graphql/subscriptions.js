@@ -205,3 +205,126 @@ export const onDeleteList = /* GraphQL */ `
     }
   }
 `;
+export const onCreateExercise = /* GraphQL */ `
+  subscription OnCreateExercise {
+    onCreateExercise {
+      act
+      rep
+      set
+      weight
+      time
+      id
+      createdAt
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const onUpdateExercise = /* GraphQL */ `
+  subscription OnUpdateExercise {
+    onUpdateExercise {
+      act
+      rep
+      set
+      weight
+      time
+      id
+      createdAt
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const onDeleteExercise = /* GraphQL */ `
+  subscription OnDeleteExercise {
+    onDeleteExercise {
+      act
+      rep
+      set
+      weight
+      time
+      id
+      createdAt
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const onCreateDay = /* GraphQL */ `
+  subscription OnCreateDay {
+    onCreateDay {
+      exercises {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const onUpdateDay = /* GraphQL */ `
+  subscription OnUpdateDay {
+    onUpdateDay {
+      exercises {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const onDeleteDay = /* GraphQL */ `
+  subscription OnDeleteDay {
+    onDeleteDay {
+      exercises {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const onCreateFitPerson = /* GraphQL */ `
+  subscription OnCreateFitPerson {
+    onCreateFitPerson {
+      name
+      days {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFitPerson = /* GraphQL */ `
+  subscription OnUpdateFitPerson {
+    onUpdateFitPerson {
+      name
+      days {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFitPerson = /* GraphQL */ `
+  subscription OnDeleteFitPerson {
+    onDeleteFitPerson {
+      name
+      days {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
