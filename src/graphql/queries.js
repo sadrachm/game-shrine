@@ -171,7 +171,6 @@ export const getExercise = /* GraphQL */ `
     getExercise(id: $id) {
       act
       rep
-      set
       weight
       time
       id
@@ -191,7 +190,6 @@ export const listExercises = /* GraphQL */ `
       items {
         act
         rep
-        set
         weight
         time
         id

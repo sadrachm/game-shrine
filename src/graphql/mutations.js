@@ -258,7 +258,6 @@ export const createExercise = /* GraphQL */ `
     createExercise(input: $input, condition: $condition) {
       act
       rep
-      set
       weight
       time
       id
@@ -276,7 +275,6 @@ export const updateExercise = /* GraphQL */ `
     updateExercise(input: $input, condition: $condition) {
       act
       rep
-      set
       weight
       time
       id
@@ -294,7 +292,6 @@ export const deleteExercise = /* GraphQL */ `
     deleteExercise(input: $input, condition: $condition) {
       act
       rep
-      set
       weight
       time
       id

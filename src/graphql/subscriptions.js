@@ -210,7 +210,6 @@ export const onCreateExercise = /* GraphQL */ `
     onCreateExercise {
       act
       rep
-      set
       weight
       time
       id
@@ -225,7 +224,6 @@ export const onUpdateExercise = /* GraphQL */ `
     onUpdateExercise {
       act
       rep
-      set
       weight
       time
       id
@@ -240,7 +238,6 @@ export const onDeleteExercise = /* GraphQL */ `
     onDeleteExercise {
       act
       rep
-      set
       weight
       time
       id
