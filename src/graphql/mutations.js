@@ -310,6 +310,7 @@ export const createDay = /* GraphQL */ `
       exercises {
         nextToken
       }
+      type
       id
       createdAt
       updatedAt
@@ -326,6 +327,7 @@ export const updateDay = /* GraphQL */ `
       exercises {
         nextToken
       }
+      type
       id
       createdAt
       updatedAt
@@ -342,6 +344,7 @@ export const deleteDay = /* GraphQL */ `
       exercises {
         nextToken
       }
+      type
       id
       createdAt
       updatedAt

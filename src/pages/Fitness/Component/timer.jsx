@@ -6,8 +6,8 @@ const Timer = ({ exercise, reps, setSet, set, setRep }) => {
 
   function handleClick() {
     console.log("Start Timer");
-    console.log(exercise)
     exercise.rep.push(parseInt(reps));
+    console.log(exercise)
     setSet(set + 1);
     setRep(0);
     if (counter === "Start Rest") {

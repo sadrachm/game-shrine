@@ -207,6 +207,7 @@ export const getDay = /* GraphQL */ `
       exercises {
         nextToken
       }
+      type
       id
       createdAt
       updatedAt
@@ -222,6 +223,7 @@ export const listDays = /* GraphQL */ `
   ) {
     listDays(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        type
         id
         createdAt
         updatedAt
