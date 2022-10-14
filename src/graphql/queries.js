@@ -170,11 +170,12 @@ export const getExercise = /* GraphQL */ `
   query GetExercise($id: ID!) {
     getExercise(id: $id) {
       act
+      type
       rep
       weight
       time
-      id
       createdAt
+      id
       updatedAt
       dayExercisesId
     }
@@ -189,11 +190,12 @@ export const listExercises = /* GraphQL */ `
     listExercises(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         act
+        type
         rep
         weight
         time
-        id
         createdAt
+        id
         updatedAt
         dayExercisesId
       }
@@ -292,6 +294,38 @@ export const listsByDate = /* GraphQL */ `
         published
         id
         updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const exerciseByDate = /* GraphQL */ `
+  query ExerciseByDate(
+    $type: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelExerciseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    exerciseByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        act
+        type
+        rep
+        weight
+        time
+        createdAt
+        id
+        updatedAt
+        dayExercisesId
       }
       nextToken
     }

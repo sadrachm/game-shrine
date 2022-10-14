@@ -3,25 +3,42 @@ import { useEffect, useState } from "react";
 import { listDays, listFitPeople } from "../../../graphql/queries";
 import Exercising from "./exercising";
 import ChooseExercise from "./chooseExercise";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
-let dayId = "";
+// let dayId = "";
 let people = [];
 const allEx = [];
 let id = "";
 
-const DayTemplate = ({ ex, setEx }) => {
+const DayTemplate = ({ ex, setEx, type }) => {
+  const [dayId, setDayId] = useState("");
+  const [act, setAct] = useState("");
+
   function consol() {
     console.log(allEx);
   }
-  const [act, setAct] = useState("");
+
   async function fetch() {
     let x = await API.graphql({
       query: listFitPeople,
     });
-    people = x.data.listFitPeople.items;    
-    id = people[0].id
+    people = x.data.listFitPeople.items;
+    id = people[0].id;
+    x = await API.graphql({
+      query: listDays,
+    });
+    let days = x.data.listDays.items;
+    let today = new Date();
+    let maybe;
+    console.log(days);
+    for (let a in days) {
+      maybe = new Date(days[a].createdAt);
+      if (maybe.getDate() === today.getDate()) {
+        setDayId(days[a].id);
+      }
+    }
   }
+
   useEffect(() => {
     fetch();
   }, []);
@@ -35,7 +52,15 @@ const DayTemplate = ({ ex, setEx }) => {
       )}
       {act !== "" && (
         <>
-          <Exercising act={act} id = {id} allEx={allEx} setAct={setAct} dayId={dayId} />
+          <Exercising
+            act={act}
+            id={id}
+            allEx={allEx}
+            setAct={setAct}
+            dayId={dayId}
+            setDayId={setDayId}
+            type={type}
+          />
         </>
       )}
       {allEx.map((el) => {

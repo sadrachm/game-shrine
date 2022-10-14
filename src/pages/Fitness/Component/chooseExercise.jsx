@@ -12,6 +12,7 @@ const ChooseExercise = ({setEx, ex, setAct}) => {
             onClick={() => {
               let x = ex
               x.splice(index, 1)
+              console.log(x)
               setEx(x)
               setAct(el);
             }}
@@ -23,7 +24,10 @@ const ChooseExercise = ({setEx, ex, setAct}) => {
           <Button
             style={{ width: "80%", fontSize: "1.2rem" }}
             onClick={() => {
-              let x = ex.pop(index)
+              let x = ex
+              x.splice(index, 1)
+              console.log(x)
+              setEx(x)
               setAct(el);
             }}
           >

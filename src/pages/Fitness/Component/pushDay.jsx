@@ -14,7 +14,7 @@ const PushDay = () => {
   ]);
   return (
     <>
-     <DayTemplate ex={ex} setEx={setEx} />
+     <DayTemplate ex={ex} setEx={setEx} type="push"/>
     </>
   );
 };

@@ -209,11 +209,12 @@ export const onCreateExercise = /* GraphQL */ `
   subscription OnCreateExercise {
     onCreateExercise {
       act
+      type
       rep
       weight
       time
-      id
       createdAt
+      id
       updatedAt
       dayExercisesId
     }
@@ -223,11 +224,12 @@ export const onUpdateExercise = /* GraphQL */ `
   subscription OnUpdateExercise {
     onUpdateExercise {
       act
+      type
       rep
       weight
       time
-      id
       createdAt
+      id
       updatedAt
       dayExercisesId
     }
@@ -237,11 +239,12 @@ export const onDeleteExercise = /* GraphQL */ `
   subscription OnDeleteExercise {
     onDeleteExercise {
       act
+      type
       rep
       weight
       time
-      id
       createdAt
+      id
       updatedAt
       dayExercisesId
     }

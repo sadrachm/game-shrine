@@ -257,11 +257,12 @@ export const createExercise = /* GraphQL */ `
   ) {
     createExercise(input: $input, condition: $condition) {
       act
+      type
       rep
       weight
       time
-      id
       createdAt
+      id
       updatedAt
       dayExercisesId
     }
@@ -274,11 +275,12 @@ export const updateExercise = /* GraphQL */ `
   ) {
     updateExercise(input: $input, condition: $condition) {
       act
+      type
       rep
       weight
       time
-      id
       createdAt
+      id
       updatedAt
       dayExercisesId
     }
@@ -291,11 +293,12 @@ export const deleteExercise = /* GraphQL */ `
   ) {
     deleteExercise(input: $input, condition: $condition) {
       act
+      type
       rep
       weight
       time
-      id
       createdAt
+      id
       updatedAt
       dayExercisesId
     }

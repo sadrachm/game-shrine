@@ -11,7 +11,7 @@ let exercise = {
   rep: [],
 };
 
-const Exercising = ({ act, id, allEx, setAct, dayId }) => {
+const Exercising = ({ act, id, allEx, setAct, dayId, setDayId, type }) => {
   const [reps, setRep] = useState(0);
   const [set, setSet] = useState(0);
 
@@ -26,15 +26,15 @@ const Exercising = ({ act, id, allEx, setAct, dayId }) => {
     for (let a in days) {
       maybe = new Date(days[a].createdAt);
       if (maybe.getDate() === today.getDate()) {
-        dayId = days[a].id;
+        setDayId(days[a].id);
       }
     }
     if (dayId === "" && id !== "") {
       API.graphql({
         query: createDay,
-        variables: { input: { fitPersonDaysId: id, type: "push" } },
+        variables: { input: { fitPersonDaysId: id, type: type } },
       }).then((data) => {
-        dayId = data.data.createDay.id;
+        setDayId(data.data.createDay.id);
         console.log(dayId);
       });
     }
@@ -51,6 +51,7 @@ const Exercising = ({ act, id, allEx, setAct, dayId }) => {
       fetchDayId();
     }
     exercise["act"] = act;
+    exercise["type"] = type
     exercise["dayExercisesId"] = dayId;
     console.log(exercise);
     await API.graphql({
@@ -61,7 +62,7 @@ const Exercising = ({ act, id, allEx, setAct, dayId }) => {
     setAct("");
     setSet(0);
     exercise = {
-      weight: 35,
+      weight: exercise.weight,
       rep: [],
       dayExercisesId: dayId,
     };
