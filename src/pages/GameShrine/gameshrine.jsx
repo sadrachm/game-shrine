@@ -5,16 +5,19 @@ import Navbar from "./Components/navbar";
 import { Auth } from "aws-amplify";
 import ArticleSample from "./Components/articleSample";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { listPosts, listGames } from "../../graphql/queries";
+import { listPosts, listGames, listsByDate } from "../../graphql/queries";
 import { API } from "aws-amplify";
 import Upcoming from "./Components/upcoming";
 
 const GameShrine = () => {
   const [posts, setPosts] = useState([]);
-  const [games, setGames] = useState([])
-  async function fetchNotes() {
-    const apiData = await API.graphql({ query: listPosts });
-    const notesFromAPI = apiData.data.listPosts.items;
+  const [games, setGames] = useState([]);
+  async function fetchPosts() {
+    const apiData = await API.graphql({
+      query: listsByDate,
+      variables: { type: "article", sortDirection: "DESC" },
+    });
+    const notesFromAPI = apiData.data.listsByDate.items;
     setPosts(notesFromAPI);
   }
   async function fetchGames() {
@@ -27,7 +30,7 @@ const GameShrine = () => {
   }
   const [user, setuser] = useState(null);
   useEffect(() => {
-    fetchNotes();
+    fetchPosts();
     fetchGames();
     Auth.currentAuthenticatedUser({
       bypassCache: false, // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
@@ -78,7 +81,8 @@ const GameShrine = () => {
             return (
               <ArticleSample
                 title={elem.title}
-                content={elem.homeDes}
+                desc={elem.homeDes}
+                content = {elem.content}
               ></ArticleSample>
             );
           })}
@@ -113,9 +117,7 @@ const GameShrine = () => {
           })}
         </div>
         <Row className="mt-5">
-          <Col>
-           
-          </Col>
+          <Col></Col>
         </Row>
       </Container>
       <div style={{ height: "100px" }}></div>

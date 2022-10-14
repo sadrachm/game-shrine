@@ -7,7 +7,7 @@ body {
 
 .contentImg {
   background-image: url("https://www.stevensegallery.com/640/360");
-  background-repeat: none;
+  /* background-repeat: none; */
   background-size: cover;
   background-position: center center;
   min-height: 150px;

@@ -55,8 +55,7 @@ export const createPost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes
@@ -76,8 +75,7 @@ export const updatePost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes
@@ -97,8 +95,7 @@ export const deletePost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes
@@ -247,6 +244,159 @@ export const deleteList = /* GraphQL */ `
   ) {
     deleteList(input: $input, condition: $condition) {
       listName
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createExercise = /* GraphQL */ `
+  mutation CreateExercise(
+    $input: CreateExerciseInput!
+    $condition: ModelExerciseConditionInput
+  ) {
+    createExercise(input: $input, condition: $condition) {
+      act
+      type
+      rep
+      weight
+      time
+      createdAt
+      id
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const updateExercise = /* GraphQL */ `
+  mutation UpdateExercise(
+    $input: UpdateExerciseInput!
+    $condition: ModelExerciseConditionInput
+  ) {
+    updateExercise(input: $input, condition: $condition) {
+      act
+      type
+      rep
+      weight
+      time
+      createdAt
+      id
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const deleteExercise = /* GraphQL */ `
+  mutation DeleteExercise(
+    $input: DeleteExerciseInput!
+    $condition: ModelExerciseConditionInput
+  ) {
+    deleteExercise(input: $input, condition: $condition) {
+      act
+      type
+      rep
+      weight
+      time
+      createdAt
+      id
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const createDay = /* GraphQL */ `
+  mutation CreateDay(
+    $input: CreateDayInput!
+    $condition: ModelDayConditionInput
+  ) {
+    createDay(input: $input, condition: $condition) {
+      exercises {
+        nextToken
+      }
+      type
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const updateDay = /* GraphQL */ `
+  mutation UpdateDay(
+    $input: UpdateDayInput!
+    $condition: ModelDayConditionInput
+  ) {
+    updateDay(input: $input, condition: $condition) {
+      exercises {
+        nextToken
+      }
+      type
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const deleteDay = /* GraphQL */ `
+  mutation DeleteDay(
+    $input: DeleteDayInput!
+    $condition: ModelDayConditionInput
+  ) {
+    deleteDay(input: $input, condition: $condition) {
+      exercises {
+        nextToken
+      }
+      type
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const createFitPerson = /* GraphQL */ `
+  mutation CreateFitPerson(
+    $input: CreateFitPersonInput!
+    $condition: ModelFitPersonConditionInput
+  ) {
+    createFitPerson(input: $input, condition: $condition) {
+      name
+      days {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFitPerson = /* GraphQL */ `
+  mutation UpdateFitPerson(
+    $input: UpdateFitPersonInput!
+    $condition: ModelFitPersonConditionInput
+  ) {
+    updateFitPerson(input: $input, condition: $condition) {
+      name
+      days {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFitPerson = /* GraphQL */ `
+  mutation DeleteFitPerson(
+    $input: DeleteFitPersonInput!
+    $condition: ModelFitPersonConditionInput
+  ) {
+    deleteFitPerson(input: $input, condition: $condition) {
+      name
+      days {
+        nextToken
+      }
       id
       createdAt
       updatedAt

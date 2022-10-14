@@ -2,7 +2,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { deletePost, updatePost } from "../../../graphql/mutations";
-import { API } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
+import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 
 const PostEditor = ({ setEdit, setFormData, formData, fetchNotes }) => {
   function consol() {
@@ -23,6 +24,14 @@ const PostEditor = ({ setEdit, setFormData, formData, fetchNotes }) => {
     }).then(()=>{setEdit(false)});
     fetchNotes();
   }
+  async function onChange(e) {
+    if (!e.target.files[0]) return;
+    const file = e.target.files[0];
+    const x = formData.images
+    x.push(file.name)
+    setFormData({ ...formData, images: x });    
+    await Storage.put(file.name, file);
+  }
   return (
     <>
       <h1 class="display-1" style={{ textAlign: "center" }}>
@@ -36,24 +45,12 @@ const PostEditor = ({ setEdit, setFormData, formData, fetchNotes }) => {
             textAlign: "center",
           }}
         >
-          {/* <Col style={{ marginBottom: "10px" }}>
-            <input
-              type="file"
-              // onChange={onChange}
-            />
-          </Col>
           <Col style={{ marginBottom: "10px" }}>
             <input
               type="file"
-              // onChange={onChange}
+              onChange={onChange}
             />
           </Col>
-          <Col style={{ marginBottom: "10px" }}>
-            <input
-              type="file"
-              // onChange={onChange}
-            />
-          </Col> */}
         </Row>
       </Container>
 

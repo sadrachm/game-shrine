@@ -43,8 +43,7 @@ export const onCreatePost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes
@@ -61,8 +60,7 @@ export const onUpdatePost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes
@@ -79,8 +77,7 @@ export const onDeletePost = /* GraphQL */ `
       title
       type
       homeImg
-      mainImg
-      lastImg
+      images
       trailer
       content
       homeDes
@@ -202,6 +199,132 @@ export const onDeleteList = /* GraphQL */ `
   subscription OnDeleteList {
     onDeleteList {
       listName
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateExercise = /* GraphQL */ `
+  subscription OnCreateExercise {
+    onCreateExercise {
+      act
+      type
+      rep
+      weight
+      time
+      createdAt
+      id
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const onUpdateExercise = /* GraphQL */ `
+  subscription OnUpdateExercise {
+    onUpdateExercise {
+      act
+      type
+      rep
+      weight
+      time
+      createdAt
+      id
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const onDeleteExercise = /* GraphQL */ `
+  subscription OnDeleteExercise {
+    onDeleteExercise {
+      act
+      type
+      rep
+      weight
+      time
+      createdAt
+      id
+      updatedAt
+      dayExercisesId
+    }
+  }
+`;
+export const onCreateDay = /* GraphQL */ `
+  subscription OnCreateDay {
+    onCreateDay {
+      exercises {
+        nextToken
+      }
+      type
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const onUpdateDay = /* GraphQL */ `
+  subscription OnUpdateDay {
+    onUpdateDay {
+      exercises {
+        nextToken
+      }
+      type
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const onDeleteDay = /* GraphQL */ `
+  subscription OnDeleteDay {
+    onDeleteDay {
+      exercises {
+        nextToken
+      }
+      type
+      id
+      createdAt
+      updatedAt
+      fitPersonDaysId
+    }
+  }
+`;
+export const onCreateFitPerson = /* GraphQL */ `
+  subscription OnCreateFitPerson {
+    onCreateFitPerson {
+      name
+      days {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFitPerson = /* GraphQL */ `
+  subscription OnUpdateFitPerson {
+    onUpdateFitPerson {
+      name
+      days {
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFitPerson = /* GraphQL */ `
+  subscription OnDeleteFitPerson {
+    onDeleteFitPerson {
+      name
+      days {
+        nextToken
+      }
       id
       createdAt
       updatedAt
