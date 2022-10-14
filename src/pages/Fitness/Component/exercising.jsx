@@ -39,12 +39,12 @@ const Exercising = ({ act, id, allEx, setAct, dayId, setDayId, type }) => {
       });
     }
   }
-  async function getId() {
-    let b = await API.graphql({
-        query: listDays,
-    })
-    console.log(b)
-  }
+  // async function getId() {
+  //   let b = await API.graphql({
+  //       query: listDays,
+  //   })
+  //   console.log(b)
+  // }
 
   async function finishedSet() {
     if (dayId === "") {
@@ -91,14 +91,14 @@ const Exercising = ({ act, id, allEx, setAct, dayId, setDayId, type }) => {
         >
           Done
         </Button>
-        <Button
+        {/* <Button
           className="mt-5"
           onClick={() => {
             getId();
           }}
         >
           qwexad
-        </Button>
+        </Button> */}
       </h1>
     </>
   );

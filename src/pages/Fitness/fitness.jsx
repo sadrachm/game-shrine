@@ -34,8 +34,8 @@ const Fitness = () => {
         </>
       )}
 
-      <Button onClick={() => consol("")}>Console</Button>
-      <Button onClick={() => setDay("")}>Go Back</Button>
+      {/* <Button onClick={() => consol("")}>Console</Button>
+      <Button onClick={() => setDay("")}>Go Back</Button> */}
     </>
   );
 };

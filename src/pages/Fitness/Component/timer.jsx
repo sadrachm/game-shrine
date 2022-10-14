@@ -11,7 +11,7 @@ const Timer = ({ exercise, reps, setSet, set, setRep }) => {
     setSet(set + 1);
     setRep(0);
     if (counter === "Start Rest") {
-      setCounter(30);
+      setCounter(90);
     }
   }
 
