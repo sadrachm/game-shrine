@@ -54,6 +54,7 @@ const Exercising = ({ act, id, allEx, setAct, dayId, setDayId, type }) => {
     exercise["type"] = type
     exercise["dayExercisesId"] = dayId;
     console.log(exercise);
+    console.log("asd")
     await API.graphql({
       query: createExercise,
       variables: { input: exercise },

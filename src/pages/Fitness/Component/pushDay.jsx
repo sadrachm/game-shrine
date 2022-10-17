@@ -3,7 +3,7 @@ import DayTemplate from "./dayTemplate";
 
 
 
-const PushDay = () => {
+const PushDay = ({setDay}) => {
   const [ex, setEx] = useState([
     "Decline Bench Press",
     "Incline Bench Press",
@@ -14,7 +14,8 @@ const PushDay = () => {
   ]);
   return (
     <>
-     <DayTemplate ex={ex} setEx={setEx} type="push"/>
+
+     <DayTemplate setDay={setDay} ex={ex} setEx={setEx} type="push"/>
     </>
   );
 };

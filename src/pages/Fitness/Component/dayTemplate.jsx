@@ -4,19 +4,16 @@ import { listDays, listFitPeople } from "../../../graphql/queries";
 import Exercising from "./exercising";
 import ChooseExercise from "./chooseExercise";
 import { Button } from "react-bootstrap";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-// let dayId = "";
 let people = [];
 const allEx = [];
 let id = "";
 
-const DayTemplate = ({ ex, setEx, type }) => {
+const DayTemplate = ({setDay, ex, setEx, type }) => {
+
   const [dayId, setDayId] = useState("");
   const [act, setAct] = useState("");
-
-  // function consol() {
-  //   console.log(allEx);
-  // }
 
   async function fetch() {
     let x = await API.graphql({
@@ -30,7 +27,6 @@ const DayTemplate = ({ ex, setEx, type }) => {
     let days = x.data.listDays.items;
     let today = new Date();
     let maybe;
-    // console.log(days);
     for (let a in days) {
       maybe = new Date(days[a].createdAt);
       if (maybe.getDate() === today.getDate()) {
@@ -45,8 +41,12 @@ const DayTemplate = ({ ex, setEx, type }) => {
 
   return (
     <>
+      
       {act === "" && (
         <>
+          <ArrowBackIosIcon  style={{color:"black"}} onClick={()=> {
+            setDay("")
+          }} />
           <ChooseExercise setEx={setEx} ex={ex} setAct={setAct} />
         </>
       )}
@@ -72,9 +72,6 @@ const DayTemplate = ({ ex, setEx, type }) => {
           </div>
         );
       })}
-      {/* <Button className="mt-5" onClick={() => consol()}>
-        Console
-      </Button> */}
     </>
   );
 };
