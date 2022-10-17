@@ -6,17 +6,19 @@ import PushDay from "./Component/pushDay";
 import { API } from "aws-amplify";
 import { exerciseByDate } from "../../graphql/queries";
 import { Auth } from "aws-amplify";
+import LogoutIcon from "@mui/icons-material/Logout";
+import styled from "styled-components";
+import background from "../../img/background.jpg"
 
 //TODO: Make a simpler way to order exercises to cut time during exercise
 
-const Fitness = ({setuser}) => {
+const Fitness = ({ user, setuser }) => {
   const [day, setDay] = useState("");
 
   async function consol() {
-    let x;
     await API.graphql({
       query: exerciseByDate,
-      variables: {  type: "push", sortDirection: "DESC"  },
+      variables: { type: "push", sortDirection: "DESC" },
     }).then((data) => console.log(data.data.exerciseByDate.items));
   }
   async function signOut() {
@@ -30,9 +32,30 @@ const Fitness = ({setuser}) => {
 
   return (
     <>
+      {day === "" && (
+        <div style={{height:'100vh', backgroundImage:`url(${background})`, backgroundRepeat:'no-repeat', backgroundSize:"cover", backgroundPosition:"100%"}}>
+          {/* <Button style={{ marginRight: "20px" }} >
+            Sign Out
+          </Button> */}
+          <div
+            className="pt-3 pe-3"
+            style={{ display: "flex", flexDirection: "row-reverse",  }}
+          >
+            <LogoutIcon
+              style={{ color: "black", fontSize: "2rem" }}
+              onClick={signOut}
+            />
+            {/* <h2 className="pe-2" style={{color:"black"}}>Log out</h2> */}
+          </div>
+          <div style={{width:"80%", margin:"auto"}}>
+            <h1 style={{ textAlign: "center" }}>
+              Welcome, {user.username}
+            </h1>
+          </div>
 
-      <Button style={{marginRight:'20px'}} onClick={signOut}>Sign Out</Button>
-      {day === "" && <SelectDay setDay={setDay} />}
+          <SelectDay setDay={setDay} />
+        </div>
+      )}
       {day === "pull" && (
         <>
           <PullDay setDay={setDay} />
@@ -41,7 +64,7 @@ const Fitness = ({setuser}) => {
 
       {day === "push" && (
         <>
-          <PushDay setDay={setDay}/>
+          <PushDay setDay={setDay} />
         </>
       )}
 
@@ -52,3 +75,5 @@ const Fitness = ({setuser}) => {
 };
 
 export default Fitness;
+
+const Title = {};

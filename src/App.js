@@ -37,7 +37,7 @@ function App() {
           <Route exact path="/portfolio" element={<Portfolio />}></Route>
           <Route exact path="/admin" element={<Admin />}></Route>
           <Route exact path="/article" element={<Article />}></Route>
-          {user && <Route exact path="/fitness" element={<Fitness setuser={setuser}/>}></Route>}   
+          {user && <Route exact path="/fitness" element={<Fitness user={user} setuser={setuser}/>}></Route>}   
           {!user && <Route exact path="/fitness" element={<FitLogin setuser={setuser}/>}></Route>}   
           <Route exact path="/543/lista" element={<Lista />}></Route>
           
