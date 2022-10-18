@@ -184,3 +184,30 @@ color:rgb(199, 199, 199) !important
 .button-82-pushable:focus:not(:focus-visible) {
   outline: none;
 }
+
+.disabledText {
+  background: rgba(211, 211, 211, 0.876)!important;
+}
+
+.textField {
+  background: rgba(255, 255, 255, 0.873);
+  border: 1px!important ;
+  border-style: solid!important;
+  border-color: black!important;
+}
+
+.timer {
+  max-height: 200px;
+  max-width: 50%;
+  aspect-ratio: 1;
+  margin: auto;
+  background: #d21717;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px rgb(181, 1, 1);
+  border-style: solid;
+
+
+}

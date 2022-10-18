@@ -48,12 +48,15 @@ const DayTemplate = ({setDay, ex, setEx, type }) => {
           <ArrowBackIcon className="back mt-2 ms-2 " style={{color:"white", position:'absolute', fontSize:'2rem'}} onClick={()=> {
             setDay("")
           }} />
-          <h1 className="pt-4 mb-4" style={{color:"white", margin:'auto', textAlign:'center', fontSize:'2rem'}}>{dayType} Day</h1>
+          <h1 className="pt-4 mb-5" style={{color:"white", margin:'auto', textAlign:'center', fontSize:'2rem'}}>{dayType} Day</h1>
           <ChooseExercise setEx={setEx} ex={ex} setAct={setAct} />
         </>
       )}
       {act !== "" && (
         <>
+          <ArrowBackIcon className="back mt-2 ms-2 " style={{color:"white", position:'absolute', fontSize:'2rem'}} onClick={()=> {
+            setAct("")
+          }} />
           <Exercising
             act={act}
             id={id}
@@ -67,8 +70,8 @@ const DayTemplate = ({setDay, ex, setEx, type }) => {
       )}
       {allEx.map((el) => {
         return (
-          <div className="mb-3" style={{ color: "black" }}>
-            <h1>{el.act}</h1>
+          <div className="mb-3" style={{ color: "white" }}>
+            <h1 style={{ color: "white" }}>{el.act}</h1>
             <h2>Weight: {el.weight}</h2>
             <h2>Reps: {el.rep.join(", ")}</h2>
           </div>

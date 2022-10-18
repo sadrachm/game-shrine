@@ -12,7 +12,7 @@ let exercise = {
 };
 
 const Exercising = ({ act, id, allEx, setAct, dayId, setDayId, type }) => {
-  const [reps, setRep] = useState(0);
+  const [reps, setRep] = useState("");
   const [set, setSet] = useState(0);
 
   async function fetchDayId() {
@@ -39,22 +39,16 @@ const Exercising = ({ act, id, allEx, setAct, dayId, setDayId, type }) => {
       });
     }
   }
-  // async function getId() {
-  //   let b = await API.graphql({
-  //       query: listDays,
-  //   })
-  //   console.log(b)
-  // }
 
   async function finishedSet() {
     if (dayId === "") {
       fetchDayId();
     }
     exercise["act"] = act;
-    exercise["type"] = type
+    exercise["type"] = type;
     exercise["dayExercisesId"] = dayId;
     console.log(exercise);
-    console.log("asd")
+    console.log("asd");
     await API.graphql({
       query: createExercise,
       variables: { input: exercise },
@@ -72,7 +66,7 @@ const Exercising = ({ act, id, allEx, setAct, dayId, setDayId, type }) => {
 
   return (
     <>
-      <h1 className="mt-3 mb-3" style={{ textAlign: "center" }}>
+      <h1 className="pt-4 mb-4" style={{ textAlign: "center", color: "white" }}>
         {act}
       </h1>
       <Timer
@@ -83,24 +77,17 @@ const Exercising = ({ act, id, allEx, setAct, dayId, setDayId, type }) => {
         setRep={setRep}
       ></Timer>
       <Inputs set={set} exercise={exercise} reps={reps} setRep={setRep} />
-      <h1>
+      <div style={{textAlign:'center'}}>
         <Button
-          className="mt-5"
+          className="mt-5 mx-auto button-33"
+          style={{fontSize:'1.2rem'}}
           onClick={() => {
             finishedSet();
           }}
         >
           Done
         </Button>
-        {/* <Button
-          className="mt-5"
-          onClick={() => {
-            getId();
-          }}
-        >
-          qwexad
-        </Button> */}
-      </h1>
+      </div>
     </>
   );
 };
