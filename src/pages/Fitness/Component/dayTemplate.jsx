@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { listDays, listFitPeople } from "../../../graphql/queries";
 import Exercising from "./exercising";
 import ChooseExercise from "./chooseExercise";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import "../fitness.css"
 import { Button } from "react-bootstrap";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 let people = [];
 const allEx = [];
@@ -14,7 +15,7 @@ const DayTemplate = ({setDay, ex, setEx, type }) => {
 
   const [dayId, setDayId] = useState("");
   const [act, setAct] = useState("");
-
+  const dayType = type[0].toUpperCase() + type.substring(1)
   async function fetch() {
     let x = await API.graphql({
       query: listFitPeople,
@@ -44,9 +45,10 @@ const DayTemplate = ({setDay, ex, setEx, type }) => {
       
       {act === "" && (
         <>
-          <ArrowBackIosIcon  style={{color:"black"}} onClick={()=> {
+          <ArrowBackIcon className="back mt-2 ms-2 " style={{color:"white", position:'absolute', fontSize:'2rem'}} onClick={()=> {
             setDay("")
           }} />
+          <h1 className="pt-4 mb-4" style={{color:"white", margin:'auto', textAlign:'center', fontSize:'2rem'}}>{dayType} Day</h1>
           <ChooseExercise setEx={setEx} ex={ex} setAct={setAct} />
         </>
       )}

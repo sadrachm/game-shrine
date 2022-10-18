@@ -34,9 +34,6 @@ const Fitness = ({ user, setuser }) => {
     <>
       {day === "" && (
         <div style={{height:'100vh', backgroundImage:`url(${background})`, backgroundRepeat:'no-repeat', backgroundSize:"cover", backgroundPosition:"100%"}}>
-          {/* <Button style={{ marginRight: "20px" }} >
-            Sign Out
-          </Button> */}
           <div
             className="pt-3 pe-3"
             style={{ display: "flex", flexDirection: "row-reverse",  }}
@@ -45,7 +42,6 @@ const Fitness = ({ user, setuser }) => {
               style={{ color: "black", fontSize: "2rem" }}
               onClick={signOut}
             />
-            {/* <h2 className="pe-2" style={{color:"black"}}>Log out</h2> */}
           </div>
           <div style={{width:"80%", margin:"auto"}}>
             <h1 style={{ textAlign: "center" }}>
