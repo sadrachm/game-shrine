@@ -19,7 +19,7 @@ const PushDay = ({ setDay }) => {
           backgroundImage: `url(${background})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          backgroundPosition: "85%",
+          backgroundPosition: "53%",
         }}
       >
         <DayTemplate setDay={setDay} ex={ex} setEx={setEx} type="push" />
