@@ -10,6 +10,8 @@ import Lista from "./pages/Lista/lista";
 import Admin from "./pages/GameShrine/Admin/admin";
 import Article from "./pages/GameShrine/article";
 import Fitness from "./pages/Fitness/fitness";
+import Login from "./pages/GameShrine/Components/login";
+import FitLogin from "./pages/Fitness/fitLogin";
 
 function App() {
   const [user, setuser] = useState(null);
@@ -35,7 +37,8 @@ function App() {
           <Route exact path="/portfolio" element={<Portfolio />}></Route>
           <Route exact path="/admin" element={<Admin />}></Route>
           <Route exact path="/article" element={<Article />}></Route>
-          <Route exact path="/fitness" element={<Fitness />}></Route>          
+          {user && <Route exact path="/fitness" element={<Fitness user={user} setuser={setuser}/>}></Route>}   
+          {!user && <Route exact path="/fitness" element={<FitLogin setuser={setuser}/>}></Route>}   
           <Route exact path="/543/lista" element={<Lista />}></Route>
           
 

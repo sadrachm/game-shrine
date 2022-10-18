@@ -3,21 +3,18 @@ import { useEffect, useState } from "react";
 import { listDays, listFitPeople } from "../../../graphql/queries";
 import Exercising from "./exercising";
 import ChooseExercise from "./chooseExercise";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import "../fitness.css";
 import { Button } from "react-bootstrap";
 
-// let dayId = "";
 let people = [];
 const allEx = [];
 let id = "";
 
-const DayTemplate = ({ ex, setEx, type }) => {
+const DayTemplate = ({ setDay, ex, setEx, type }) => {
   const [dayId, setDayId] = useState("");
   const [act, setAct] = useState("");
-
-  // function consol() {
-  //   console.log(allEx);
-  // }
-
+  const dayType = type[0].toUpperCase() + type.substring(1);
   async function fetch() {
     let x = await API.graphql({
       query: listFitPeople,
@@ -30,7 +27,6 @@ const DayTemplate = ({ ex, setEx, type }) => {
     let days = x.data.listDays.items;
     let today = new Date();
     let maybe;
-    // console.log(days);
     for (let a in days) {
       maybe = new Date(days[a].createdAt);
       if (maybe.getDate() === today.getDate()) {
@@ -47,11 +43,46 @@ const DayTemplate = ({ ex, setEx, type }) => {
     <>
       {act === "" && (
         <>
+          <ArrowBackIcon
+            className="back mt-2 ms-2 "
+            style={{ color: "white", position: "absolute", fontSize: "2rem" }}
+            onClick={() => {
+              setDay("");
+            }}
+          />
+          <h1
+            className="pt-4 mb-5"
+            style={{
+              color: "white",
+              margin: "auto",
+              textAlign: "center",
+              fontSize: "2rem",
+            }}
+          >
+            {dayType} Day
+          </h1>
           <ChooseExercise setEx={setEx} ex={ex} setAct={setAct} />
+
+          {allEx.map((el) => {
+            return (
+              <div className="mb-3 mt-4" style={{ color: "white", textAlign:"center" }}>
+                <h1 style={{ color: "white" }}>{el.act}</h1>
+                <h2>Weight: {el.weight}</h2>
+                <h2>Reps: {el.rep.join(", ")}</h2>
+              </div>
+            );
+          })}
         </>
       )}
       {act !== "" && (
         <>
+          <ArrowBackIcon
+            className="back mt-2 ms-2 "
+            style={{ color: "white", position: "absolute", fontSize: "2rem" }}
+            onClick={() => {
+              setAct("");
+            }}
+          />
           <Exercising
             act={act}
             id={id}
@@ -63,18 +94,6 @@ const DayTemplate = ({ ex, setEx, type }) => {
           />
         </>
       )}
-      {allEx.map((el) => {
-        return (
-          <div className="mb-3" style={{ color: "black" }}>
-            <h1>{el.act}</h1>
-            <h2>Weight: {el.weight}</h2>
-            <h2>Reps: {el.rep.join(", ")}</h2>
-          </div>
-        );
-      })}
-      {/* <Button className="mt-5" onClick={() => consol()}>
-        Console
-      </Button> */}
     </>
   );
 };
