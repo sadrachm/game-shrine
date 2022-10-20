@@ -26,31 +26,31 @@
   word-break: break-word;
 }
 
-.button-45:active,
+/* .button-45:active,
 .button-45:hover,
 .button-45:focus {
   outline: 0;
-}
+} */
 
 
-.button-45:active {
+/* .button-45:active {
   background-color: #D33A2C;
   box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
   color: #FFFFFF;
-}
+} */
 
 .button-45:hover {
   background-color: #FFE3E3;
   border-color: #FAA4A4;
 }
 
-.button-45:active:hover,
+/* .button-45:active:hover,
 .button-45:focus:hover,
 .button-45:focus {
   background-color: #D33A2C;
   box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
   color: #FFFFFF;
-}
+} */
 
 .back:hover{
 color:rgb(199, 199, 199) !important
@@ -58,10 +58,10 @@ color:rgb(199, 199, 199) !important
 
 
 .button-33 {
-  background-color: #c2fbd7;
+  background-color: #fe3838;
   border-radius: 100px;
   box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
-  color: green;
+  color: rgb(217, 217, 217);
   cursor: pointer;
   display: inline-block;
   font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
@@ -201,7 +201,7 @@ color:rgb(199, 199, 199) !important
   max-width: 50%;
   aspect-ratio: 1;
   margin: auto;
-  background: #d21717;
+  background: #332ebdf0;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
