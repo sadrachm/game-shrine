@@ -210,8 +210,8 @@ export const getDay = /* GraphQL */ `
         nextToken
       }
       type
-      id
       createdAt
+      id
       updatedAt
       fitPersonDaysId
     }
@@ -226,8 +226,8 @@ export const listDays = /* GraphQL */ `
     listDays(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         type
-        id
         createdAt
+        id
         updatedAt
         fitPersonDaysId
       }
@@ -326,6 +326,34 @@ export const exerciseByDate = /* GraphQL */ `
         id
         updatedAt
         dayExercisesId
+      }
+      nextToken
+    }
+  }
+`;
+export const dayByDate = /* GraphQL */ `
+  query DayByDate(
+    $type: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelDayFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    dayByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        createdAt
+        id
+        updatedAt
+        fitPersonDaysId
       }
       nextToken
     }

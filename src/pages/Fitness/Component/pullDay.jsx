@@ -15,7 +15,7 @@ const PullDay = ({ setDay }) => {
       {" "}
       <div
         style={{
-          height: "100vh",
+          minHeight: "100vh",
           backgroundImage: `url(${background})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -23,6 +23,7 @@ const PullDay = ({ setDay }) => {
         }}
       >
         <DayTemplate setDay={setDay} ex={ex} setEx={setEx} type="pull" />
+        <div style={{height:'100px'}}></div>
       </div>
     </>
   );

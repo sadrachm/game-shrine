@@ -257,8 +257,8 @@ export const onCreateDay = /* GraphQL */ `
         nextToken
       }
       type
-      id
       createdAt
+      id
       updatedAt
       fitPersonDaysId
     }
@@ -271,8 +271,8 @@ export const onUpdateDay = /* GraphQL */ `
         nextToken
       }
       type
-      id
       createdAt
+      id
       updatedAt
       fitPersonDaysId
     }
@@ -285,8 +285,8 @@ export const onDeleteDay = /* GraphQL */ `
         nextToken
       }
       type
-      id
       createdAt
+      id
       updatedAt
       fitPersonDaysId
     }

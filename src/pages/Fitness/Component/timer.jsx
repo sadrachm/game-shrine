@@ -5,11 +5,20 @@ const Timer = ({ exercise, reps, setSet, set, setRep }) => {
   const [counter, setCounter] = useState("Start Rest");
 
   function handleClick() {
-    console.log("Start Timer");
-    exercise.rep.push(parseInt(reps));
-    console.log(exercise);
+    // console.log("Start Timer");
+    // console.log(exercise);
+    if (set < exercise.rep.length - 1) {
+      exercise.rep[set] = parseInt(reps);
+      setRep(exercise.rep[set + 1]);
+    } else {
+      if (set === exercise.rep.length - 1) {
+        exercise.rep[set] = parseInt(reps);
+      } else {
+        exercise.rep.push(parseInt(reps));
+      }
+      setRep(0);
+    }
     setSet(set + 1);
-    setRep("");
     if (counter === "Start Rest") {
       setCounter(90);
     }
@@ -25,11 +34,14 @@ const Timer = ({ exercise, reps, setSet, set, setRep }) => {
   }, [counter]);
   return (
     <>
-      <div
-        className="mt-5 mb-3 timer"
-        onClick={handleClick}
-      >
-        {<h1 style={{ fontSize:'1.5rem', textAlign: "center", color: "white" }}>{counter}</h1>}
+      <div className="mt-3 mb-3 timer" onClick={handleClick}>
+        {
+          <h1
+            style={{ fontSize: "1.5rem", textAlign: "center", color: "white" }}
+          >
+            {counter}
+          </h1>
+        }
       </div>
     </>
   );
