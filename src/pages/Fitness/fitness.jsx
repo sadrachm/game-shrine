@@ -57,23 +57,23 @@ const Fitness = ({ user, setuser }) => {
               <h1 style={{ textAlign: "center" }}>Welcome, {user.username}</h1>
             </div>
 
-            <SelectDay setDay={setDay} />
+            <SelectDay setDay={setDay}  />
           </>
         )}
         {day === "pull" && (
           <>
-            <PullDay setDay={setDay} />
+            <PullDay setDay={setDay} user={user.username} />
           </>
         )}
 
         {day === "push" && (
           <>
-            <PushDay setDay={setDay} />
+            <PushDay setDay={setDay} user={user.username} />
           </>
         )}
         {day === "past" && (
           <>
-            <ShowData user={user} />
+            <ShowData user={user}  />
           </>
         )}
 

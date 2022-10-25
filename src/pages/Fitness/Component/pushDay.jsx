@@ -2,7 +2,7 @@ import { useState } from "react";
 import DayTemplate from "./dayTemplate";
 import background from "../../../img/inspire.jpg"
 
-const PushDay = ({ setDay }) => {
+const PushDay = ({ setDay, user }) => {
   const [ex, setEx] = useState([
     "Decline Bench Press",
     "Incline Bench Press",
@@ -22,7 +22,7 @@ const PushDay = ({ setDay }) => {
           // backgroundPosition: "53%",
         }}
       >
-        <DayTemplate setDay={setDay} ex={ex} setEx={setEx} type="push" />
+        <DayTemplate user={user} setDay={setDay} ex={ex} setEx={setEx} type="push" />
       </div>
     </>
   );

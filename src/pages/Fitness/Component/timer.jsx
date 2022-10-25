@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import "../fitness.css";
 
-const Timer = ({ exercise, reps, setSet, set, setRep }) => {
+const Timer = ({ exercise, reps, setSet, set, setRep, }) => {
   const [counter, setCounter] = useState("Start Rest");
 
   function handleClick() {
-    // console.log("Start Timer");
-    // console.log(exercise);
     if (set < exercise.rep.length - 1) {
       exercise.rep[set] = parseInt(reps);
       setRep(exercise.rep[set + 1]);
@@ -22,6 +20,7 @@ const Timer = ({ exercise, reps, setSet, set, setRep }) => {
     if (counter === "Start Rest") {
       setCounter(90);
     }
+    console.log(exercise)
   }
 
   useEffect(() => {

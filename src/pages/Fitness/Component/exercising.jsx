@@ -21,24 +21,26 @@ const Exercising = ({
     weight: prevEx[0],
     rep: prevEx[1],
   };
+  
   const [reps, setRep] = useState("");
   const [set, setSet] = useState(0);
+  const [weight, setWeight] = useState(exercise.weight)
   const [showPrev, setShowPrev] = useState("")
 
   async function fetchDayId() {
-    let x = await API.graphql({
-      query: listDays,
-    });
-    let days = x.data.listDays.items;
-    let today = new Date();
-    let maybe;
-    console.log(days);
-    for (let a in days) {
-      maybe = new Date(days[a].createdAt);
-      if (maybe.getDate() === today.getDate()) {
-        setDayId(days[a].id);
-      }
-    }
+    // let x = await API.graphql({
+    //   query: listDays,
+    // });
+    // let days = x.data.listDays.items;
+    // let today = new Date();
+    // let maybe;
+    // console.log(days);
+    // for (let a in days) {
+    //   maybe = new Date(days[a].createdAt);
+    //   if (maybe.getDate() === today.getDate()) {
+    //     setDayId(days[a].id);
+    //   }
+    // }
     if (dayId === "" && id !== "") {
       API.graphql({
         query: createDay,
@@ -57,6 +59,7 @@ const Exercising = ({
     exercise["act"] = act;
     exercise["type"] = type;
     exercise["dayExercisesId"] = dayId;
+    exercise.weight = weight
     await API.graphql({
       query: createExercise,
       variables: { input: exercise },
@@ -94,6 +97,8 @@ let x = {
         exercise={exercise}
         reps={reps}
         setRep={setRep}
+        weight = {weight}
+        setWeight = {setWeight}
       />
       <div style={{ textAlign: "center", height:"100px" }}>
         <button style={x} className="px-1 mx-auto mt-3 button-45" onClick={()=> {
