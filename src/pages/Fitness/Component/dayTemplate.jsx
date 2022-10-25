@@ -1,6 +1,11 @@
 import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
-import { exerciseByDate, listDays, listFitPeople } from "../../../graphql/queries";
+import {
+  dayByDate,
+  exerciseByDate,
+  listDays,
+  listFitPeople,
+} from "../../../graphql/queries";
 import Exercising from "./exercising";
 import ChooseExercise from "./chooseExercise";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -9,53 +14,72 @@ import { Button } from "react-bootstrap";
 
 let people = [];
 const allEx = [];
-let prevEx = {}
+let prevEx = {};
 let id = "";
+let prevDay = {};
 
-const DayTemplate = ({ setDay, ex, setEx, type }) => {
+const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
   const [dayId, setDayId] = useState("");
   const [act, setAct] = useState("");
   const dayType = type[0].toUpperCase() + type.substring(1);
 
-  async function getPrevExercises() {
-    let prev = await API.graphql({
-      query : exerciseByDate,
-      variables: { type, limit: 10, sortDirection: "DESC" },
-    })
-    prev = prev.data.exerciseByDate.items
-    console.log(prev)
-    let day = prev[0].dayExercisesId
-    prev.map((el) => {
-      if (el.dayExercisesId === day) {
-        prevEx[el.act] = [el.weight, el.rep]
-      }
-    })
-    console.log(prevEx)
-  }
-
   async function fetch() {
     let x = await API.graphql({
       query: listFitPeople,
+      variables: { filter: { name: { eq: user } } },
     });
     people = x.data.listFitPeople.items;
+    console.log(people);
+
     id = people[0].id;
+    console.log("id", id);
     x = await API.graphql({
-      query: listDays,
+      query: dayByDate,
+      variables: {
+        filter: { fitPersonDaysId: { eq: id } },
+        type,
+        sortDirection: "DESC",
+        limit: "1",
+      },
     });
-    let days = x.data.listDays.items;
-    let today = new Date();
-    let maybe;
-    for (let a in days) {
-      maybe = new Date(days[a].createdAt);
-      if (maybe.getDate() === today.getDate()) {
-        setDayId(days[a].id);
-      }
+    let days = x.data.dayByDate.items[0];
+    console.log("days", days)
+    if (days === undefined) {
+      console.log(ex)
+      ex.map((el) => {
+        prevEx[el] = [20, [0,0,0]]
+      })
+      console.log("prevEx", prevEx)
+      return
     }
+
+    let today = new Date();
+    let maybe = new Date(days.createdAt);
+    if (maybe.getDate() === today.getDate()) {
+      setDayId(days.id);
+    }
+    let prev = await API.graphql({
+      query: exerciseByDate,
+      variables: {
+        filter: { dayExercisesId: { eq: days.id } },
+        type,
+        sortDirection: "DESC",
+      },
+    });    
+    prev = prev.data.exerciseByDate.items;
+    console.log("prev, ", prev)
+    prev.map((el) => {
+      if (el.dayExercisesId === days.id) {
+        prevEx[el.act] = [el.weight, el.rep];
+      }
+    });
+    console.log(prevEx);
   }
 
   useEffect(() => {
+    console.log("user", user);
     fetch();
-    getPrevExercises();
+    // getPrevExercises();
   }, []);
 
   return (
@@ -84,7 +108,10 @@ const DayTemplate = ({ setDay, ex, setEx, type }) => {
 
           {allEx.map((el) => {
             return (
-              <div className="mb-3 mt-4" style={{ color: "white", textAlign:"center" }}>
+              <div
+                className="mb-3 mt-4"
+                style={{ color: "white", textAlign: "center" }}
+              >
                 <h1 style={{ color: "white" }}>{el.act}</h1>
                 <h2>Weight: {el.weight}</h2>
                 <h2>Reps: {el.rep.join(", ")}</h2>
@@ -105,7 +132,7 @@ const DayTemplate = ({ setDay, ex, setEx, type }) => {
           <Exercising
             act={act}
             id={id}
-            prevEx = {prevEx[act]}
+            prevEx={prevEx[act]}
             allEx={allEx}
             setAct={setAct}
             dayId={dayId}

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import "../fitness.css";
 
-const Inputs = ({ set, exercise, reps, setRep }) => {
+const Inputs = ({ set, exercise, reps, setRep, weight, setWeight }) => {
   useEffect(() => {
     if (set < exercise.rep.length) {
       setRep(exercise.rep[set]);
@@ -55,8 +55,11 @@ const Inputs = ({ set, exercise, reps, setRep }) => {
               shrink: true,
             }}
             fullWidth
-            placeholder={exercise.weight}
-            onChange={(el) => (exercise.weight = el.target.value)}
+            placeholder={weight}
+            onChange={(el) => {
+              setWeight(el.target.value);
+              console.log("weight", weight)
+              }}
             id="weight"
           />
           <TextField
