@@ -43,14 +43,14 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       },
     });
     let days = x.data.dayByDate.items[0];
-    console.log("days", days)
+    console.log("days", days);
     if (days === undefined) {
-      console.log(ex)
+      console.log(ex);
       ex.map((el) => {
-        prevEx[el] = [20, [0,0,0]]
-      })
-      console.log("prevEx", prevEx)
-      return
+        prevEx[el] = [20, [0, 0, 0]];
+      });
+      console.log("prevEx", prevEx);
+      return;
     }
 
     let today = new Date();
@@ -65,9 +65,9 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
         type,
         sortDirection: "DESC",
       },
-    });    
+    });
     prev = prev.data.exerciseByDate.items;
-    console.log("prev, ", prev)
+    console.log("prev, ", prev);
     prev.map((el) => {
       if (el.dayExercisesId === days.id) {
         prevEx[el.act] = [el.weight, el.rep];
@@ -122,19 +122,12 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       )}
       {act !== "" && (
         <>
-          <ArrowBackIcon
-            className="back mt-2 ms-2 "
-            style={{ color: "white", position: "absolute", fontSize: "2rem" }}
-            onClick={() => {
-              setAct("");
-            }}
-          />
           <Exercising
+            setAct={setAct}
             act={act}
             id={id}
             prevEx={prevEx[act]}
             allEx={allEx}
-            setAct={setAct}
             dayId={dayId}
             setDayId={setDayId}
             type={type}
