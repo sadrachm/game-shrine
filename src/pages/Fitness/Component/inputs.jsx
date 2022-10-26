@@ -58,7 +58,6 @@ const Inputs = ({ set, exercise, reps, setRep, weight, setWeight }) => {
             placeholder={weight}
             onChange={(el) => {
               setWeight(el.target.value);
-              console.log("weight", weight)
               }}
             id="weight"
           />

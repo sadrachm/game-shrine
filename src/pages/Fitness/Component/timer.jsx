@@ -20,7 +20,6 @@ const Timer = ({ exercise, reps, setSet, set, setRep, }) => {
     if (counter === "Start Rest") {
       setCounter(90);
     }
-    console.log(exercise)
   }
 
   useEffect(() => {

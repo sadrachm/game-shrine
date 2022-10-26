@@ -7,9 +7,6 @@ import { useEffect } from "react";
 const ChooseExercise = ({ setEx, ex, setAct }) => {
   const matches = useMediaQuery("(min-width:680px)");
   const x = "button-33 mb-3";
-  useEffect(() => {
-    console.log(ex)
-  })
   return (
     <>
       {ex.map((el, index) => {

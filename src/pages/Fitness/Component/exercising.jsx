@@ -22,7 +22,6 @@ const Exercising = ({
     weight: prevEx[0],
     rep: prevEx[1],
   };
-  console.log("another one")
 
   const [reps, setRep] = useState("");
   const [set, setSet] = useState(0);
@@ -30,28 +29,15 @@ const Exercising = ({
   const [showPrev, setShowPrev] = useState("");
 
   async function fetchDayId() {
-    // let x = await API.graphql({
-    //   query: listDays,
-    // });
-    // let days = x.data.listDays.items;
-    // let today = new Date();
-    // let maybe;
-    // console.log(days);
-    // for (let a in days) {
-    //   maybe = new Date(days[a].createdAt);
-    //   if (maybe.getDate() === today.getDate()) {
-    //     setDayId(days[a].id);
-    //   }
-    // }
     if (dayId === "" && id !== "") {
       let data = await API.graphql({
         query: createDay,
         variables: { input: { fitPersonDaysId: id, type: type } },
       }).then((data) => {
-        setDayId(data.data.createDay.id)
-        return data
-      })
-      
+        setDayId(data.data.createDay.id);
+        return data;
+      });
+
       return data.data.createDay.id;
     }
   }
@@ -61,7 +47,7 @@ const Exercising = ({
     if (dayId === "") {
       day = await fetchDayId();
     } else {
-      day = dayId
+      day = dayId;
     }
     exercise["act"] = act;
     exercise["type"] = type;
@@ -79,7 +65,6 @@ const Exercising = ({
       rep: [],
       dayExercisesId: day,
     };
-    console.log(exercise);
   }
   let x = {
     fontSize: "1.2rem",
@@ -144,7 +129,7 @@ const Exercising = ({
       </div>
 
       <div style={{ textAlign: "center" }}>
-        <Button
+        {/* <Button
           className="mt-5 mx-auto button-33"
           style={{ fontSize: "1.2rem" }}
           onClick={() => {
@@ -152,7 +137,7 @@ const Exercising = ({
           }}
         >
           Done
-        </Button>
+        </Button> */}
       </div>
     </>
   );
