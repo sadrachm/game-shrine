@@ -3,137 +3,240 @@ import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
 import {
   exerciseByDate,
-  listDays,
   listFitPeople,
   dayByDate,
 } from "../../../graphql/queries";
 import LineChart from "./Components/lineChart";
-import {UserData} from './data.js'
 
 let userId = "";
 let days = [];
+let pushDays = [];
 let filter = { or: [] };
+let pushFilter = { or: [] };
+let people = "";
 
 const ShowData = ({ user }) => {
-  const [data, setData] = useState({labels: UserData.map((data) => data.year),
-    datasets: [
-      {
-        label: "Users Gained",
-        data: UserData.map((data) => data.userGain),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-        ],
-        borderColor: "black",
-        borderWidth: 2,
-      },
-    ],
+  const [data, setData] = useState({
+    labels: "",
+    datasets: [],
   });
-  const [type, setType] = useState("pull");
-  const [exercise, setExercise] = useState("Vertical Bench Row");
+  const [pushData, setPushData] = useState({
+    labels: "",
+    datasets: [],
+  });
+  const [exercise, setExercise] = useState("Assisted Pull Up 1");
+  const [pushExercise, setPushExercise] = useState("Bench Press");
 
-  async function helper() {
-    let people = await API.graphql({
+  async function getPeople() {
+    people = await API.graphql({
       query: listFitPeople,
       variables: { filter: { name: { eq: user.username } } },
     });
     userId = people.data.listFitPeople.items[0].id;
-    // console.log("user ID", userId);
+  }
+  async function getDays(type) {
+    if (type === "pull") {
+      days = await API.graphql({
+        query: dayByDate,
+        variables: {
+          filter: { fitPersonDaysId: { eq: userId } },
+          type,
+          sortDirection: "DESC",
+        },
+      });
+      days = days.data.dayByDate.items;
+    } else {
+      pushDays = await API.graphql({
+        query: dayByDate,
+        variables: {
+          filter: { fitPersonDaysId: { eq: userId } },
+          type,
+          sortDirection: "DESC",
+        },
+      });
+      pushDays = pushDays.data.dayByDate.items;
+    }
+  }
 
-    days = await API.graphql({
-      query: dayByDate,
-      variables: {
-        filter: { fitPersonDaysId: { eq: userId } },
-        type,
-        sortDirection: "DESC",
-      },
-    });
-    days = days.data.dayByDate.items;
-    console.log(days);
-    // TODO: Make more efficient
-    filter["or"] = [];
-    days.map((el) => {
-      filter["or"].push({ dayExercisesId: { eq: el.id } });
-    });
-    filter["and"] = { act: { eq: exercise } };
-    console.log("Filter", filter);
-    let x = await API.graphql({
-      query: exerciseByDate,
-      variables: { filter, type },
-    });
+  async function updateChart(type) {
+    console.log("filter", pushFilter);
+    let x = "";
+    if (type === "pull") {
+      x = await API.graphql({
+        query: exerciseByDate,
+        variables: { filter, type: type },
+      });
+    } else {
+      x = await API.graphql({
+        query: exerciseByDate,
+        variables: { filter: pushFilter, type: type },
+      });
+    }
     x = x.data.exerciseByDate.items;
+    console.log("exercises", x);
     let y = [];
     x.map((el) => {
       let power = el.rep.reduce((acc, re) => acc + re * el.weight);
-      console.log(power);
       y.push({ time: el.createdAt, power: power });
     });
-    setData({
-      labels: y.map((data) => new Date(data.time).getDate()),
-      datasets: [
-        {
-          label: "POWER",
-          data: y.map((data)=> data.power),
-          backgroundColor: "black",
-          borderColor:'black',
-        }
-      ]
-    });
+    if (type === "pull") {
+      setData({
+        labels: y.map((data) => new Date(data.time).getDate()),
+        datasets: [
+          {
+            label: "POWER",
+            data: y.map((data) => data.power),
+            backgroundColor: "black",
+            borderColor: "black",
+          },
+        ],
+      });
+    } else {
+      setPushData({
+        labels: y.map((data) => new Date(data.time).getDate()),
+        datasets: [
+          {
+            label: "POWER",
+            data: y.map((data) => data.power),
+            backgroundColor: "black",
+            borderColor: "black",
+          },
+        ],
+      });
+    }
+  }
+
+  function updateFilter(type) {
+    if (type === "pull") {
+      filter["or"] = [];
+      days.map((el) => {
+        filter["or"].push({ dayExercisesId: { eq: el.id } });
+      });
+      filter["and"] = { act: { eq: exercise } };
+    } else if (type === "push") {
+      pushFilter["or"] = [];
+      pushDays.map((el) => {
+        pushFilter["or"].push({ dayExercisesId: { eq: el.id } });
+      });
+      pushFilter["and"] = { act: { eq: pushExercise } };
+    } else {
+      console.log("Invalid type of Exercise");
+    }
+  }
+  useEffect(() => {
+    filter["and"] = { act: { eq: exercise } };
+    updateChart("pull");
+  }, [exercise]);
+
+  useEffect(() => {
+    pushFilter["and"] = { act: { eq: pushExercise } };
+    updateChart("push");
+  }, [pushExercise]);
+
+  async function helper(type) {
+    if (userId === "") {
+      await getPeople();
+    }
+    await getDays(type);
+    console.log("pushDays", pushDays);
+    updateFilter(type);
+    console.log("Push Filter", pushFilter);
+    updateChart(type);
   }
 
   useEffect(() => {
-    helper();
-  }, [exercise]);
-
-  async function something(x) {
-    let a = await API.graphql({
-      query: exerciseByDate,
-      variables: { type: x, filter: filter },
-    });
-    a = a.data.exerciseByDate.items;
-    setData(a);
-    console.log(a);
-    let dic = {};
-    a.map((el) => {
-      if (dic[el.act]) {
-        dic[el.act] = [...dic[el.act], [el.weight, ...el.rep]];
-      } else {
-        dic[el.act] = [[el.weight, ...el.rep]];
-      }
-    });
-    console.log(dic);
-    setData(dic);
-    //TODO: Iterate through object to view data on screen
-    dic.map((el) => {
-      console.log(el);
-    });
-  }
+    helper("pull");
+    helper("push");
+  }, []);
 
   return (
     <>
-      {/* <h1 style={{ color: "black" }}>Nani</h1> */}
-      <button onClick={() => something("pull")}>Pull</button>
-      <button onClick={() => something("push")}>Push</button>
-      <div className="mt-3" style={{ width: "80%", margin: "auto" }}>
+      <h1 className="pt-3 pb-3" style={{ textAlign: "center" }}>
+        Pull Exercises
+      </h1>
+      <div
+        className="mt-3"
+        style={dropdown}
+      >
         <FormControl style={{}} fullWidth>
           <InputLabel id="demo-simple-select-label">Exercise</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={exercise}
-            label="Exercise"
+            label="Pull Exercise"
             onChange={(ev) => setExercise(ev.target.value)}
           >
             <MenuItem value={"Assisted Pull Up 1"}>Assisted Pull Up 1</MenuItem>
             <MenuItem value={"Vertical Bench Row"}>Vertical Bench Row</MenuItem>
             <MenuItem value={"Assisted Pull Up 2"}>Assisted Pull Up 2</MenuItem>
             <MenuItem value={"Bicep Curls"}>Bicep Curls</MenuItem>
-            <MenuItem value={"Squats"}>Squats</MenuItem>
+            {user !== "jesus" && <MenuItem value={"Squats"}>Squats</MenuItem>}
+            {user === "jesus" && (
+              <MenuItem value={"Kettle Bell Swings"}>
+                Kettle Bell Swings
+              </MenuItem>
+            )}
           </Select>
         </FormControl>
       </div>
       {data !== [] && (
-        <div className="mt-3" style={{ width: "80%", backgroundColor:'#ffffff73', margin:'auto' }}>
+        <div
+          className="mt-3"
+          style={{
+            width: "80%",
+            maxWidth: "600px",
+            backgroundColor: "rgba(255, 255, 255, 0.6)",
+            margin: "auto",
+          }}
+        >
           <LineChart chartData={data} />
+        </div>
+      )}
+
+      <h1 className="pt-3 pb-3" style={{ textAlign: "center" }}>
+        Push Exercises
+      </h1>
+
+      <div
+        className="mt-3"
+        style={dropdown}
+      >
+        <FormControl style={{}} fullWidth>
+          <InputLabel id="x">Exercise</InputLabel>
+          <Select
+            labelId="x"
+            id="x"
+            value={pushExercise}
+            label="Push Exercise"
+            onChange={(ev) => setPushExercise(ev.target.value)}
+          >
+            <MenuItem value={"Decline Bench Press"}>
+              Decline Bench Press
+            </MenuItem>
+            <MenuItem value={"Incline Bench Press"}>
+              Incline Bench Press
+            </MenuItem>
+            <MenuItem value={"Overhead Shoulder Press"}>
+              Overhead Shoulder Press
+            </MenuItem>
+            <MenuItem value={"Bench Press"}>Bench Press</MenuItem>
+            <MenuItem value={"Butterfly Swings"}>Butterfly Swings</MenuItem>
+            <MenuItem value={"Skull Crushers"}>Skull Crushers</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+      {data !== [] && (
+        <div
+          className="mt-3"
+          style={{
+            width: "80%",
+            maxWidth: "600px",
+            backgroundColor: "rgba(255, 255, 255, 0.6)",
+            margin: "auto",
+          }}
+        >
+          <LineChart chartData={pushData} />
         </div>
       )}
 
@@ -153,6 +256,13 @@ const ShowData = ({ user }) => {
       </>)} */}
     </>
   );
+};
+
+const dropdown = {
+  width: "80%",
+  maxWidth: "500px",
+  backgroundColor: "rgba(255, 255, 255, 0.8)",
+  margin: "auto",
 };
 
 export default ShowData;
