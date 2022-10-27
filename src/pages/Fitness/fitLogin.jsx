@@ -1,4 +1,4 @@
-import { Auth } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -13,6 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createFitPerson } from "../../graphql/mutations";
 
 function Copyright(props) {
   return (
@@ -56,7 +57,13 @@ export default function FitLogin({ setuser }) {
       password: data.get("password"),
     });
   };
+  async function something() {
+    API.graphql({
+      query:createFitPerson,      
+      variables: { input: { name:"guest" } },
 
+    })
+  }
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -101,6 +108,7 @@ export default function FitLogin({ setuser }) {
               id="password"
               autoComplete="current-password"
             />
+            <Button onClick={something}>Create Guest</Button>
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
