@@ -3,8 +3,7 @@ import Inputs from "./inputs";
 import { Button } from "react-bootstrap";
 import { API } from "aws-amplify";
 import { createExercise, createDay } from "../../../graphql/mutations";
-import { getDay, listDays } from "../../../graphql/queries";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 

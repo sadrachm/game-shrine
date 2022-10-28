@@ -7,6 +7,7 @@ import {
   dayByDate,
 } from "../../../graphql/queries";
 import LineChart from "./Components/lineChart";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 let userId = "";
 let days = [];
@@ -15,7 +16,7 @@ let filter = { or: [] };
 let pushFilter = { or: [] };
 let people = "";
 
-const ShowData = ({ user }) => {
+const ShowData = ({ user, setDay }) => {
   const [data, setData] = useState({
     labels: "",
     datasets: [],
@@ -59,7 +60,6 @@ const ShowData = ({ user }) => {
   }
 
   async function updateChart(type) {
-    console.log("filter", pushFilter);
     let x = "";
     if (type === "pull") {
       x = await API.graphql({
@@ -73,7 +73,6 @@ const ShowData = ({ user }) => {
       });
     }
     x = x.data.exerciseByDate.items;
-    console.log("exercises", x);
     let y = [];
     x.map((el) => {
       let power = el.rep.reduce((acc, re) => acc + re * el.weight);
@@ -138,9 +137,7 @@ const ShowData = ({ user }) => {
       await getPeople();
     }
     await getDays(type);
-    console.log("pushDays", pushDays);
     updateFilter(type);
-    console.log("Push Filter", pushFilter);
     updateChart(type);
   }
 
@@ -151,6 +148,7 @@ const ShowData = ({ user }) => {
 
   return (
     <>
+      <ArrowBackIcon onClick={()=>setDay("")} style={{position:"absolute", top:"10px", left: "10px"}} />
       <h1 className="pt-3 pb-3" style={{ textAlign: "center" }}>
         Pull Exercises
       </h1>
