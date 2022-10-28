@@ -3,14 +3,12 @@ import { useEffect, useState } from "react";
 import {
   dayByDate,
   exerciseByDate,
-  listDays,
   listFitPeople,
 } from "../../../graphql/queries";
 import Exercising from "./exercising";
 import ChooseExercise from "./chooseExercise";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "../fitness.css";
-import { Button } from "react-bootstrap";
 
 let people = [];
 const allEx = [];
@@ -29,28 +27,28 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       variables: { filter: { name: { eq: user } } },
     });
     people = x.data.listFitPeople.items;
-    console.log(people);
+    console.log("People", people)
 
     id = people[0].id;
-    console.log("id", id);
+    console.log("ID", id)
     x = await API.graphql({
       query: dayByDate,
       variables: {
         filter: { fitPersonDaysId: { eq: id } },
-        type,
+        type: type,
         sortDirection: "DESC",
-        limit: "1",
+        limit: 2,
       },
     });
+    console.log("dayByDate", x)
     let days = x.data.dayByDate.items[0];
-    console.log("days", days)
+    console.log("dayByDate", days)
+
     if (days === undefined) {
-      console.log(ex)
       ex.map((el) => {
-        prevEx[el] = [20, [0,0,0]]
-      })
-      console.log("prevEx", prevEx)
-      return
+        prevEx[el] = [20, [0, 0, 0]];
+      });
+      return;
     }
 
     let today = new Date();
@@ -65,19 +63,16 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
         type,
         sortDirection: "DESC",
       },
-    });    
+    });
     prev = prev.data.exerciseByDate.items;
-    console.log("prev, ", prev)
     prev.map((el) => {
       if (el.dayExercisesId === days.id) {
         prevEx[el.act] = [el.weight, el.rep];
       }
     });
-    console.log(prevEx);
   }
 
   useEffect(() => {
-    console.log("user", user);
     fetch();
     // getPrevExercises();
   }, []);
@@ -122,19 +117,12 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       )}
       {act !== "" && (
         <>
-          <ArrowBackIcon
-            className="back mt-2 ms-2 "
-            style={{ color: "white", position: "absolute", fontSize: "2rem" }}
-            onClick={() => {
-              setAct("");
-            }}
-          />
           <Exercising
+            setAct={setAct}
             act={act}
             id={id}
             prevEx={prevEx[act]}
             allEx={allEx}
-            setAct={setAct}
             dayId={dayId}
             setDayId={setDayId}
             type={type}

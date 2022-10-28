@@ -1,8 +1,12 @@
+import { FormControlLabel, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import "../fitness.css";
+import NoteAltIcon from "@mui/icons-material/NoteAlt";
 
-const Timer = ({ exercise, reps, setSet, set, setRep, }) => {
+const Timer = ({ exercise, reps, setSet, set, setRep }) => {
   const [counter, setCounter] = useState("Start Rest");
+  const [enableCounter, setEnable] = useState(true);
 
   function handleClick() {
     if (set < exercise.rep.length - 1) {
@@ -20,7 +24,6 @@ const Timer = ({ exercise, reps, setSet, set, setRep, }) => {
     if (counter === "Start Rest") {
       setCounter(90);
     }
-    console.log(exercise)
   }
 
   useEffect(() => {
@@ -33,15 +36,49 @@ const Timer = ({ exercise, reps, setSet, set, setRep, }) => {
   }, [counter]);
   return (
     <>
-      <div className="mt-3 mb-3 timer" onClick={handleClick}>
-        {
+      <div
+        style={{
+          display: "block",
+          position: "absolute",
+          bottom: 0,
+          left: "50%",
+        }}
+      >
+        <FormControlLabel
+          labelPlacement="end"
+          label="Timer"
+          style={{ color: "white" }}
+          control={
+            <Switch
+              checked={enableCounter}
+              onChange={(ev) => setEnable(ev.target.checked)}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          }
+        />
+      </div>
+      {!enableCounter && (
+        <div className="mt-4 mb-2" style={{ textAlign: "center" }}>
+          <Button
+            style={{
+              boxShadow: " 4px 3px 7px #ec5454",
+              backgroundColor: "black",
+              borderColor: "transparent",
+            }}
+          >
+            <NoteAltIcon style={{ color:"white", fontSize: "2rem" }} />
+          </Button>
+        </div>
+      )}
+      {enableCounter && (
+        <div className="mt-3 mb-3 timer" onClick={handleClick}>
           <h1
             style={{ fontSize: "1.5rem", textAlign: "center", color: "white" }}
           >
             {counter}
           </h1>
-        }
-      </div>
+        </div>
+      )}
     </>
   );
 };

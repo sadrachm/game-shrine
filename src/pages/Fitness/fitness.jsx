@@ -73,7 +73,7 @@ const Fitness = ({ user, setuser }) => {
         )}
         {day === "past" && (
           <>
-            <ShowData user={user}  />
+            <ShowData setDay={setDay} user={user}  />
           </>
         )}
 
