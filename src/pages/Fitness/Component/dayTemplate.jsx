@@ -26,6 +26,7 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       query: listFitPeople,
       variables: { filter: { name: { eq: user } } },
     });
+
     people = x.data.listFitPeople.items;
     console.log("People", people)
 
@@ -37,12 +38,26 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
         filter: { fitPersonDaysId: { eq: id } },
         type: type,
         sortDirection: "DESC",
-        limit: 2,
+        limit: 5,
       },
     });
-    console.log("dayByDate", x)
-    let days = x.data.dayByDate.items[0];
-    console.log("dayByDate", days)
+    console.log(x)
+    x = x.data.dayByDate.items
+    let days
+    x.map((el, index) => {
+      let today = new Date();
+      let maybe = new Date(el.createdAt);
+      if (index === 0 && maybe.getDate() === today.getDate()) {
+        setDayId(el.id);
+      } else if (index >= 2) {
+        console.log("Fix dayByDate limit")
+      }
+      else {
+        days = el
+      }
+    })
+    // days = x.data.dayByDate.items[0];
+    
 
     if (days === undefined) {
       ex.map((el) => {
@@ -51,11 +66,7 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       return;
     }
 
-    let today = new Date();
-    let maybe = new Date(days.createdAt);
-    if (maybe.getDate() === today.getDate()) {
-      setDayId(days.id);
-    }
+
     let prev = await API.graphql({
       query: exerciseByDate,
       variables: {
@@ -64,7 +75,9 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
         sortDirection: "DESC",
       },
     });
+
     prev = prev.data.exerciseByDate.items;
+
     prev.map((el) => {
       if (el.dayExercisesId === days.id) {
         prevEx[el.act] = [el.weight, el.rep];
@@ -74,7 +87,6 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
 
   useEffect(() => {
     fetch();
-    // getPrevExercises();
   }, []);
 
   return (
@@ -124,6 +136,8 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
             prevEx={prevEx[act]}
             allEx={allEx}
             dayId={dayId}
+            ex ={ex}
+            setEx={setEx}
             setDayId={setDayId}
             type={type}
           />
