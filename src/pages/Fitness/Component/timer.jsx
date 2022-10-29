@@ -37,6 +37,8 @@ const Timer = ({ exercise, reps, setSet, set, setRep }) => {
   return (
     <>
       <div
+      
+      className="clipboardButton"
         style={{
           display: "block",
           position: "absolute",
@@ -60,13 +62,15 @@ const Timer = ({ exercise, reps, setSet, set, setRep }) => {
       {!enableCounter && (
         <div className="mt-4 mb-2" style={{ textAlign: "center" }}>
           <Button
+            className="clipboardButton"
             style={{
-              boxShadow: " 4px 3px 7px #ec5454",
-              backgroundColor: "black",
+              boxShadow: " 3px 2px 3px 1px #ccc1c1",
+              backgroundColor: "#362e2e",
               borderColor: "transparent",
             }}
+            onClick={handleClick}
           >
-            <NoteAltIcon style={{ color:"white", fontSize: "2rem" }} />
+            <NoteAltIcon style={{ color: "white", fontSize: "2rem" }} />
           </Button>
         </div>
       )}

@@ -3,9 +3,11 @@ import Inputs from "./inputs";
 import { Button } from "react-bootstrap";
 import { API } from "aws-amplify";
 import { createExercise, createDay } from "../../../graphql/mutations";
-import {  useState } from "react";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useEffect, useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+let previousSet = [0, [0]];
 
 const Exercising = ({
   act,
@@ -15,17 +17,27 @@ const Exercising = ({
   dayId,
   setDayId,
   type,
+  setEx,
+  ex,
   prevEx,
 }) => {
   let exercise = {
     weight: prevEx[0],
     rep: prevEx[1],
   };
-
   const [reps, setRep] = useState("");
   const [set, setSet] = useState(0);
   const [weight, setWeight] = useState(exercise.weight);
-  const [showPrev, setShowPrev] = useState("");
+  const [currentSet, setCurrentSet] = useState([]);
+
+  useEffect(() => {
+    previousSet = JSON.parse(JSON.stringify(prevEx));
+  }, []);
+  useEffect(() => {
+    if (set !== 0) {
+      setCurrentSet([...currentSet, exercise.rep[set - 1]]);
+    }
+  }, [set]);
 
   async function fetchDayId() {
     if (dayId === "" && id !== "") {
@@ -65,17 +77,27 @@ const Exercising = ({
       dayExercisesId: day,
     };
   }
-  let x = {
-    fontSize: "1.2rem",
-    background: showPrev,
-  };
+
   async function some() {
     await finishedSet();
     setAct("");
   }
+  function goBack() {
+    setEx([act,...ex])
+    setAct("")
+  }
 
   return (
     <>
+      <ArrowBackIcon
+        style={{
+          position: "absolute",
+          top: "10px",
+          left: "2%",
+          fontSize: "1.7rem",
+        }}
+        onClick={goBack}
+      />
       <CheckCircleOutlineIcon
         className="back mt-3 "
         style={{
@@ -105,39 +127,25 @@ const Exercising = ({
         weight={weight}
         setWeight={setWeight}
       />
-      <div style={{ textAlign: "center", height: "100px" }}>
-        <button
-          style={x}
-          className="px-1 mx-auto mt-3 button-45"
-          onClick={() => {
-            if (showPrev) {
-              setShowPrev("");
-            } else {
-              setShowPrev("red");
-            }
-          }}
-        >
-          <ArrowDropDownIcon /> Previous Sets
-        </button>
-        {showPrev && (
-          <div className="mt-3" style={{ fontSize: "1.3rem", color: "white" }}>
-            <div>Weight: {prevEx[0]}</div>
-            <div className="prevSets">Reps: {prevEx[1].join(", ")}</div>
-          </div>
-        )}
+      <div style={{ textAlign: "center" }}>
+        <h1 className="mt-3" style={{ color: "white" }}>
+          Current Set
+        </h1>
+        <div className="" style={{ fontSize: "1.3rem", color: "white" }}>
+          <div className="prevSets">Reps: {currentSet.join(", ")}</div>
+        </div>
+      </div>
+      <div style={{ textAlign: "center", height: "" }}>
+        <h1 className="mt-3" style={{ color: "white" }}>
+          Previous Set
+        </h1>
+        <div className="" style={{ fontSize: "1.3rem", color: "white" }}>
+          <div>Weight: {previousSet[0]}</div>
+          <div className="prevSets">Reps: {previousSet[1].join(", ")}</div>
+        </div>
       </div>
 
-      <div style={{ textAlign: "center" }}>
-        {/* <Button
-          className="mt-5 mx-auto button-33"
-          style={{ fontSize: "1.2rem" }}
-          onClick={() => {
-            finishedSet();
-          }}
-        >
-          Done
-        </Button> */}
-      </div>
+      <div style={{ textAlign: "center" }}></div>
     </>
   );
 };

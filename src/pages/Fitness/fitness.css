@@ -41,7 +41,7 @@
 
 .button-45:hover {
   background-color: #FFE3E3;
-  border-color: #FAA4A4;
+  border-color: #faa4a4db;
 }
 
 /* .button-45:active:hover,
@@ -183,6 +183,10 @@ color:rgb(199, 199, 199) !important
 
 .button-82-pushable:focus:not(:focus-visible) {
   outline: none;
+}
+
+.clipboardButton:active {
+  background-color: white!important;
 }
 
 .disabledText {
