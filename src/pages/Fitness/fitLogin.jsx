@@ -1,19 +1,15 @@
-import { API, Auth } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { createFitPerson } from "../../graphql/mutations";
 
 function Copyright(props) {
   return (
@@ -57,12 +53,8 @@ export default function FitLogin({ setuser }) {
       password: data.get("password"),
     });
   };
-  async function something() {
-    API.graphql({
-      query:createFitPerson,      
-      variables: { input: { name:"guest" } },
-
-    })
+  async function guest() {
+    signIn("guest", "bestguest");
   }
   return (
     <ThemeProvider theme={theme}>
@@ -108,11 +100,11 @@ export default function FitLogin({ setuser }) {
               id="password"
               autoComplete="current-password"
             />
-            <Button onClick={something}>Create Guest</Button>
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
+            <div style={{ textAlign: "center" }}>
+              <Button  onClick={guest}>
+                Continue As Guest
+              </Button>
+            </div>{" "}
             <Button
               type="submit"
               fullWidth
@@ -121,18 +113,6 @@ export default function FitLogin({ setuser }) {
             >
               Sign In
             </Button>
-            {/* <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid> */}
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
