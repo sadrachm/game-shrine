@@ -1,12 +1,10 @@
-import { FormControlLabel, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import "../fitness.css";
 import NoteAltIcon from "@mui/icons-material/NoteAlt";
 
-const Timer = ({ exercise, reps, setSet, set, setRep }) => {
+const Timer = ({ exercise, reps, setSet, set, setRep, enableCounter }) => {
   const [counter, setCounter] = useState("Start Rest");
-  const [enableCounter, setEnable] = useState(true);
 
   function handleClick() {
     if (set < exercise.rep.length - 1) {
@@ -46,18 +44,6 @@ const Timer = ({ exercise, reps, setSet, set, setRep }) => {
           left: "50%",
         }}
       >
-        <FormControlLabel
-          labelPlacement="end"
-          label="Timer"
-          style={{ color: "white" }}
-          control={
-            <Switch
-              checked={enableCounter}
-              onChange={(ev) => setEnable(ev.target.checked)}
-              inputProps={{ "aria-label": "controlled" }}
-            />
-          }
-        />
       </div>
       {!enableCounter && (
         <div className="mt-4 mb-2" style={{ textAlign: "center" }}>

@@ -14,11 +14,11 @@ let people = [];
 const allEx = [];
 let prevEx = {};
 let id = "";
-let prevDay = {};
 
 const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
   const [dayId, setDayId] = useState("");
   const [act, setAct] = useState("");
+  const [enableCounter, setEnable] = useState(true);
   const dayType = type[0].toUpperCase() + type.substring(1);
 
   async function fetch() {
@@ -28,10 +28,10 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
     });
 
     people = x.data.listFitPeople.items;
-    console.log("People", people)
+    console.log("People", people);
 
     id = people[0].id;
-    console.log("ID", id)
+    console.log("ID", id);
     x = await API.graphql({
       query: dayByDate,
       variables: {
@@ -41,31 +41,28 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
         limit: 5,
       },
     });
-    console.log(x)
-    x = x.data.dayByDate.items
-    let days
+    console.log(x);
+    x = x.data.dayByDate.items;
+    let days;
     x.map((el, index) => {
       let today = new Date();
       let maybe = new Date(el.createdAt);
       if (index === 0 && maybe.getDate() === today.getDate()) {
         setDayId(el.id);
       } else if (index >= 2) {
-        console.log("Fix dayByDate limit")
+        console.log("Fix dayByDate limit");
+      } else {
+        days = el;
       }
-      else {
-        days = el
-      }
-    })
-    // days = x.data.dayByDate.items[0];
-    
+      return 1
+    });
 
     if (days === undefined) {
       ex.map((el) => {
         prevEx[el] = [20, [0, 0, 0]];
+        return 1
       });
-      return;
     }
-
 
     let prev = await API.graphql({
       query: exerciseByDate,
@@ -82,11 +79,13 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       if (el.dayExercisesId === days.id) {
         prevEx[el.act] = [el.weight, el.rep];
       }
+      return 1
     });
   }
 
   useEffect(() => {
     fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -101,7 +100,7 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
             }}
           />
           <h1
-            className="pt-4 mb-5"
+            className="pt-4 "
             style={{
               color: "white",
               margin: "auto",
@@ -111,12 +110,20 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
           >
             {dayType} Day
           </h1>
-          <ChooseExercise setEx={setEx} ex={ex} setAct={setAct} />
-
+          <div style={{textAlign:'center'}}>
+            <ChooseExercise
+              enableCounter={enableCounter}
+              setEnable={setEnable}
+              setEx={setEx}
+              ex={ex}
+              setAct={setAct}
+            />
+          </div>
+            <div>
           {allEx.map((el) => {
             return (
               <div
-                className="mb-3 mt-4"
+                className="pb-3"
                 style={{ color: "white", textAlign: "center" }}
               >
                 <h1 style={{ color: "white" }}>{el.act}</h1>
@@ -124,7 +131,7 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
                 <h2>Reps: {el.rep.join(", ")}</h2>
               </div>
             );
-          })}
+          })}</div>
         </>
       )}
       {act !== "" && (
@@ -136,10 +143,11 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
             prevEx={prevEx[act]}
             allEx={allEx}
             dayId={dayId}
-            ex ={ex}
+            ex={ex}
             setEx={setEx}
             setDayId={setDayId}
             type={type}
+            enableCounter={enableCounter}
           />
         </>
       )}

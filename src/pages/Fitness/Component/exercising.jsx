@@ -1,6 +1,5 @@
 import Timer from "./timer";
 import Inputs from "./inputs";
-import { Button } from "react-bootstrap";
 import { API } from "aws-amplify";
 import { createExercise, createDay } from "../../../graphql/mutations";
 import { useEffect, useState } from "react";
@@ -20,6 +19,7 @@ const Exercising = ({
   setEx,
   ex,
   prevEx,
+  enableCounter
 }) => {
   let exercise = {
     weight: prevEx[0],
@@ -32,11 +32,14 @@ const Exercising = ({
 
   useEffect(() => {
     previousSet = JSON.parse(JSON.stringify(prevEx));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
   useEffect(() => {
     if (set !== 0) {
       setCurrentSet([...currentSet, exercise.rep[set - 1]]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [set]);
 
   async function fetchDayId() {
@@ -108,7 +111,7 @@ const Exercising = ({
         }}
         onClick={some}
       />
-      <h1 className="pt-4 mb-2" style={{ textAlign: "center", color: "white" }}>
+      <h1 className="pt-4 mb-2" style={{width:"80%", margin:"auto", textAlign: "center", color: "white" }}>
         {act}
       </h1>
       <Timer
@@ -117,6 +120,7 @@ const Exercising = ({
         setSet={setSet}
         set={set}
         setRep={setRep}
+        enableCounter={enableCounter}
       ></Timer>
       <Inputs
         set={set}
@@ -135,7 +139,7 @@ const Exercising = ({
           <div className="prevSets">Reps: {currentSet.join(", ")}</div>
         </div>
       </div>
-      <div style={{ textAlign: "center", height: "" }}>
+      <div className="pb-3" style={{ textAlign: "center" }}>
         <h1 className="mt-3" style={{ color: "white" }}>
           Previous Set
         </h1>

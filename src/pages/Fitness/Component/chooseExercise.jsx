@@ -1,22 +1,31 @@
-import { Button } from "react-bootstrap";
-import { useMediaQuery } from "@mui/material";
+import { FormControlLabel, Switch, useMediaQuery } from "@mui/material";
 import "../fitness.css";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useEffect } from "react";
 
-const ChooseExercise = ({ setEx, ex, setAct }) => {
+const ChooseExercise = ({ setEx, ex, setAct, setEnable, enableCounter }) => {
   const matches = useMediaQuery("(min-width:680px)");
-  const x = "button-33 mb-3";
   return (
     <>
+      <div className="my-3">
+        <FormControlLabel
+          labelPlacement="end"
+          label="Timer"
+          style={{ color: "white" }}
+          control={
+            <Switch
+              checked={enableCounter}
+              onChange={(ev) => setEnable(ev.target.checked)}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          }
+        />
+      </div>
       {ex.map((el, index) => {
         return (
-          <div style={{ textAlign: "center" }}>
+          <div key={index}>
             {matches && (
               <button
                 style={{ width: "40%", fontSize: "1.4rem", margin: "auto" }}
-                class="button-82-pushable mb-3"
-                role="button"
+                className="button-82-pushable mb-3"
                 onClick={() => {
                   let x = ex;
                   x.splice(index, 1);
@@ -25,16 +34,15 @@ const ChooseExercise = ({ setEx, ex, setAct }) => {
                   setAct(el);
                 }}
               >
-                <span class="button-82-shadow"></span>
-                <span class="button-82-edge"></span>
-                <span class="button-82-front text">{el}</span>
+                <span className="button-82-shadow"></span>
+                <span className="button-82-edge"></span>
+                <span className="button-82-front text">{el}</span>
               </button>
             )}
             {!matches && (
               <button
                 style={{ width: "80%", fontSize: "1.2rem", margin: "auto" }}
-                class="button-82-pushable mb-3"
-                role="button"
+                className="button-82-pushable mb-3"
                 onClick={() => {
                   let x = ex;
                   x.splice(index, 1);
@@ -43,9 +51,9 @@ const ChooseExercise = ({ setEx, ex, setAct }) => {
                   setAct(el);
                 }}
               >
-                <span class="button-82-shadow"></span>
-                <span class="button-82-edge"></span>
-                <span class="button-82-front text">{el}</span>
+                <span className="button-82-shadow"></span>
+                <span className="button-82-edge"></span>
+                <span className="button-82-front text">{el}</span>
               </button>
             )}
           </div>
