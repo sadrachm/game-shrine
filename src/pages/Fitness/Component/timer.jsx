@@ -8,7 +8,7 @@ const Timer = ({ exercise, reps, setSet, set, setRep, enableCounter }) => {
   const [showErr, setShowErr] = useState(false);
 
   function handleClick() {
-    if (reps >= 0) {
+    if (reps <= 0) {
       setShowErr(true);
       console.log(showErr);
       return;
