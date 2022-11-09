@@ -5,24 +5,20 @@ import { API } from "aws-amplify";
 import { createFitPerson } from "../../../graphql/mutations";
 
 const PullDay = ({ setDay, user }) => {
-  const [ex, setEx] = useState([
+  const [ex, setEx] = useState(user !== "jesus" ? [
     "Assisted Pull Up 1",
     "Vertical Bench Row",
     "Assisted Pull Up 2",
     "Bicep Curls",
     "Squats",
+  ] : [
+    "Assisted Pull Up 1",
+    "Vertical Bench Row",
+    "Assisted Pull Up 2",
+    "Bicep Curls",
+    "Kettle Bell Swings",
   ]);
-  useEffect(() => {
-    if (user === "jesus") {
-      setEx([
-        "Assisted Pull Up 1",
-        "Vertical Bench Row",
-        "Assisted Pull Up 2",
-        "Bicep Curls",
-        "Kettle Bell Swings",
-      ]);
-    }
-  }, []);
+
 
   return (
     <>

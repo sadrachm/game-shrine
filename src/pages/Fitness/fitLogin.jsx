@@ -32,6 +32,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function FitLogin({ setuser }) {
+
   async function signIn(username, password) {
     console.log(username);
     console.log(password);
@@ -53,9 +54,11 @@ export default function FitLogin({ setuser }) {
       password: data.get("password"),
     });
   };
+
   async function guest() {
     signIn("guest", "bestguest");
   }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -101,9 +104,7 @@ export default function FitLogin({ setuser }) {
               autoComplete="current-password"
             />
             <div style={{ textAlign: "center" }}>
-              <Button  onClick={guest}>
-                Continue As Guest
-              </Button>
+              <Button onClick={guest}>Continue As Guest</Button>
             </div>{" "}
             <Button
               type="submit"
