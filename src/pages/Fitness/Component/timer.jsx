@@ -5,8 +5,17 @@ import NoteAltIcon from "@mui/icons-material/NoteAlt";
 
 const Timer = ({ exercise, reps, setSet, set, setRep, enableCounter }) => {
   const [counter, setCounter] = useState("Start Rest");
+  const [showErr, setShowErr] = useState(false);
 
   function handleClick() {
+    if (reps >= 0) {
+      setShowErr(true);
+      console.log(showErr);
+      return;
+    } else {
+      setShowErr(false)
+      console.log(showErr);
+    }
     if (set < exercise.rep.length - 1) {
       exercise.rep[set] = parseInt(reps);
       setRep(exercise.rep[set + 1]);
@@ -35,16 +44,14 @@ const Timer = ({ exercise, reps, setSet, set, setRep, enableCounter }) => {
   return (
     <>
       <div
-      
-      className="clipboardButton"
+        className="clipboardButton"
         style={{
           display: "block",
           position: "absolute",
           bottom: 0,
           left: "50%",
         }}
-      >
-      </div>
+      ></div>
       {!enableCounter && (
         <div className="mt-4 mb-2" style={{ textAlign: "center" }}>
           <Button
@@ -67,6 +74,11 @@ const Timer = ({ exercise, reps, setSet, set, setRep, enableCounter }) => {
           >
             {counter}
           </h1>
+        </div>
+      )}
+      {showErr && (
+        <div className="" style={{ color: "white", width:"50%",margin:'auto', textAlign: "center" }}>
+          <h1 style={{ color: "white" }}>Invalid Reps</h1>
         </div>
       )}
     </>
