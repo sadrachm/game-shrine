@@ -5,6 +5,7 @@ import { createExercise, createDay } from "../../../graphql/mutations";
 import { useEffect, useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { TextField } from "@mui/material";
 
 let previousSet = [0, [0]];
 
@@ -136,7 +137,31 @@ const Exercising = ({
           Current Set
         </h1>
         <div className="" style={{ fontSize: "1.3rem", color: "white" }}>
+          <div className="prevSets">Reps: {currentSet}</div>
           <div className="prevSets">Reps: {currentSet.join(", ")}</div>
+          {currentSet.map((el, index) => {
+            return           <TextField
+            // style={{ background: "white" }}
+            className="textField"
+            margin="normal"
+            name="reps"
+            label="Reps"
+            variant="filled"
+            value={el}
+            onChange={(ex) => {
+              let newSet = currentSet
+              newSet[index] = parseInt(ex.target.value)
+              setCurrentSet( newSet )
+              
+              console.log(currentSet)
+              return
+            }}
+            type="number"
+            fullWidth
+            id="reps"
+          />
+          })}
+          
         </div>
       </div>
       <div className="pb-3" style={{ textAlign: "center" }}>

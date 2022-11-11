@@ -74,7 +74,6 @@ const Inputs = ({ set, exercise, reps, setRep, weight, setWeight }) => {
             type="number"
             fullWidth
             id="reps"
-            autoComplete="current-password"
           />
         </Box>
       </Box>
