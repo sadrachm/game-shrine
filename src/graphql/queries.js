@@ -114,6 +114,7 @@ export const getProductos = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      order
       id
       createdAt
       updatedAt
@@ -130,6 +131,7 @@ export const listProductos = /* GraphQL */ `
     listProductos(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         name
+        order
         id
         createdAt
         updatedAt
