@@ -14,20 +14,19 @@ const Lista = () => {
   const [list, setList] = useState([]);
   const [listID, setListID] = useState("");
   const [entry, setEntry] = useState("");
+  let biggest = 0
   const [erase, setErase] = useState(false);
 
   async function start() {
     const apiData = await API.graphql({ query: listLists });
     const notesfromAPI = apiData.data.listLists.items;
     var x;
-    await Promise.all(
-      notesfromAPI.map(async (item) => {
-        if (item.listName === "Costco") {
-          setListID(item);
-          x = item;
-        }
-      })
-    );
+    notesfromAPI.map((item) => {
+      if (item.listName === "Costco") {
+        setListID(item);
+        x = item;
+      }
+    });
     fetchItems(x);
   }
   useEffect(() => {
@@ -60,16 +59,18 @@ const Lista = () => {
   }
   async function fetchItems(storeObject) {
     console.log("listID:", storeObject.id);
-    const apiData = await API.graphql({ query: listProductos });
+    const apiData = await API.graphql({
+      query: listProductos,
+      variables: { filter: { productosListId: { eq: storeObject.id } } },
+    });
     const notesFromAPI = apiData.data.listProductos.items;
     var x = [];
-    await Promise.all(
-      notesFromAPI.map(async (item) => {
-        if (item.productosListId === storeObject.id) {
-          x.push(item);
+    notesFromAPI.map((item) => {
+        x.push(item);
+        if (item.order > biggest) {
+          biggest = item.order + 1
         }
-      })
-    );
+    })
     setList(x);
     console.log(x);
     console.log(entry);
@@ -77,8 +78,9 @@ const Lista = () => {
   async function createItem() {
     await API.graphql({
       query: createProductos,
-      variables: { input: { name: entry, productosListId: listID.id } },
+      variables: { input: { name: entry, productosListId: listID.id, order: biggest} },
     }).then((data) => {
+      biggest = biggest + 1
       var short = data.data.createProductos;
       var c = {
         name: short.name,
@@ -166,7 +168,11 @@ const Lista = () => {
         <Row>
           <Col>
             <Form.Check
-              style={{ color: "black", textAlign: "end", margin:"5px 5% 5px 0" }}
+              style={{
+                color: "black",
+                textAlign: "end",
+                margin: "5px 5% 5px 0",
+              }}
               reverse
               type="switch"
               id="custom-switch"

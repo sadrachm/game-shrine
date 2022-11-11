@@ -74,6 +74,7 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
     });
 
     prev = prev.data.exerciseByDate.items;
+    console.log("EX", ex)
 
     prev.map((el) => {
       if (el.dayExercisesId === days.id) {
@@ -81,6 +82,12 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       }
       return 1
     });
+    for (let x in ex) {
+      if (!(ex[x] in prevEx)) {
+        prevEx[ex[x]] = [20,[0,0,0]]
+      }
+    }
+    console.log(prevEx)
   }
 
   useEffect(() => {

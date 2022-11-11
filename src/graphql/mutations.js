@@ -164,6 +164,7 @@ export const createProductos = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      order
       id
       createdAt
       updatedAt
@@ -184,6 +185,7 @@ export const updateProductos = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      order
       id
       createdAt
       updatedAt
@@ -204,6 +206,7 @@ export const deleteProductos = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      order
       id
       createdAt
       updatedAt
