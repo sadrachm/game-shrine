@@ -78,7 +78,7 @@ const Timer = ({ exercise, reps, setSet, set, setRep, enableCounter }) => {
       )}
       {showErr && (
         <div className="" style={{ color: "white", width:"50%",margin:'auto', textAlign: "center" }}>
-          <h1 style={{ color: "white" }}>Invalid Reps</h1>
+          <h1 style={{ color: "white", fontSize:"1rem",margin:"0" }}>Invalid Reps</h1>
         </div>
       )}
     </>

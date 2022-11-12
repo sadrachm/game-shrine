@@ -45,6 +45,7 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
     x = x.data.dayByDate.items;
     let days;
     x.map((el, index) => {
+      // TODO: Check if it has been 24 hours rather than if its the same day
       let today = new Date();
       let maybe = new Date(el.createdAt);
       if (index === 0 && maybe.getDate() === today.getDate()) {
