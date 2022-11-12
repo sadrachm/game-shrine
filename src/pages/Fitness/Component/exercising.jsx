@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { TextField } from "@mui/material";
+import { textAlign } from "@mui/system";
 
 let previousSet = [0, [0]];
 
@@ -20,7 +21,7 @@ const Exercising = ({
   setEx,
   ex,
   prevEx,
-  enableCounter
+  enableCounter,
 }) => {
   let exercise = {
     weight: prevEx[0],
@@ -30,19 +31,64 @@ const Exercising = ({
   const [set, setSet] = useState(0);
   const [weight, setWeight] = useState(exercise.weight);
   const [currentSet, setCurrentSet] = useState([]);
+  const [first, setFirst] = useState(0);
+  const [second, setSecond] = useState(0);
+  const [third, setThird] = useState(0);
 
   useEffect(() => {
     previousSet = JSON.parse(JSON.stringify(prevEx));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   useEffect(() => {
     if (set !== 0) {
       setCurrentSet([...currentSet, exercise.rep[set - 1]]);
+      if (set === 1) {
+        setFirst(exercise.rep[set - 1]);
+      } else if (set === 2) {
+        setSecond(exercise.rep[set - 1]);
+      } else if (set === 3) {
+        setThird(exercise.rep[set - 1]);
+      } else {
+        console.log("Error in line 53");
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [set]);
 
+  function text(index) {
+    console.log("nani");
+    let x = first;
+    let y = setFirst;
+    let title = "First";
+    if (index === 1) {
+      x = second;
+      y = setSecond;
+      title = "Second";
+    } else if (index === 2) {
+      x = third;
+      y = setThird;
+      title = "Third";
+    } else if (index >= 3) {
+      return;
+    }
+
+    return (
+      <TextField
+        className="textField"
+        margin="normal"
+        name="reps"
+        label={`${title} Set`}
+        variant="filled"
+        value={x}
+        onChange={(ex) => {
+          y(ex.target.value);
+        }}
+        type="number"
+        id="reps"
+      />
+    );
+  }
   async function fetchDayId() {
     if (dayId === "" && id !== "") {
       let data = await API.graphql({
@@ -52,7 +98,6 @@ const Exercising = ({
         setDayId(data.data.createDay.id);
         return data;
       });
-
       return data.data.createDay.id;
     }
   }
@@ -87,8 +132,8 @@ const Exercising = ({
     setAct("");
   }
   function goBack() {
-    setEx([act,...ex])
-    setAct("")
+    setEx([act, ...ex]);
+    setAct("");
   }
 
   return (
@@ -112,7 +157,15 @@ const Exercising = ({
         }}
         onClick={some}
       />
-      <h1 className="pt-4 mb-2" style={{width:"80%", margin:"auto", textAlign: "center", color: "white" }}>
+      <h1
+        className="pt-4 mb-2"
+        style={{
+          width: "80%",
+          margin: "auto",
+          textAlign: "center",
+          color: "white",
+        }}
+      >
         {act}
       </h1>
       <Timer
@@ -137,31 +190,10 @@ const Exercising = ({
           Current Set
         </h1>
         <div className="" style={{ fontSize: "1.3rem", color: "white" }}>
-          <div className="prevSets">Reps: {currentSet}</div>
           <div className="prevSets">Reps: {currentSet.join(", ")}</div>
           {currentSet.map((el, index) => {
-            return           <TextField
-            // style={{ background: "white" }}
-            className="textField"
-            margin="normal"
-            name="reps"
-            label="Reps"
-            variant="filled"
-            value={el}
-            onChange={(ex) => {
-              let newSet = currentSet
-              newSet[index] = parseInt(ex.target.value)
-              setCurrentSet( newSet )
-              
-              console.log(currentSet)
-              return
-            }}
-            type="number"
-            fullWidth
-            id="reps"
-          />
+            return text(index);
           })}
-          
         </div>
       </div>
       <div className="pb-3" style={{ textAlign: "center" }}>
