@@ -58,6 +58,8 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       return 1
     });
 
+    console.log("prevEx", prevEx)
+    console.log("days", days)
     if (days === undefined) {
       ex.map((el) => {
         prevEx[el] = [20, [0, 0, 0]];
@@ -88,7 +90,7 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
         prevEx[ex[x]] = [20,[0,0,0]]
       }
     }
-    console.log(prevEx)
+    console.log("Ex again", prevEx)
   }
 
   useEffect(() => {
