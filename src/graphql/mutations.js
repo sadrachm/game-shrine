@@ -214,6 +214,48 @@ export const deleteProductos = /* GraphQL */ `
     }
   }
 `;
+export const createProductOrder = /* GraphQL */ `
+  mutation CreateProductOrder(
+    $input: CreateProductOrderInput!
+    $condition: ModelProductOrderConditionInput
+  ) {
+    createProductOrder(input: $input, condition: $condition) {
+      store
+      list
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateProductOrder = /* GraphQL */ `
+  mutation UpdateProductOrder(
+    $input: UpdateProductOrderInput!
+    $condition: ModelProductOrderConditionInput
+  ) {
+    updateProductOrder(input: $input, condition: $condition) {
+      store
+      list
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteProductOrder = /* GraphQL */ `
+  mutation DeleteProductOrder(
+    $input: DeleteProductOrderInput!
+    $condition: ModelProductOrderConditionInput
+  ) {
+    deleteProductOrder(input: $input, condition: $condition) {
+      store
+      list
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createList = /* GraphQL */ `
   mutation CreateList(
     $input: CreateListInput!
@@ -250,6 +292,63 @@ export const deleteList = /* GraphQL */ `
       id
       createdAt
       updatedAt
+    }
+  }
+`;
+export const createMeasurements = /* GraphQL */ `
+  mutation CreateMeasurements(
+    $input: CreateMeasurementsInput!
+    $condition: ModelMeasurementsConditionInput
+  ) {
+    createMeasurements(input: $input, condition: $condition) {
+      chest
+      waist
+      hip
+      thigh
+      weight
+      arm
+      id
+      createdAt
+      updatedAt
+      fitPersonMeasurementsId
+    }
+  }
+`;
+export const updateMeasurements = /* GraphQL */ `
+  mutation UpdateMeasurements(
+    $input: UpdateMeasurementsInput!
+    $condition: ModelMeasurementsConditionInput
+  ) {
+    updateMeasurements(input: $input, condition: $condition) {
+      chest
+      waist
+      hip
+      thigh
+      weight
+      arm
+      id
+      createdAt
+      updatedAt
+      fitPersonMeasurementsId
+    }
+  }
+`;
+export const deleteMeasurements = /* GraphQL */ `
+  mutation DeleteMeasurements(
+    $input: DeleteMeasurementsInput!
+    $condition: ModelMeasurementsConditionInput
+  ) {
+    deleteMeasurements(input: $input, condition: $condition) {
+      chest
+      waist
+      hip
+      thigh
+      weight
+      arm
+      id
+      createdAt
+      updatedAt
+      fitPersonMeasurementsId
     }
   }
 `;
@@ -368,6 +467,9 @@ export const createFitPerson = /* GraphQL */ `
       days {
         nextToken
       }
+      measurements {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -384,6 +486,9 @@ export const updateFitPerson = /* GraphQL */ `
       days {
         nextToken
       }
+      measurements {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -398,6 +503,9 @@ export const deleteFitPerson = /* GraphQL */ `
     deleteFitPerson(input: $input, condition: $condition) {
       name
       days {
+        nextToken
+      }
+      measurements {
         nextToken
       }
       id

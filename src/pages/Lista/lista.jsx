@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./lista.css";
-import { createProductos } from "../../graphql/mutations";
+import { createProductOrder, createProductos, updateProductOrder } from "../../graphql/mutations";
 import { listLists, listProductos } from "../../graphql/queries";
 import { API } from "aws-amplify";
 import Card from "./Components/Card";
 import SendIcon from "@mui/icons-material/Send";
 import ListTest from "./Components/listTest";
-import { TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 
 //TODO: Sort values returned from db to chronological
+var stores = {};
+var productIds = {};
+var productOrder = {}
+var orderProduct = {}
 
 const Lista = () => {
   const [store, setStore] = useState(0);
   const [list, setList] = useState([]);
-  const [listID, setListID] = useState("");
   const [entry, setEntry] = useState("");
   const [erase, setErase] = useState(false);
   const [items, setItems] = useState([]);
   const [ogItems, setOgItems] = useState([]);
-  var stores = {};
-  var productIds = {};
 
   async function start() {
     const apiData = await API.graphql({ query: listLists });
@@ -29,82 +30,112 @@ const Lista = () => {
     notesfromAPI.map((item) => {
       stores[item.listName] = item.id;
       if (item.listName === "Costco") {
-        setListID(item);
+        setStore("Costco");
         x = item;
       }
     });
-    console.log("Stores", stores);
-    console.log(x);
-    fetchItems(x);
+    console.log("X", x)
+    fetchItems(x.id);
   }
 
   useEffect(() => {
     start();
   }, []);
 
-  function keyDown(ev) {
-    if (ev.key === "Enter") {
-      createItem();
-    }
-  }
+  useEffect(()=> {
+    fetchItems(stores[store])
+  }, [store])
 
-  async function switchStore(val, storeName) {
-    setStore(val);
-    const apiData = await API.graphql({ query: listLists });
-    const notesfromAPI = apiData.data.listLists.items;
-    var x;
-    await Promise.all(
-      notesfromAPI.map(async (item) => {
-        if (item.listName === storeName) {
-          setListID(item);
-          x = item;
-        }
-      })
-    );
-    fetchItems(x);
-  }
-
-  function consol() {
-    console.log(entry);
-  }
+  // function keyDown(ev) {
+  //   if (ev.key === "Enter") {
+  //     createItem();
+  //   }
+  // }
 
   async function fetchItems(storeObject) {
-    console.log("listID:", storeObject.id);
+    console.log("listID:", storeObject);
     const apiData = await API.graphql({
       query: listProductos,
-      variables: { filter: { productosListId: { eq: storeObject.id } } },
+      variables: { filter: { productosListId: { eq: storeObject } } },
     });
     const products = apiData.data.listProductos.items;
     console.log("Products", products);
     var x = [];
     var y = [];
-    var z = {};
     products.map((el) => {
       x.push(el.name);
       y.push(el.name);
-      z[el.name] = el.id;
+      productIds[el.name] = el.id;
+      productOrder[el.order] = el.name
+      orderProduct[el.name] = el.order
     });
-    productIds = z;
     setItems(x);
     setOgItems(y);
   }
 
   async function createItem() {
     await API.graphql({
-      query: createProductos,
-      variables: { input: { name: entry, productosListId: listID.id, order:items.length } },
+      query: updateProductOrder,
+      variables: {
+        input: { name: entry, productosListId: stores[store], order: items.length },
+      },
     }).then((data) => {
       var short = data.data.createProductos;
-      productIds[short.name] = short.id
-      setItems([...items, short.name])
-      setOgItems([...ogItems, short.name])
+      productIds[short.name] = short.id;
+      setItems([...items, short.name]);
+      setOgItems([...ogItems, short.name]);
     });
 
     setEntry("");
   }
 
+  async function something() {
+    console.log("ProductOrder", productOrder)
+    await API.graphql({
+      query: updateProductOrder,
+      variables: {
+        input: {id:"0a83320d-bec9-4e57-bd80-86b0c0790f51", list: [5,2,4]}
+      }
+    })
+  }
+
   return (
     <div id="lista">
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-evenly"
+        alignItems="row"
+        rowSpacing={1}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        paddingBottom="20px"
+      >
+        <Grid item xs={4}>
+          <div style={{ textAlign: "center" }}>
+            {store !== "Costco" && <Button onClick={()=> setStore("Costco")}>Costco</Button>}
+            {store === "Costco" && (
+              <Button style={{ backgroundColor: "grey" }}>Costco</Button>
+            )}
+          </div>
+        </Grid>
+        <Grid item xs={4}>
+          <div style={{ textAlign: "center" }}>
+            {store !== "Super" && <Button onClick={()=> setStore("Super")}>Super</Button>}
+            {store === "Super" && (
+              <Button style={{ backgroundColor: "grey" }}>Super</Button>
+            )}
+          </div>
+        </Grid>
+        <Grid item xs={4}>
+          <div style={{ textAlign: "center" }}>
+            {store !== "Otro" && <Button onClick={()=> setStore("Otro")}>Super</Button>}
+            {store === "Otro" && (
+              <Button style={{ backgroundColor: "grey" }}>Otro</Button>
+            )}
+          </div>
+        </Grid>
+      </Grid>
+      <Button onClick={something}>Send</Button>
       <ListTest items={items} setItems={setItems} ogItems={ogItems} />
       <div className="mt-3">
         <TextField
@@ -124,129 +155,6 @@ const Lista = () => {
       </div>
     </div>
   );
-  // return (
-  //   <div className="listaBody pt-5">
-  //     <Container
-  //       className="listaContainer"
-  //       style={{
-  //         width: "80%",
-  //         margin: "0 auto",
-  //         textAlign: "center",
-  //         backgroundColor: "white",
-  //       }}
-  //     >
-  //       <Row className="mx-0">
-  //         <Col className="listaCol">
-  //           {store === 0 && (
-  //             <Button
-  //               style={{ backgroundColor: "grey", color: "white" }}
-  //               className="listaButtons"
-  //             >
-  //               Costco
-  //             </Button>
-  //           )}
-  //           {store !== 0 && (
-  //             <Button
-  //               onClick={() => switchStore(0, "Costco")}
-  //               className="listaButtons"
-  //             >
-  //               Costco
-  //             </Button>
-  //           )}
-  //         </Col>
-  //         <Col className="listaCol">
-  //           {store === 1 && (
-  //             <Button
-  //               style={{ backgroundColor: "grey", color: "white" }}
-  //               className="listaButtons"
-  //             >
-  //               Super
-  //             </Button>
-  //           )}
-  //           {store !== 1 && (
-  //             <Button
-  //               onClick={() => switchStore(1, "Super")}
-  //               className="listaButtons"
-  //             >
-  //               Super
-  //             </Button>
-  //           )}
-  //         </Col>
-  //         <Col className="listaCol">
-  //           {store === 2 && (
-  //             <Button
-  //               style={{ backgroundColor: "grey", color: "white" }}
-  //               className="listaButtons"
-  //             >
-  //               Otro
-  //             </Button>
-  //           )}
-  //           {store !== 2 && (
-  //             <Button
-  //               onClick={() => switchStore(2, "Otro")}
-  //               className="listaButtons"
-  //             >
-  //               Otro
-  //             </Button>
-  //           )}
-  //         </Col>
-  //         {/* <Col className="listaCol">
-  //           <Button className="listaButtons">Super</Button>
-  //         </Col> */}
-  //       </Row>
-  //       <Row>
-  //         <Col>
-  //           <Form.Check
-  //             style={{ color: "black", textAlign: "end", margin:"5px 5% 5px 0" }}
-  //             reverse
-  //             type="switch"
-  //             id="custom-switch"
-  //             onClick={() => setErase(!erase)}
-  //           />
-  //         </Col>
-  //       </Row>
-  //       {list.map((item) => {
-  //         return (
-  //           <Card
-  //             list={list}
-  //             erase={erase}
-  //             setList={setList}
-  //             name={item.name}
-  //             id={item.id}
-  //           />
-  //         );
-  //       })}
-  //       <Row className="content mt-4 mb-4">
-  //         <Col xs={8} style={{ padding: "0" }}>
-  //           <Form.Control
-  //             style={{ width: "85%", margin: "0 auto", fontSize: "1rem" }}
-  //             type="text"
-  //             value={entry}
-  //             onChange={(ev) => setEntry(ev.target.value)}
-  //             onKeyDown={keyDown}
-  //             placeholder="Nuevo Producto"
-  //           />
-  //         </Col>
-  //         <Col>
-  //           <Button onClick={createItem} style={{ fontSize: "1rem" }}>
-  //             <SendIcon />
-  //           </Button>
-  //         </Col>
-  //       </Row>
-  //       {/* <Button onClick={consol}>Console</Button>
-  //       <Button  onClick={createItem}>Create Item</Button> */}
-
-  //       <div style={{ height: "50px" }}></div>
-  //     </Container>
-  //   </div>
-  // );
 };
 
 export default Lista;
-
-// async function createLista() {
-//   // await API.graphql({
-//   //   query: createList,
-//   //   variables: { input: {listName: "Otro"} },
-//   // });
-// }

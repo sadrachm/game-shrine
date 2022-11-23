@@ -178,6 +178,39 @@ export const onDeleteProductos = /* GraphQL */ `
     }
   }
 `;
+export const onCreateProductOrder = /* GraphQL */ `
+  subscription OnCreateProductOrder {
+    onCreateProductOrder {
+      store
+      list
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateProductOrder = /* GraphQL */ `
+  subscription OnUpdateProductOrder {
+    onUpdateProductOrder {
+      store
+      list
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteProductOrder = /* GraphQL */ `
+  subscription OnDeleteProductOrder {
+    onDeleteProductOrder {
+      store
+      list
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateList = /* GraphQL */ `
   subscription OnCreateList {
     onCreateList {
@@ -205,6 +238,54 @@ export const onDeleteList = /* GraphQL */ `
       id
       createdAt
       updatedAt
+    }
+  }
+`;
+export const onCreateMeasurements = /* GraphQL */ `
+  subscription OnCreateMeasurements {
+    onCreateMeasurements {
+      chest
+      waist
+      hip
+      thigh
+      weight
+      arm
+      id
+      createdAt
+      updatedAt
+      fitPersonMeasurementsId
+    }
+  }
+`;
+export const onUpdateMeasurements = /* GraphQL */ `
+  subscription OnUpdateMeasurements {
+    onUpdateMeasurements {
+      chest
+      waist
+      hip
+      thigh
+      weight
+      arm
+      id
+      createdAt
+      updatedAt
+      fitPersonMeasurementsId
+    }
+  }
+`;
+export const onDeleteMeasurements = /* GraphQL */ `
+  subscription OnDeleteMeasurements {
+    onDeleteMeasurements {
+      chest
+      waist
+      hip
+      thigh
+      weight
+      arm
+      id
+      createdAt
+      updatedAt
+      fitPersonMeasurementsId
     }
   }
 `;
@@ -302,6 +383,9 @@ export const onCreateFitPerson = /* GraphQL */ `
       days {
         nextToken
       }
+      measurements {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -315,6 +399,9 @@ export const onUpdateFitPerson = /* GraphQL */ `
       days {
         nextToken
       }
+      measurements {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -326,6 +413,9 @@ export const onDeleteFitPerson = /* GraphQL */ `
     onDeleteFitPerson {
       name
       days {
+        nextToken
+      }
+      measurements {
         nextToken
       }
       id

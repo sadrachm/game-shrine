@@ -141,6 +141,35 @@ export const listProductos = /* GraphQL */ `
     }
   }
 `;
+export const getProductOrder = /* GraphQL */ `
+  query GetProductOrder($id: ID!) {
+    getProductOrder(id: $id) {
+      store
+      list
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listProductOrders = /* GraphQL */ `
+  query ListProductOrders(
+    $filter: ModelProductOrderFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listProductOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        store
+        list
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getList = /* GraphQL */ `
   query GetList($id: ID!) {
     getList(id: $id) {
@@ -163,6 +192,45 @@ export const listLists = /* GraphQL */ `
         id
         createdAt
         updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMeasurements = /* GraphQL */ `
+  query GetMeasurements($id: ID!) {
+    getMeasurements(id: $id) {
+      chest
+      waist
+      hip
+      thigh
+      weight
+      arm
+      id
+      createdAt
+      updatedAt
+      fitPersonMeasurementsId
+    }
+  }
+`;
+export const listMeasurements = /* GraphQL */ `
+  query ListMeasurements(
+    $filter: ModelMeasurementsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMeasurements(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        chest
+        waist
+        hip
+        thigh
+        weight
+        arm
+        id
+        createdAt
+        updatedAt
+        fitPersonMeasurementsId
       }
       nextToken
     }
@@ -242,6 +310,9 @@ export const getFitPerson = /* GraphQL */ `
     getFitPerson(id: $id) {
       name
       days {
+        nextToken
+      }
+      measurements {
         nextToken
       }
       id
