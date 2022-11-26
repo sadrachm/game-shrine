@@ -160,6 +160,7 @@ export const createProductos = /* GraphQL */ `
       name
       list {
         listName
+        list
         id
         createdAt
         updatedAt
@@ -181,6 +182,7 @@ export const updateProductos = /* GraphQL */ `
       name
       list {
         listName
+        list
         id
         createdAt
         updatedAt
@@ -202,6 +204,7 @@ export const deleteProductos = /* GraphQL */ `
       name
       list {
         listName
+        list
         id
         createdAt
         updatedAt
@@ -214,48 +217,6 @@ export const deleteProductos = /* GraphQL */ `
     }
   }
 `;
-export const createProductOrder = /* GraphQL */ `
-  mutation CreateProductOrder(
-    $input: CreateProductOrderInput!
-    $condition: ModelProductOrderConditionInput
-  ) {
-    createProductOrder(input: $input, condition: $condition) {
-      store
-      list
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateProductOrder = /* GraphQL */ `
-  mutation UpdateProductOrder(
-    $input: UpdateProductOrderInput!
-    $condition: ModelProductOrderConditionInput
-  ) {
-    updateProductOrder(input: $input, condition: $condition) {
-      store
-      list
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteProductOrder = /* GraphQL */ `
-  mutation DeleteProductOrder(
-    $input: DeleteProductOrderInput!
-    $condition: ModelProductOrderConditionInput
-  ) {
-    deleteProductOrder(input: $input, condition: $condition) {
-      store
-      list
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createList = /* GraphQL */ `
   mutation CreateList(
     $input: CreateListInput!
@@ -263,6 +224,7 @@ export const createList = /* GraphQL */ `
   ) {
     createList(input: $input, condition: $condition) {
       listName
+      list
       id
       createdAt
       updatedAt
@@ -276,6 +238,7 @@ export const updateList = /* GraphQL */ `
   ) {
     updateList(input: $input, condition: $condition) {
       listName
+      list
       id
       createdAt
       updatedAt
@@ -289,6 +252,7 @@ export const deleteList = /* GraphQL */ `
   ) {
     deleteList(input: $input, condition: $condition) {
       listName
+      list
       id
       createdAt
       updatedAt

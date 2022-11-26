@@ -6,11 +6,9 @@ import { Item } from "./item.tsx";
 
 const initialItems = ["🍅 Tomato", "🥒 Cucumber", "🧀 Cheese", "🥬 Lettuce"];
 
-export default function ListTest({ items, setItems, ogItems }) {
+export default function ListTest({ items, setItems }) {
   // const [items, setItems] = useState(initialItems);
-  function consol() {
-    console.log(ogItems);
-  }
+
   console.log(items);
 
   return (
@@ -24,7 +22,6 @@ export default function ListTest({ items, setItems, ogItems }) {
           <Item key={item} item={item} />
         ))}
       </Reorder.Group>
-      <button onClick={consol}>Something</button>
     </div>
   );
 }

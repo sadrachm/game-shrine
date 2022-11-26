@@ -110,6 +110,7 @@ export const getProductos = /* GraphQL */ `
       name
       list {
         listName
+        list
         id
         createdAt
         updatedAt
@@ -141,39 +142,11 @@ export const listProductos = /* GraphQL */ `
     }
   }
 `;
-export const getProductOrder = /* GraphQL */ `
-  query GetProductOrder($id: ID!) {
-    getProductOrder(id: $id) {
-      store
-      list
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listProductOrders = /* GraphQL */ `
-  query ListProductOrders(
-    $filter: ModelProductOrderFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listProductOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        store
-        list
-        id
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getList = /* GraphQL */ `
   query GetList($id: ID!) {
     getList(id: $id) {
       listName
+      list
       id
       createdAt
       updatedAt
@@ -189,6 +162,7 @@ export const listLists = /* GraphQL */ `
     listLists(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         listName
+        list
         id
         createdAt
         updatedAt

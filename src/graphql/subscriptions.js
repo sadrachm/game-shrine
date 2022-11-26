@@ -130,6 +130,7 @@ export const onCreateProductos = /* GraphQL */ `
       name
       list {
         listName
+        list
         id
         createdAt
         updatedAt
@@ -148,6 +149,7 @@ export const onUpdateProductos = /* GraphQL */ `
       name
       list {
         listName
+        list
         id
         createdAt
         updatedAt
@@ -166,6 +168,7 @@ export const onDeleteProductos = /* GraphQL */ `
       name
       list {
         listName
+        list
         id
         createdAt
         updatedAt
@@ -178,43 +181,11 @@ export const onDeleteProductos = /* GraphQL */ `
     }
   }
 `;
-export const onCreateProductOrder = /* GraphQL */ `
-  subscription OnCreateProductOrder {
-    onCreateProductOrder {
-      store
-      list
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateProductOrder = /* GraphQL */ `
-  subscription OnUpdateProductOrder {
-    onUpdateProductOrder {
-      store
-      list
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteProductOrder = /* GraphQL */ `
-  subscription OnDeleteProductOrder {
-    onDeleteProductOrder {
-      store
-      list
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateList = /* GraphQL */ `
   subscription OnCreateList {
     onCreateList {
       listName
+      list
       id
       createdAt
       updatedAt
@@ -225,6 +196,7 @@ export const onUpdateList = /* GraphQL */ `
   subscription OnUpdateList {
     onUpdateList {
       listName
+      list
       id
       createdAt
       updatedAt
@@ -235,6 +207,7 @@ export const onDeleteList = /* GraphQL */ `
   subscription OnDeleteList {
     onDeleteList {
       listName
+      list
       id
       createdAt
       updatedAt

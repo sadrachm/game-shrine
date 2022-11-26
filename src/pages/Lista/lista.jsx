@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./lista.css";
-import { createProductOrder, createProductos, updateProductOrder } from "../../graphql/mutations";
+import { createProductos, updateList } from "../../graphql/mutations";
 import { listLists, listProductos } from "../../graphql/queries";
 import { API } from "aws-amplify";
 import Card from "./Components/Card";
@@ -14,6 +14,8 @@ var stores = {};
 var productIds = {};
 var productOrder = {}
 var orderProduct = {}
+let order = []
+let maxima = 0
 
 const Lista = () => {
   const [store, setStore] = useState(0);
@@ -21,20 +23,20 @@ const Lista = () => {
   const [entry, setEntry] = useState("");
   const [erase, setErase] = useState(false);
   const [items, setItems] = useState([]);
-  const [ogItems, setOgItems] = useState([]);
 
   async function start() {
-    const apiData = await API.graphql({ query: listLists });
-    const notesfromAPI = apiData.data.listLists.items;
+    let y = await API.graphql({ query: listLists });
+    const markets = y.data.listLists.items;
     var x;
-    notesfromAPI.map((item) => {
+    markets.map((item) => {
       stores[item.listName] = item.id;
       if (item.listName === "Costco") {
         setStore("Costco");
+        order = item.list
         x = item;
       }
     });
-    console.log("X", x)
+
     fetchItems(x.id);
   }
 
@@ -61,40 +63,47 @@ const Lista = () => {
     const products = apiData.data.listProductos.items;
     console.log("Products", products);
     var x = [];
-    var y = [];
+    orderProduct = {}
+    productOrder = {}
+    productIds = {}
     products.map((el) => {
       x.push(el.name);
-      y.push(el.name);
+      if (el.order > maxima) {
+        maxima = el.order
+      }
       productIds[el.name] = el.id;
       productOrder[el.order] = el.name
       orderProduct[el.name] = el.order
     });
+    console.log(maxima)
     setItems(x);
-    setOgItems(y);
   }
 
   async function createItem() {
     await API.graphql({
-      query: updateProductOrder,
+      query: createProductos,
       variables: {
-        input: { name: entry, productosListId: stores[store], order: items.length },
+        input: { name: entry, productosListId: stores[store], order: maxima+1 },
       },
     }).then((data) => {
+      maxima += 1
       var short = data.data.createProductos;
       productIds[short.name] = short.id;
       setItems([...items, short.name]);
-      setOgItems([...ogItems, short.name]);
     });
 
     setEntry("");
   }
 
   async function something() {
-    console.log("ProductOrder", productOrder)
+    let newItemOrder = []
+    items.map((el) => {
+      newItemOrder.push(orderProduct[el])
+    })
     await API.graphql({
-      query: updateProductOrder,
+      query: updateList,
       variables: {
-        input: {id:"0a83320d-bec9-4e57-bd80-86b0c0790f51", list: [5,2,4]}
+        input: {id:stores[store], list: newItemOrder}
       }
     })
   }
@@ -136,7 +145,7 @@ const Lista = () => {
         </Grid>
       </Grid>
       <Button onClick={something}>Send</Button>
-      <ListTest items={items} setItems={setItems} ogItems={ogItems} />
+      <ListTest items={items} setItems={setItems} />
       <div className="mt-3">
         <TextField
           id="outlined-basic"
