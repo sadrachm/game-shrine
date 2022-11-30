@@ -137,8 +137,8 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
                 style={{ color: "white", textAlign: "center" }}
               >
                 <h1 style={{ color: "white" }}>{el.act}</h1>
-                <h2>Weight: {el.weight}</h2>
-                <h2>Reps: {el.rep.join(", ")}</h2>
+                <h2 style={{ color: "white" }}>Weight: {el.weight}</h2>
+                <h2 style={{ color: "white" }}>Reps: {el.rep.join(", ")}</h2>
               </div>
             );
           })}</div>
