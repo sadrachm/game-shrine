@@ -10,6 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import styled from "styled-components";
 import background from "../../img/inspire.jpg";
 import ShowData from "./showData/showData";
+import Measure from "./Component/measurement";
 
 //TODO: Make a simpler way to order exercises to cut time during exercise
 
@@ -75,6 +76,9 @@ const Fitness = ({ user, setuser }) => {
           <>
             <ShowData setDay={setDay} user={user}  />
           </>
+        )}
+        {day === "measure" && (
+          <Measure setDay = {setDay} user={user} />
         )}
 
         {/* <Button onClick={() => consol("")}>Console</Button>

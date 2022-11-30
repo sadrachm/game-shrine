@@ -27,7 +27,7 @@ const Inputs = ({ set, exercise, reps, setRep, weight, setWeight }) => {
         <Box
           component="form"
           noValidate
-          sx={{ mt: 1, width: "80%", maxWidth: "200px", textAlign: "center" }}
+          sx={{ mt: 0, width: "80%", maxWidth: "200px", textAlign: "center" }}
         >
           <TextField
             // sx={{ background: "lightgrey" }}
@@ -74,7 +74,6 @@ const Inputs = ({ set, exercise, reps, setRep, weight, setWeight }) => {
             type="number"
             fullWidth
             id="reps"
-            autoComplete="current-password"
           />
         </Box>
       </Box>

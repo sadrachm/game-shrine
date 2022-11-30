@@ -44,6 +44,16 @@ const SelectDay = ({ setDay }) => {
         >
           Past
         </button>
+        <button
+          style={{ margin: "auto" }}
+          className="button-45 mt-5"
+          role="button"
+          onClick={() => {
+            setDay("measure");
+          }}
+        >
+          Measure
+        </button>
       </div>
     </>
   );

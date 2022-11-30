@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
 
 function Copyright(props) {
   return (
@@ -32,6 +33,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function FitLogin({ setuser }) {
+  const [invalid, setInvalid] = useState("")
 
   async function signIn(username, password) {
     console.log(username);
@@ -40,6 +42,7 @@ export default function FitLogin({ setuser }) {
       setuser(await Auth.signIn(username, password));
     } catch (error) {
       console.log(error);
+      setInvalid("Invalid user/password")
     }
   }
 
@@ -105,6 +108,7 @@ export default function FitLogin({ setuser }) {
             />
             <div style={{ textAlign: "center" }}>
               <Button onClick={guest}>Continue As Guest</Button>
+              <div style={{color:"red"}}>{invalid}</div>
             </div>{" "}
             <Button
               type="submit"
