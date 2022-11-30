@@ -56,39 +56,40 @@ const Exercising = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [set]);
 
-  function text(index) {
-    console.log("nani");
-    let x = first;
-    let y = setFirst;
-    let title = "First";
-    if (index === 1) {
-      x = second;
-      y = setSecond;
-      title = "Second";
-    } else if (index === 2) {
-      x = third;
-      y = setThird;
-      title = "Third";
-    } else if (index >= 3) {
-      return;
-    }
+  // Fix input 
+  // function text(index) {
+  //   console.log("nani");
+  //   let x = first;
+  //   let y = setFirst;
+  //   let title = "First";
+  //   if (index === 1) {
+  //     x = second;
+  //     y = setSecond;
+  //     title = "Second";
+  //   } else if (index === 2) {
+  //     x = third;
+  //     y = setThird;
+  //     title = "Third";
+  //   } else if (index >= 3) {
+  //     return;
+  //   }
 
-    return (
-      <TextField
-        className="textField"
-        margin="normal"
-        name="reps"
-        label={`${title} Set`}
-        variant="filled"
-        value={x}
-        onChange={(ex) => {
-          y(ex.target.value);
-        }}
-        type="number"
-        id="reps"
-      />
-    );
-  }
+  //   return (
+  //     <TextField
+  //       className="textField"
+  //       margin="normal"
+  //       name="reps"
+  //       label={`${title} Set`}
+  //       variant="filled"
+  //       value={x}
+  //       onChange={(ex) => {
+  //         y(ex.target.value);
+  //       }}
+  //       type="number"
+  //       id="reps"
+  //     />
+  //   );
+  // }
   async function fetchDayId() {
     if (dayId === "" && id !== "") {
       let data = await API.graphql({
@@ -191,9 +192,9 @@ const Exercising = ({
         </h1>
         <div className="" style={{ fontSize: "1.3rem", color: "white" }}>
           <div className="prevSets">Reps: {currentSet.join(", ")}</div>
-          {currentSet.map((el, index) => {
+          {/* {currentSet.map((el, index) => {
             return text(index);
-          })}
+          })} */}
         </div>
       </div>
       <div className="pb-3" style={{ textAlign: "center" }}>

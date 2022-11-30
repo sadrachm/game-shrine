@@ -1,26 +1,23 @@
 import "./styles.css";
 import * as React from "react";
 import { useState } from "react";
-import { Reorder } from "framer-motion";
+import { AnimatePresence, Reorder, motion } from "framer-motion";
 import { Item } from "./item.tsx";
 
-const initialItems = ["🍅 Tomato", "🥒 Cucumber", "🧀 Cheese", "🥬 Lettuce"];
-
-export default function ListTest({ items, setItems }) {
-  // const [items, setItems] = useState(initialItems);
-
-  console.log(items);
-
+export default function ListTest({ items, deleteItem, setItems }) {
   return (
-    <div >
-      <Reorder.Group
-        axis="y"
-        onReorder={setItems}
-        values={items}
-      >
-        {items.map((item) => (
-          <Item key={item} item={item} />
-        ))}
+    <div>
+      <Reorder.Group axis="y" onReorder={setItems} values={items}>
+        <AnimatePresence>
+          {items.map((item) => (
+            <Item
+              key={item}
+              onRemove={() => deleteItem(item)}
+              item={item}
+              setItems={setItems}
+            />
+          ))}
+        </AnimatePresence>
       </Reorder.Group>
     </div>
   );

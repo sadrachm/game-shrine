@@ -1,127 +1,182 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./lista.css";
-import { createProductos, updateList } from "../../graphql/mutations";
+import { createProductos, deleteProductos, updateList } from "../../graphql/mutations";
 import { listLists, listProductos } from "../../graphql/queries";
 import { API } from "aws-amplify";
 import Card from "./Components/Card";
 import SendIcon from "@mui/icons-material/Send";
 import ListTest from "./Components/listTest";
 import { Grid, TextField } from "@mui/material";
+import { Button } from "react-bootstrap";
 
-//TODO: Sort values returned from db to chronological
 var stores = {};
 var productIds = {};
-var productOrder = {}
-var orderProduct = {}
-let order = []
-let maxima = 0
+var productOrder = {};
+var orderProduct = {};
+let order = {};
+let maxima = 0;
 
 const Lista = () => {
   const [store, setStore] = useState(0);
-  const [list, setList] = useState([]);
   const [entry, setEntry] = useState("");
-  const [erase, setErase] = useState(false);
   const [items, setItems] = useState([]);
 
   async function start() {
     let y = await API.graphql({ query: listLists });
     const markets = y.data.listLists.items;
-    var x;
     markets.map((item) => {
       stores[item.listName] = item.id;
-      if (item.listName === "Costco") {
-        setStore("Costco");
-        order = item.list
-        x = item;
-      }
+      order[item.id] = item.list;
     });
-
-    fetchItems(x.id);
+    setStore("Costco");
   }
 
   useEffect(() => {
     start();
   }, []);
 
-  useEffect(()=> {
-    fetchItems(stores[store])
-  }, [store])
+  useEffect(() => {
+    if (store === 0) {
+      return;
+    }
+    fetchItems(stores[store]);
+  }, [store]);
 
-  // function keyDown(ev) {
-  //   if (ev.key === "Enter") {
-  //     createItem();
-  //   }
-  // }
+  function keyDown(ev) {
+    if (ev.key === "Enter") {
+      createItem();
+    }
+  }
 
   async function fetchItems(storeObject) {
-    console.log("listID:", storeObject);
     const apiData = await API.graphql({
       query: listProductos,
       variables: { filter: { productosListId: { eq: storeObject } } },
     });
     const products = apiData.data.listProductos.items;
-    console.log("Products", products);
-    var x = [];
-    orderProduct = {}
-    productOrder = {}
-    productIds = {}
+    console.log("PRODUCTS", products)
+    orderProduct = {};
+    productOrder = {};
+    productIds = {};
     products.map((el) => {
-      x.push(el.name);
       if (el.order > maxima) {
-        maxima = el.order
+        maxima = el.order;
       }
       productIds[el.name] = el.id;
-      productOrder[el.order] = el.name
-      orderProduct[el.name] = el.order
+      productOrder[el.order] = el.name;
+      orderProduct[el.name] = el.order;
     });
-    console.log(maxima)
+    console.log("PRODUCT_ORDER", productOrder)
+    let x = [];
+    for (var el of order[storeObject]) {
+      if (productOrder[el] === undefined) {
+        continue;
+      }
+      x.push(productOrder[el]);
+    }
+    console.log("Items", x)
+    console.log("Orders", order)
     setItems(x);
   }
 
   async function createItem() {
-    await API.graphql({
+    if (entry === "") {
+      return;
+    }
+    let apiData = await API.graphql({
       query: createProductos,
       variables: {
-        input: { name: entry, productosListId: stores[store], order: maxima+1 },
+        input: {
+          name: entry,
+          productosListId: stores[store],
+          order: maxima + 1,
+        },
       },
-    }).then((data) => {
-      maxima += 1
-      var short = data.data.createProductos;
-      productIds[short.name] = short.id;
-      setItems([...items, short.name]);
     });
+    order[stores[store]].push(maxima + 1);
+    await API.graphql({
+      query: updateList,
+      variables: {
+        input: { id: stores[store], list: order[stores[store]] },
+      },
+    });
+    var short = apiData.data.createProductos;
+    productIds[short.name] = short.id;
+    orderProduct[short.name] = short.order;
+    setItems([...items, short.name]);
+    maxima += 1;
 
     setEntry("");
   }
 
-  async function something() {
-    let newItemOrder = []
+  async function updateOrder() {
+    let newItemOrder = [];
+    console.log("Update List", items)
     items.map((el) => {
-      newItemOrder.push(orderProduct[el])
-    })
+      newItemOrder.push(orderProduct[el]);
+    });
     await API.graphql({
       query: updateList,
       variables: {
-        input: {id:stores[store], list: newItemOrder}
+        input: { id: stores[store], list: newItemOrder },
+      },
+    });
+  }
+  async function deleteItem(item) {
+    let id = productIds[item]
+    console.log(id)
+    let x = items
+    const index = x.indexOf(item)
+    if (index > -1) {
+      x.splice(index, 1)
+    }
+    
+    setItems(x)
+    console.log(x)
+    await API.graphql({
+      query: deleteProductos,
+      variables: {
+        input: {id}
       }
     })
+    console.log()
+    updateOrder()
+    
   }
 
   return (
     <div id="lista">
+      <ListTest deleteItem={deleteItem} items={items} setItems={setItems} />
+      <div className="plus">
+        <TextField
+          id="outlined-basic"
+          label="New Produce"
+          variant="outlined"
+          onKeyDown={keyDown}
+          value={entry}
+          onChange={(el) => setEntry(el.target.value)}
+        />
+        <Button onClick={createItem}  className="mx-3" color="success">
+          +
+        </Button>
+      </div>
+      <Button className="mt-4" onClick={updateOrder}>Save</Button>
+      <div style={{ height: "100px" }}></div>
       <Grid
         container
         direction="row"
         justifyContent="space-evenly"
         alignItems="row"
         rowSpacing={1}
+        className="grid"
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        paddingBottom="20px"
+        paddingBottom="8px"
       >
         <Grid item xs={4}>
           <div style={{ textAlign: "center" }}>
-            {store !== "Costco" && <Button onClick={()=> setStore("Costco")}>Costco</Button>}
+            {store !== "Costco" && (
+              <Button onClick={() => setStore("Costco")}>Costco</Button>
+            )}
             {store === "Costco" && (
               <Button style={{ backgroundColor: "grey" }}>Costco</Button>
             )}
@@ -129,7 +184,9 @@ const Lista = () => {
         </Grid>
         <Grid item xs={4}>
           <div style={{ textAlign: "center" }}>
-            {store !== "Super" && <Button onClick={()=> setStore("Super")}>Super</Button>}
+            {store !== "Super" && (
+              <Button onClick={() => setStore("Super")}>Super</Button>
+            )}
             {store === "Super" && (
               <Button style={{ backgroundColor: "grey" }}>Super</Button>
             )}
@@ -137,31 +194,15 @@ const Lista = () => {
         </Grid>
         <Grid item xs={4}>
           <div style={{ textAlign: "center" }}>
-            {store !== "Otro" && <Button onClick={()=> setStore("Otro")}>Super</Button>}
+            {store !== "Otro" && (
+              <Button onClick={() => setStore("Otro")}>Otro</Button>
+            )}
             {store === "Otro" && (
               <Button style={{ backgroundColor: "grey" }}>Otro</Button>
             )}
           </div>
         </Grid>
       </Grid>
-      <Button onClick={something}>Send</Button>
-      <ListTest items={items} setItems={setItems} />
-      <div className="mt-3">
-        <TextField
-          id="outlined-basic"
-          label="Outlined"
-          variant="outlined"
-          value={entry}
-          onChange={(el) => setEntry(el.target.value)}
-        />
-        <Button
-          style={{ background: "blue", color: "white" }}
-          onClick={createItem}
-          variant="contained"
-        >
-          +
-        </Button>
-      </div>
     </div>
   );
 };
