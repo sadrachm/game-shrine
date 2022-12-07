@@ -7,7 +7,7 @@ import {
   dayByDate,
 } from "../../../graphql/queries";
 import LineChart from "./Components/lineChart";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 let userId = "";
 let days = [];
@@ -46,6 +46,7 @@ const ShowData = ({ user, setDay }) => {
         },
       });
       days = days.data.dayByDate.items;
+      console.log("pullDays", days);
     } else {
       pushDays = await API.graphql({
         query: dayByDate,
@@ -56,6 +57,7 @@ const ShowData = ({ user, setDay }) => {
         },
       });
       pushDays = pushDays.data.dayByDate.items;
+      console.log("pushDays", pushDays);
     }
   }
 
@@ -64,12 +66,13 @@ const ShowData = ({ user, setDay }) => {
     if (type === "pull") {
       x = await API.graphql({
         query: exerciseByDate,
-        variables: { filter, type: type },
+        variables: { filter, type, sortDirection:"DESC" },
       });
     } else {
+      console.log("pushing", pushFilter);
       x = await API.graphql({
         query: exerciseByDate,
-        variables: { filter: pushFilter, type: type },
+        variables: { filter: pushFilter, type, sortDirection: "DESC", },
       });
     }
     x = x.data.exerciseByDate.items;
@@ -78,12 +81,17 @@ const ShowData = ({ user, setDay }) => {
       let power = el.rep.reduce((acc, re) => acc + re * el.weight);
       y.push({ time: el.createdAt, power: power });
     });
+    let labels = y.map((data) => {
+      let a = new Date(data.time);
+      return a.getMonth() + 1 + "/" + a.getDate();
+    })
+    console.log(type, labels)
     if (type === "pull") {
       setData({
-        labels: y.map((data) => new Date(data.time).getDate()),
+        labels,
         datasets: [
           {
-            label: "POWER",
+            label: "",
             data: y.map((data) => data.power),
             backgroundColor: "black",
             borderColor: "black",
@@ -92,10 +100,10 @@ const ShowData = ({ user, setDay }) => {
       });
     } else {
       setPushData({
-        labels: y.map((data) => new Date(data.time).getDate()),
+        labels,
         datasets: [
           {
-            label: "POWER",
+            label: "",
             data: y.map((data) => data.power),
             backgroundColor: "black",
             borderColor: "black",
@@ -137,7 +145,7 @@ const ShowData = ({ user, setDay }) => {
       await getPeople();
     }
     await getDays(type);
-    updateFilter(type);
+    await updateFilter(type);
     updateChart(type);
   }
 
@@ -148,14 +156,14 @@ const ShowData = ({ user, setDay }) => {
 
   return (
     <>
-      <ArrowBackIcon onClick={()=>setDay("")} style={{position:"absolute", top:"10px", left: "10px"}} />
+      <ArrowBackIcon
+        onClick={() => setDay("")}
+        style={{ position: "absolute", top: "10px", left: "10px" }}
+      />
       <h1 className="pt-3 pb-3" style={{ textAlign: "center" }}>
         Pull Exercises
       </h1>
-      <div
-        className="mt-3"
-        style={dropdown}
-      >
+      <div className="mt-3" style={dropdown}>
         <FormControl style={{}} fullWidth>
           <InputLabel id="demo-simple-select-label">Exercise</InputLabel>
           <Select
@@ -188,7 +196,7 @@ const ShowData = ({ user, setDay }) => {
             margin: "auto",
           }}
         >
-          <LineChart chartData={data} />
+          <LineChart chartData={data} exercise={exercise}/>
         </div>
       )}
 
@@ -196,10 +204,7 @@ const ShowData = ({ user, setDay }) => {
         Push Exercises
       </h1>
 
-      <div
-        className="mt-3"
-        style={dropdown}
-      >
+      <div className="mt-3" style={dropdown}>
         <FormControl style={{}} fullWidth>
           <InputLabel id="x">Exercise</InputLabel>
           <Select
@@ -234,7 +239,7 @@ const ShowData = ({ user, setDay }) => {
             margin: "auto",
           }}
         >
-          <LineChart chartData={pushData} />
+          <LineChart chartData={pushData} exercise={pushExercise} />
         </div>
       )}
 
