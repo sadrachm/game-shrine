@@ -46,7 +46,7 @@ const ShowData = ({ user, setDay }) => {
         },
       });
       days = days.data.dayByDate.items;
-      console.log("pullDays", days);
+      // console.log("pullDays", days);
     } else {
       pushDays = await API.graphql({
         query: dayByDate,
@@ -57,22 +57,25 @@ const ShowData = ({ user, setDay }) => {
         },
       });
       pushDays = pushDays.data.dayByDate.items;
-      console.log("pushDays", pushDays);
+      // console.log("pushDays", pushDays);
     }
   }
 
   async function updateChart(type) {
-    let x = "";
+    let x
     if (type === "pull") {
+      console.log(filter)
       x = await API.graphql({
         query: exerciseByDate,
         variables: { filter, type, sortDirection:"DESC" },
+        limit: 400
       });
     } else {
-      console.log("pushing", pushFilter);
+      console.log(pushFilter)
       x = await API.graphql({
         query: exerciseByDate,
         variables: { filter: pushFilter, type, sortDirection: "DESC", },
+        limit:400
       });
     }
     x = x.data.exerciseByDate.items;
@@ -85,7 +88,7 @@ const ShowData = ({ user, setDay }) => {
       let a = new Date(data.time);
       return a.getMonth() + 1 + "/" + a.getDate();
     })
-    console.log(type, labels)
+    // console.log(type, labels)
     if (type === "pull") {
       setData({
         labels,
@@ -242,21 +245,9 @@ const ShowData = ({ user, setDay }) => {
           <LineChart chartData={pushData} exercise={pushExercise} />
         </div>
       )}
+      <div style={{height:"50px"}}></div>
 
-      {/* {data !== [] && data.map((el) => {
-        return <>
-          <h1>{el}</h1>
-          <h1>{data[el][0]}</h1>
-          <h1>{data[el].substring(1).join(', ')}</h1>
-        </>;
-      })} */}
 
-      {/* {data === "pull" && (<>
-        <h1>Pull</h1>
-      </>)}
-      {data === "push" && (<>
-        <h1>Push</h1>
-      </>)} */}
     </>
   );
 };
@@ -270,19 +261,4 @@ const dropdown = {
 
 export default ShowData;
 
-// .then((data) => {
-//   let x = data.data.listFitPeople.items;
-//   userId = x[0].id;
-// })
-// .then(() => {
-//   API.graphql({
-//     query: listDays,
-//     variables: { filter: { fitPersonDaysId: { eq: userId } } },
-//   }).then((q) => {
-//     let x = q.data.listDays.items;
-//     x.map((el) => {
-//       days.push(el.id);
-//       filter["or"].push({ dayExercisesId: { eq: el.id } });
-//     });
-//   });
-// });
+
