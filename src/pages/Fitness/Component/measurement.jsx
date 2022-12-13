@@ -4,9 +4,18 @@ import { Container } from "react-bootstrap";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { API } from "aws-amplify";
 import { createMeasurements } from "../../../graphql/mutations";
-import { listFitPeople } from "../../../graphql/queries";
+import { listFitPeople, listMeasurements } from "../../../graphql/queries";
 
-var userId = ""
+var userId = "";
+let allMeasurements = {
+  arm: [],
+  chest: [],
+  hip: [],
+  thigh: [],
+  waist: [],
+  weight: [],
+};
+let bodyPart = ['arm','chest','hip','thigh','waist','weight']
 
 const Measure = ({ setDay, user }) => {
   const [chest, setChest] = useState("");
@@ -14,7 +23,16 @@ const Measure = ({ setDay, user }) => {
   const [thigh, setThigh] = useState("");
   const [arm, setArm] = useState("");
   const [waist, setWaist] = useState("");
-  const [weight, setWeight] = useState("")
+  const [weight, setWeight] = useState("");
+
+  const [body, setBody] = useState({
+    arm: [],
+    chest: [],
+    hip: [],
+    thigh: [],
+    waist: [],
+    weight: [],
+  })
 
   async function getPeople() {
     var people = await API.graphql({
@@ -22,27 +40,61 @@ const Measure = ({ setDay, user }) => {
       variables: { filter: { name: { eq: user.username } } },
     });
     userId = people.data.listFitPeople.items[0].id;
-    console.log("user", userId)
+    console.log("user", userId);
   }
+
+  async function getMeasurements() {
+    let measurements = await API.graphql({
+      query: listMeasurements,
+      variables: { filter: { fitPersonMeasurementsId: { eq: userId } } },
+    });
+    measurements = measurements.data.listMeasurements.items;
+    allMeasurements = body
+    measurements.map((el) => {
+      console.log(el)
+      allMeasurements.arm.push(el.arm);
+      allMeasurements.chest.push(el.chest);
+      allMeasurements.hip.push(el.hip);
+      allMeasurements.thigh.push(el.thigh);
+      allMeasurements.waist.push(el.waist);
+      allMeasurements.weight.push(el.weight);
+    });
+    setBody(body=>({...allMeasurements}))
+  }
+
+  async function helper() {
+    await getPeople();
+    getMeasurements()
+  }
+  useEffect(()=> {
+    console.log("nani")
+  }, [body])
+
   useEffect(() => {
-    getPeople()
-  }, [])
-  
-  async function submit() {   
-    var x = [chest, hip, thigh, arm, waist, weight]
-    var names = ["chest", "hip", "thigh", "arm", "waist", "weight"]
-    var values = {fitPersonMeasurementsId:userId}
+    helper()
+  }, []);
+
+  async function submit() {
+    var x = [chest, hip, thigh, arm, waist, weight];
+    var names = ["chest", "hip", "thigh", "arm", "waist", "weight"];
+    var values = { fitPersonMeasurementsId: userId };
     x.forEach(function (value, i) {
-        if (value !== "") {
-            values[names[i]] = value 
-        }
-    })
-    console.log(values)
-    console.log(user)
+      if (value !== "") {
+        values[names[i]] = value;
+      }
+    });
+    console.log(values);
+    console.log(user);
     await API.graphql({
-    query: createMeasurements,
-    variables: { input: values },
-  });
+      query: createMeasurements,
+      variables: { input: values },
+    });
+  }
+
+  function renderMeasurements() {
+    return bodyPart.map((el)=> {
+      return <p style={{color:'white'}}>{el}: {body[el].toString(', ')}</p>
+    })
   }
 
   return (
@@ -148,14 +200,17 @@ const Measure = ({ setDay, user }) => {
           </Box>
         </Box>
       </Container>
-        <button
-          style={{ margin: "auto" }}
-          className="button-45 mt-5"
-          role="button"
-          onClick={submit}
-        >
-          Send
-        </button>
+      <button
+        style={{ margin: "auto" }}
+        className="button-45 mt-5"
+        role="button"
+        onClick={submit}
+      >
+        Send
+      </button>
+      <div className="pt-3" style={{display:'flex',margin: "auto", width:'40%', flexDirection:"column", justifyContent:'space-between'}}>
+        {renderMeasurements()}
+      </div>
     </>
   );
 };
