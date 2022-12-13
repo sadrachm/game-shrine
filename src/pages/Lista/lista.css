@@ -46,3 +46,9 @@ h1 {
 .listaTitle {
     text-align: center;
 }
+.stores {
+    background-color: #ca970b;
+    position: fixed;
+    padding: 7px 0 7px 0;
+    bottom:0
+}
