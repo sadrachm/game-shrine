@@ -54,6 +54,16 @@ const SelectDay = ({ setDay }) => {
         >
           Measure
         </button>
+        <button
+          style={{ margin: "auto" }}
+          className="button-45 mt-5"
+          role="button"
+          onClick={() => {
+            setDay("calendar");
+          }}
+        >
+          Calendar
+        </button>
       </div>
     </>
   );

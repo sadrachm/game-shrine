@@ -11,6 +11,7 @@ import styled from "styled-components";
 import background from "../../img/inspire.jpg";
 import ShowData from "./showData/showData";
 import Measure from "./Component/measurement";
+import Cal from "./calendar/Cal";
 
 //TODO: Make a simpler way to order exercises to cut time during exercise
 
@@ -79,6 +80,9 @@ const Fitness = ({ user, setuser }) => {
         )}
         {day === "measure" && (
           <Measure setDay = {setDay} user={user} />
+        )}
+        {day === "calendar" && (
+          <Cal setDay = {setDay} user={user} />
         )}
 
         {/* <Button onClick={() => consol("")}>Console</Button>
