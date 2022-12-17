@@ -2,6 +2,8 @@ import { Button } from "@mui/material";
 import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { Calendar } from "react-calendar";
+import { useMediaQuery } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   dayByDate,
   exerciseByDate,
@@ -13,14 +15,13 @@ let userId;
 let pullMap = new Map();
 let pushMap = new Map();
 let exerciseMap = new Map();
-let ranOnce = false
+let ranOnce = false;
 export default function Cal({ setDay, user }) {
+  const matches = useMediaQuery("(min-width:350px)");
   const [value, setVal] = useState(new Date());
   const [fin, setFin] = useState(false);
   const [exercise, setExercise] = useState([]);
-  function back() {
-    setDay("");
-  }
+
   async function getPeople() {
     var people = await API.graphql({
       query: listFitPeople,
@@ -45,7 +46,7 @@ export default function Cal({ setDay, user }) {
       let x = new Date(el.createdAt);
       pullMap.set(x.getMonth() + "/" + x.getDate(), el.id);
       if (!ranOnce && exerciseMap.get(x.getMonth())) {
-        exerciseMap.set(x.getMonth(), exerciseMap.get(x.getMonth())+1)
+        exerciseMap.set(x.getMonth(), exerciseMap.get(x.getMonth()) + 1);
       } else {
         exerciseMap.set(x.getMonth(), 1);
       }
@@ -64,15 +65,13 @@ export default function Cal({ setDay, user }) {
       let x = new Date(el.createdAt);
       pushMap.set(x.getMonth() + "/" + x.getDate(), el.id);
       if (!ranOnce && exerciseMap.get(x.getMonth())) {
-        exerciseMap.set(x.getMonth(), exerciseMap.get(x.getMonth())+1)
+        exerciseMap.set(x.getMonth(), exerciseMap.get(x.getMonth()) + 1);
       } else {
         exerciseMap.set(x.getMonth(), 1);
       }
     });
-    console.log(exerciseMap)
     setFin(true);
-    ranOnce = true
-
+    ranOnce = true;
   }
 
   async function helper() {
@@ -134,10 +133,19 @@ export default function Cal({ setDay, user }) {
   }, []);
   return (
     <>
+      <ArrowBackIcon
+        className="back mt-2 ms-2 "
+        style={{ color: "white", position: "absolute", fontSize: "2rem" }}
+        onClick={() => {
+          setDay("");
+        }}
+      />
+      <h1 className="py-3" style={{ textAlign: "center" }}>
+        Calendar
+      </h1>{" "}
       {fin === false && (
         <>
-          <h1>Helo This is Your Calendar</h1>{" "}
-          <div className=" container">
+          <div style={{ textAlign: "center" }}>
             <main className=" container ">
               <Calendar />
             </main>
@@ -146,7 +154,6 @@ export default function Cal({ setDay, user }) {
       )}
       {fin !== false && (
         <>
-          <h1>Hello This is Your Calendar</h1>{" "}
           <div className=" container">
             <main className=" container ">
               <Calendar
@@ -159,10 +166,10 @@ export default function Cal({ setDay, user }) {
                       return <p>Pull</p>;
                     }
                   } else if (view == "year") {
-                    console.log(exerciseMap)
+                    console.log(exerciseMap);
                     if (exerciseMap.get(date.getMonth())) {
-                      console.log("nani")
-                      return <p>{exerciseMap.get(date.getMonth())}</p>
+                      console.log("nani");
+                      return <p>{exerciseMap.get(date.getMonth())}</p>;
                     }
                     return <p>0</p>;
                   }
@@ -172,22 +179,42 @@ export default function Cal({ setDay, user }) {
               />
             </main>
           </div>
-          {exercise !== [] &&
-            exercise.map((el) => {
-              return (
-                <div style={{ width: "80%", margin: "auto" }}>
-                  <p
-                    className="py-2"
-                    style={{ border: "1px solid black", margin: 0 }}
-                  >
-                    {el.act}: {el.rep[0]}, {el.rep[1]}, {el.rep[2]} @{" "}
-                    {el.weight} lbs{" "}
-                  </p>
-                </div>
-              );
-            })}
-          <Button onClick={back}>Go Back</Button>
-          <Button onClick={consol}>Console log</Button>
+          <div className="pt-3">
+            {exercise !== [] &&
+              exercise.map((el) => {
+                return (
+                  <div >
+                    <div
+                      style={{
+                        borderStyle:'dotted',
+                        borderColor:'black',
+                        width: matches ? "380px" : "100%",
+                        borderWidth: "1.5px 0px 0px 0px",
+                        margin: "auto",
+                      }}
+                    >
+                      
+                        <p
+                          className="py-2"
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            margin: 0,
+                          }}
+                        >
+                          <span> {el.act}: </span>
+                          <span>
+                            {el.rep[0]}, {el.rep[1]}, {el.rep[2]} @ {el.weight}{" "}
+                            lbs
+                          </span>
+                        </p>
+                      
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
         </>
       )}
     </>

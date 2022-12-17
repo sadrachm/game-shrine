@@ -9,14 +9,14 @@ const PullDay = ({ setDay, user }) => {
     "Assisted Pull Up 1",
     "Vertical Bench Row",
     "Assisted Pull Up 2",
-    "Bicep Curls",
     "Squats",
+    "Bicep Curls",
   ] : [
     "Assisted Pull Up 1",
     "Vertical Bench Row",
     "Assisted Pull Up 2",
-    "Bicep Curls",
     "Kettle Bell Swings",
+    "Bicep Curls",
   ]);
 
 

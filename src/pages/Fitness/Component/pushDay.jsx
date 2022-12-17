@@ -7,8 +7,8 @@ const PushDay = ({ setDay, user }) => {
     "Decline Bench Press",
     "Incline Bench Press",
     "Overhead Shoulder Press",
-    "Bench Press",
     "Butterfly Swings",
+    "Bench Press",
     "Skull Crushers",
   ]);
   return (
