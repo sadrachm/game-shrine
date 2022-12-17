@@ -52,3 +52,50 @@ h1 {
     padding: 7px 0 7px 0;
     bottom:0
 }
+
+.copyButton {
+    background-color: orange;
+    border-color: #292929;
+    box-shadow: 4px 5px 5px black;
+    text-decoration: none !important;
+}
+.copyButton:focus {
+    outline: none;
+    box-shadow: none;
+    background-color: orange;
+    border-color: #292929;
+}
+.copyButton:hover{
+    background-color: orange;
+    text-decoration: none !important;
+    border-color: #292929;
+}
+
+.productInput {
+    font-size: 1.2rem;
+}
+.plus {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:center; 
+  }
+
+  .grid {
+    background-color: #9c6800;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    bottom:0;
+  }
+  #lista {
+    background: #ffaa00 !important;
+    min-height: 100vh;
+    height:100%;
+    padding: 30px 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
