@@ -13,6 +13,9 @@ import ListTest from "./Components/listTest";
 import { Grid, TextField } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { motion, AnimatePresence } from "framer-motion";
+import { Hint } from "react-autocomplete-hint";
+import wordBank from "./wordBank";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 var stores = {};
 var productIds = {};
@@ -20,6 +23,14 @@ var productOrder = {};
 var orderProduct = {};
 let order = {};
 let maxima = 0;
+var search_terms = [
+  "apple",
+  "apple watch",
+  "apple macbook",
+  "apple macbook pro",
+  "iphone",
+  "iphone 12",
+];
 
 const Lista = () => {
   const threshold = 50;
@@ -71,9 +82,7 @@ const Lista = () => {
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  useEffect(() => {
-    console.log(scrollDir);
-  }, [scrollDir]);
+  useEffect(() => {}, [scrollDir]);
 
   useEffect(() => {
     if (store === 0) {
@@ -87,6 +96,27 @@ const Lista = () => {
       createItem();
     }
   }
+  function autocomplete(input) {
+    if (input == "") {
+      return [];
+    }
+    var reg = new RegExp(input);
+    return search_terms.filter(function (term) {
+      if (term.match(reg)) {
+        return term;
+      }
+    });
+  }
+  function showResults(value) {
+    let res = document.getElementById("result");
+    res.innerHTML = "";
+    let list = "";
+    let terms = autocomplete(value);
+    for (let i = 0; i < terms.length; i++) {
+      list += "<li>" + terms[i] + "</li>";
+    }
+    res.innerHTML = "<ul>" + list + "</ul>";
+  }
 
   async function fetchItems(storeObject) {
     const apiData = await API.graphql({
@@ -94,7 +124,6 @@ const Lista = () => {
       variables: { filter: { productosListId: { eq: storeObject } } },
     });
     const products = apiData.data.listProductos.items;
-    console.log("PRODUCTS", products);
     orderProduct = {};
     productOrder = {};
     productIds = {};
@@ -106,7 +135,6 @@ const Lista = () => {
       productOrder[el.order] = el.name;
       orderProduct[el.name] = el.order;
     });
-    console.log("PRODUCT_ORDER", productOrder);
     let x = [];
     for (var el of order[storeObject]) {
       if (productOrder[el] === undefined) {
@@ -114,8 +142,6 @@ const Lista = () => {
       }
       x.push(productOrder[el]);
     }
-    console.log("Items", x);
-    console.log("Orders", order);
     setItems(x);
   }
 
@@ -151,7 +177,6 @@ const Lista = () => {
 
   async function updateOrder() {
     let newItemOrder = [];
-    console.log("Update List", items);
     items.map((el) => {
       newItemOrder.push(orderProduct[el]);
     });
@@ -164,7 +189,6 @@ const Lista = () => {
   }
   async function deleteItem(item) {
     let id = productIds[item];
-    console.log(id);
     let x = items;
     const index = x.indexOf(item);
     if (index > -1) {
@@ -172,29 +196,35 @@ const Lista = () => {
     }
 
     setItems(x);
-    console.log(x);
     await API.graphql({
       query: deleteProductos,
       variables: {
         input: { id },
       },
     });
-    console.log();
     updateOrder();
+  }
+  function copy() {
+    let x = items.toString(" ");
+    navigator.clipboard.writeText(x);
   }
 
   return (
     <div id="lista">
       <ListTest deleteItem={deleteItem} items={items} setItems={setItems} />
+
       <div className="plus">
-        <TextField
-          id="outlined-basic"
-          label="New Produce"
-          variant="outlined"
-          onKeyDown={keyDown}
-          value={entry}
-          onChange={(el) => setEntry(el.target.value)}
-        />
+        <Hint options={wordBank}>
+          <input
+            autoComplete="off"
+            autoFocus={true}
+            onKeyDown={keyDown}
+            value={entry}
+            className="productInput"
+            onChange={(el) => setEntry(el.target.value)}
+          />
+        </Hint>
+
         <Button onClick={createItem} className="mx-3" color="success">
           +
         </Button>
@@ -209,38 +239,60 @@ const Lista = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            style={{display:'flex', width:'100%', flexDirection:"row", justifyContent:'space-around'}}
+            style={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
             className="stores"
           >
             <Grid item xs={4}>
               <div style={{ textAlign: "center" }}>
-                {store !== "Costco" && (
-                  <Button onClick={() => setStore("Costco")}>Costco</Button>
-                )}
-                {store === "Costco" && (
-                  <Button style={{ backgroundColor: "grey" }}>Costco</Button>
-                )}
+                <Button
+                  onClick={() => store !== "Costco" && setStore("Costco")}
+                  className="copyButton"
+                  style={{
+                    backgroundColor: store !== "Costco" ? "orange" : "grey",
+                    boxShadow: store!=="Costco" ? "4px 5px 5px black" : "none",
+                  }}
+                >
+                  Costco
+                </Button>
               </div>
             </Grid>
             <Grid item xs={4}>
               <div style={{ textAlign: "center" }}>
-                {store !== "Super" && (
-                  <Button onClick={() => setStore("Super")}>Super</Button>
-                )}
-                {store === "Super" && (
-                  <Button style={{ backgroundColor: "grey" }}>Super</Button>
-                )}
+                <Button
+                  onClick={() => store !== "Super" && setStore("Super")}
+                  className="copyButton"
+                  style={{
+                    backgroundColor: store !== "Super" ? "orange" : "grey",
+                    boxShadow: store!=="Super" ? "4px 5px 5px black" : "none",
+                  }}
+                >
+                  Super
+                </Button>
               </div>
             </Grid>
             <Grid item xs={4}>
               <div style={{ textAlign: "center" }}>
-                {store !== "Otro" && (
-                  <Button onClick={() => setStore("Otro")}>Otro</Button>
-                )}
-                {store === "Otro" && (
-                  <Button style={{ backgroundColor: "grey" }}>Otro</Button>
-                )}
+                <Button
+                  onClick={() => store !== "Otro" && setStore("Otro")}
+                  className="copyButton"
+                  style={{
+                    backgroundColor: store !== "Otro" ? "orange" : "grey",
+                    boxShadow: store!=="Otro" ? "4px 5px 5px black" : "none",
+                  }}
+                >
+                  Otro
+                </Button>
               </div>
+            </Grid>
+            <Grid>
+              <Button className="copyButton" onClick={copy}>
+                <ContentCopyIcon />
+              </Button>
             </Grid>
           </motion.div>
         )}
