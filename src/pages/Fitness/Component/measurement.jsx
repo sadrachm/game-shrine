@@ -103,6 +103,7 @@ const Measure = ({ setDay, user }) => {
         onClick={() => setDay("")}
         style={{ position: "absolute", top: "10px", left: "10px" }}
       />
+      <h1 className="pt-3" style={{color:'white', textAlign:'center'}}>Measurements</h1>
 
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -112,6 +113,7 @@ const Measure = ({ setDay, user }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            margin:'auto',
           }}
         >
           <Box
