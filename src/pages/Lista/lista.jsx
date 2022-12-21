@@ -71,7 +71,6 @@ const Lista = () => {
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  useEffect(() => {}, [scrollDir]);
 
   useEffect(() => {
     if (store === 0) {
@@ -86,10 +85,7 @@ const Lista = () => {
     }
   }
  
-  
-  useEffect(()=> {
-    console.log("Items changed", items)
-  }, [items])
+
 
   async function fetchItems(storeObject) {
     const apiData = await API.graphql({
