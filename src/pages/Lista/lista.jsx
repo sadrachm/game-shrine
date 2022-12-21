@@ -7,10 +7,8 @@ import {
 } from "../../graphql/mutations";
 import { listLists, listProductos } from "../../graphql/queries";
 import { API } from "aws-amplify";
-import Card from "./Components/Card";
-import SendIcon from "@mui/icons-material/Send";
 import ListTest from "./Components/listTest";
-import { Grid, TextField } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { motion, AnimatePresence } from "framer-motion";
 import { Hint } from "react-autocomplete-hint";
@@ -23,14 +21,6 @@ var productOrder = {};
 var orderProduct = {};
 let order = {};
 let maxima = 0;
-var search_terms = [
-  "apple",
-  "apple watch",
-  "apple macbook",
-  "apple macbook pro",
-  "iphone",
-  "iphone 12",
-];
 
 const Lista = () => {
   const threshold = 50;
@@ -38,7 +28,6 @@ const Lista = () => {
   const [store, setStore] = useState(0);
   const [entry, setEntry] = useState("");
   const [items, setItems] = useState([]);
-  const [y, setY] = useState(window.scrollY);
 
   async function start() {
     let y = await API.graphql({ query: listLists });
@@ -96,27 +85,11 @@ const Lista = () => {
       createItem();
     }
   }
-  function autocomplete(input) {
-    if (input == "") {
-      return [];
-    }
-    var reg = new RegExp(input);
-    return search_terms.filter(function (term) {
-      if (term.match(reg)) {
-        return term;
-      }
-    });
-  }
-  function showResults(value) {
-    let res = document.getElementById("result");
-    res.innerHTML = "";
-    let list = "";
-    let terms = autocomplete(value);
-    for (let i = 0; i < terms.length; i++) {
-      list += "<li>" + terms[i] + "</li>";
-    }
-    res.innerHTML = "<ul>" + list + "</ul>";
-  }
+ 
+  
+  useEffect(()=> {
+    console.log("Items changed", items)
+  }, [items])
 
   async function fetchItems(storeObject) {
     const apiData = await API.graphql({
