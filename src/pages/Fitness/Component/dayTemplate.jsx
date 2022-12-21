@@ -38,7 +38,7 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
         filter: { fitPersonDaysId: { eq: id } },
         type: type,
         sortDirection: "DESC",
-        limit: 5,
+        limit:5
       },
     });
     console.log(x);
@@ -50,7 +50,7 @@ const DayTemplate = ({ user, setDay, ex, setEx, type }) => {
       let maybe = new Date(el.createdAt);
       if (index === 0 && maybe.getDate() === today.getDate()) {
         setDayId(el.id);
-      } else if (index >= 2) {
+      } else if (index >= 1) {
         console.log("Fix dayByDate limit");
       } else {
         days = el;

@@ -1,4 +1,4 @@
-import { CssBaseline, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
@@ -15,34 +15,21 @@ const Inputs = ({ set, exercise, reps, setRep, weight, setWeight }) => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 0,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          textAlign: "center",
+          margin: "auto",
         }}
       >
         <Box
           component="form"
           noValidate
-          sx={{ mt: 0, width: "80%", maxWidth: "200px", textAlign: "center" }}
+          sx={{ mt: 0, width: "80%", maxWidth: "300px", textAlign: "center" }}
         >
-          <TextField
-            // sx={{ background: "lightgrey" }}
-            className="textField disabledText "
-            margin="normal"
-            disabled
-            value={set}
-            id="set"
-            label="Set"
-            name="Set"
-            variant="filled"
-            type="number"
-            placeholder="0"
-            fullWidth
-          />
           <TextField
             // style={{ background: "white" }}
             className="textField"
@@ -58,23 +45,44 @@ const Inputs = ({ set, exercise, reps, setRep, weight, setWeight }) => {
             placeholder={weight}
             onChange={(el) => {
               setWeight(el.target.value);
-              }}
+            }}
             id="weight"
           />
-          <TextField
-            // style={{ background: "white" }}
-            className="textField"
-            margin="normal"
-            required
-            name="reps"
-            label="Reps"
-            variant="filled"
-            value={reps}
-            onChange={(el) => setRep(el.target.value)}
-            type="number"
-            fullWidth
-            id="reps"
-          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: "rgba(255, 255, 255, 0.873)",
+              justifyContent:'space-around',
+              borderWidth:'1px',
+              borderColor:'black',
+              borderStyle:'solid',
+              textAlign:'center',
+              
+            }}
+          >
+            <div className="increments" onClick={()=> setRep(reps-1)}>
+              -
+            </div>
+            <TextField
+              className="textField"
+              margin="normal"
+              required
+              name="reps"
+              label="Reps"
+              variant="filled"
+              value={reps}
+              onChange={(el) => setRep(el.target.value)}
+              InputProps={{disableUnderline:true}}
+              type="number"              
+              id="reps"
+              sx={{ mt:'0',mb:'0', backgroundColor: "transparent", width:'50%', borderRadius:'0%' }}
+            />
+            <div className="increments" onClick={()=> setRep(reps+1)}>
+              +
+            </div>
+          </div>
         </Box>
       </Box>
     </Container>

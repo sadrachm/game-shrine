@@ -17,13 +17,35 @@ var wordBank = [
   "Spray p bano",
   "Pledge",
   "Corn Meal",
-  "Head and Shoulders",
+  "Head & Shoulders",
   "Bolsa Simple 1/4",
   "Aceite de Aguacate",
   "Caja de Harinade Pastel",
   "Platos",
   "Papel encerado",
   "Toallas",
+  "cranberry juice"
 ];
+
+var costco = [
+  "Pledge",
+  "Spray p bano",
+  "cranberry juice",
+
+]
+
+var supe = [
+  "Lechuga",
+  "Limon",
+]
+
+var other = [
+  "Aceite de aguacate",
+  "Head & Shoulders",
+  "Papel Encerado",
+  "Bolsa Simple 1/4",
+  "Corn Meal",
+
+]
 
 export default wordBank;
