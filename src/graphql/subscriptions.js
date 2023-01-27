@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateNote = /* GraphQL */ `
-  subscription OnCreateNote {
-    onCreateNote {
+  subscription OnCreateNote($filter: ModelSubscriptionNoteFilterInput) {
+    onCreateNote(filter: $filter) {
       id
       name
       description
@@ -14,8 +14,8 @@ export const onCreateNote = /* GraphQL */ `
   }
 `;
 export const onUpdateNote = /* GraphQL */ `
-  subscription OnUpdateNote {
-    onUpdateNote {
+  subscription OnUpdateNote($filter: ModelSubscriptionNoteFilterInput) {
+    onUpdateNote(filter: $filter) {
       id
       name
       description
@@ -26,8 +26,8 @@ export const onUpdateNote = /* GraphQL */ `
   }
 `;
 export const onDeleteNote = /* GraphQL */ `
-  subscription OnDeleteNote {
-    onDeleteNote {
+  subscription OnDeleteNote($filter: ModelSubscriptionNoteFilterInput) {
+    onDeleteNote(filter: $filter) {
       id
       name
       description
@@ -38,8 +38,8 @@ export const onDeleteNote = /* GraphQL */ `
   }
 `;
 export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost {
-    onCreatePost {
+  subscription OnCreatePost($filter: ModelSubscriptionPostFilterInput) {
+    onCreatePost(filter: $filter) {
       title
       type
       homeImg
@@ -55,8 +55,8 @@ export const onCreatePost = /* GraphQL */ `
   }
 `;
 export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost {
-    onUpdatePost {
+  subscription OnUpdatePost($filter: ModelSubscriptionPostFilterInput) {
+    onUpdatePost(filter: $filter) {
       title
       type
       homeImg
@@ -72,8 +72,8 @@ export const onUpdatePost = /* GraphQL */ `
   }
 `;
 export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost {
-    onDeletePost {
+  subscription OnDeletePost($filter: ModelSubscriptionPostFilterInput) {
+    onDeletePost(filter: $filter) {
       title
       type
       homeImg
@@ -89,8 +89,8 @@ export const onDeletePost = /* GraphQL */ `
   }
 `;
 export const onCreateGames = /* GraphQL */ `
-  subscription OnCreateGames {
-    onCreateGames {
+  subscription OnCreateGames($filter: ModelSubscriptionGamesFilterInput) {
+    onCreateGames(filter: $filter) {
       title
       date
       src
@@ -101,8 +101,8 @@ export const onCreateGames = /* GraphQL */ `
   }
 `;
 export const onUpdateGames = /* GraphQL */ `
-  subscription OnUpdateGames {
-    onUpdateGames {
+  subscription OnUpdateGames($filter: ModelSubscriptionGamesFilterInput) {
+    onUpdateGames(filter: $filter) {
       title
       date
       src
@@ -113,8 +113,8 @@ export const onUpdateGames = /* GraphQL */ `
   }
 `;
 export const onDeleteGames = /* GraphQL */ `
-  subscription OnDeleteGames {
-    onDeleteGames {
+  subscription OnDeleteGames($filter: ModelSubscriptionGamesFilterInput) {
+    onDeleteGames(filter: $filter) {
       title
       date
       src
@@ -125,8 +125,10 @@ export const onDeleteGames = /* GraphQL */ `
   }
 `;
 export const onCreateProductos = /* GraphQL */ `
-  subscription OnCreateProductos {
-    onCreateProductos {
+  subscription OnCreateProductos(
+    $filter: ModelSubscriptionProductosFilterInput
+  ) {
+    onCreateProductos(filter: $filter) {
       name
       list {
         listName
@@ -144,8 +146,10 @@ export const onCreateProductos = /* GraphQL */ `
   }
 `;
 export const onUpdateProductos = /* GraphQL */ `
-  subscription OnUpdateProductos {
-    onUpdateProductos {
+  subscription OnUpdateProductos(
+    $filter: ModelSubscriptionProductosFilterInput
+  ) {
+    onUpdateProductos(filter: $filter) {
       name
       list {
         listName
@@ -163,8 +167,10 @@ export const onUpdateProductos = /* GraphQL */ `
   }
 `;
 export const onDeleteProductos = /* GraphQL */ `
-  subscription OnDeleteProductos {
-    onDeleteProductos {
+  subscription OnDeleteProductos(
+    $filter: ModelSubscriptionProductosFilterInput
+  ) {
+    onDeleteProductos(filter: $filter) {
       name
       list {
         listName
@@ -182,8 +188,8 @@ export const onDeleteProductos = /* GraphQL */ `
   }
 `;
 export const onCreateList = /* GraphQL */ `
-  subscription OnCreateList {
-    onCreateList {
+  subscription OnCreateList($filter: ModelSubscriptionListFilterInput) {
+    onCreateList(filter: $filter) {
       listName
       list
       id
@@ -193,8 +199,8 @@ export const onCreateList = /* GraphQL */ `
   }
 `;
 export const onUpdateList = /* GraphQL */ `
-  subscription OnUpdateList {
-    onUpdateList {
+  subscription OnUpdateList($filter: ModelSubscriptionListFilterInput) {
+    onUpdateList(filter: $filter) {
       listName
       list
       id
@@ -204,8 +210,8 @@ export const onUpdateList = /* GraphQL */ `
   }
 `;
 export const onDeleteList = /* GraphQL */ `
-  subscription OnDeleteList {
-    onDeleteList {
+  subscription OnDeleteList($filter: ModelSubscriptionListFilterInput) {
+    onDeleteList(filter: $filter) {
       listName
       list
       id
@@ -215,8 +221,12 @@ export const onDeleteList = /* GraphQL */ `
   }
 `;
 export const onCreateMeasurements = /* GraphQL */ `
-  subscription OnCreateMeasurements {
-    onCreateMeasurements {
+  subscription OnCreateMeasurements(
+    $filter: ModelSubscriptionMeasurementsFilterInput
+  ) {
+    onCreateMeasurements(filter: $filter) {
+      fitPersonMeasurementsId
+      createdAt
       chest
       waist
       hip
@@ -224,15 +234,17 @@ export const onCreateMeasurements = /* GraphQL */ `
       weight
       arm
       id
-      createdAt
       updatedAt
-      fitPersonMeasurementsId
     }
   }
 `;
 export const onUpdateMeasurements = /* GraphQL */ `
-  subscription OnUpdateMeasurements {
-    onUpdateMeasurements {
+  subscription OnUpdateMeasurements(
+    $filter: ModelSubscriptionMeasurementsFilterInput
+  ) {
+    onUpdateMeasurements(filter: $filter) {
+      fitPersonMeasurementsId
+      createdAt
       chest
       waist
       hip
@@ -240,15 +252,17 @@ export const onUpdateMeasurements = /* GraphQL */ `
       weight
       arm
       id
-      createdAt
       updatedAt
-      fitPersonMeasurementsId
     }
   }
 `;
 export const onDeleteMeasurements = /* GraphQL */ `
-  subscription OnDeleteMeasurements {
-    onDeleteMeasurements {
+  subscription OnDeleteMeasurements(
+    $filter: ModelSubscriptionMeasurementsFilterInput
+  ) {
+    onDeleteMeasurements(filter: $filter) {
+      fitPersonMeasurementsId
+      createdAt
       chest
       waist
       hip
@@ -256,15 +270,13 @@ export const onDeleteMeasurements = /* GraphQL */ `
       weight
       arm
       id
-      createdAt
       updatedAt
-      fitPersonMeasurementsId
     }
   }
 `;
 export const onCreateExercise = /* GraphQL */ `
-  subscription OnCreateExercise {
-    onCreateExercise {
+  subscription OnCreateExercise($filter: ModelSubscriptionExerciseFilterInput) {
+    onCreateExercise(filter: $filter) {
       act
       type
       rep
@@ -278,8 +290,8 @@ export const onCreateExercise = /* GraphQL */ `
   }
 `;
 export const onUpdateExercise = /* GraphQL */ `
-  subscription OnUpdateExercise {
-    onUpdateExercise {
+  subscription OnUpdateExercise($filter: ModelSubscriptionExerciseFilterInput) {
+    onUpdateExercise(filter: $filter) {
       act
       type
       rep
@@ -293,8 +305,8 @@ export const onUpdateExercise = /* GraphQL */ `
   }
 `;
 export const onDeleteExercise = /* GraphQL */ `
-  subscription OnDeleteExercise {
-    onDeleteExercise {
+  subscription OnDeleteExercise($filter: ModelSubscriptionExerciseFilterInput) {
+    onDeleteExercise(filter: $filter) {
       act
       type
       rep
@@ -308,8 +320,8 @@ export const onDeleteExercise = /* GraphQL */ `
   }
 `;
 export const onCreateDay = /* GraphQL */ `
-  subscription OnCreateDay {
-    onCreateDay {
+  subscription OnCreateDay($filter: ModelSubscriptionDayFilterInput) {
+    onCreateDay(filter: $filter) {
       exercises {
         nextToken
       }
@@ -322,8 +334,8 @@ export const onCreateDay = /* GraphQL */ `
   }
 `;
 export const onUpdateDay = /* GraphQL */ `
-  subscription OnUpdateDay {
-    onUpdateDay {
+  subscription OnUpdateDay($filter: ModelSubscriptionDayFilterInput) {
+    onUpdateDay(filter: $filter) {
       exercises {
         nextToken
       }
@@ -336,8 +348,8 @@ export const onUpdateDay = /* GraphQL */ `
   }
 `;
 export const onDeleteDay = /* GraphQL */ `
-  subscription OnDeleteDay {
-    onDeleteDay {
+  subscription OnDeleteDay($filter: ModelSubscriptionDayFilterInput) {
+    onDeleteDay(filter: $filter) {
       exercises {
         nextToken
       }
@@ -350,8 +362,10 @@ export const onDeleteDay = /* GraphQL */ `
   }
 `;
 export const onCreateFitPerson = /* GraphQL */ `
-  subscription OnCreateFitPerson {
-    onCreateFitPerson {
+  subscription OnCreateFitPerson(
+    $filter: ModelSubscriptionFitPersonFilterInput
+  ) {
+    onCreateFitPerson(filter: $filter) {
       name
       days {
         nextToken
@@ -366,8 +380,10 @@ export const onCreateFitPerson = /* GraphQL */ `
   }
 `;
 export const onUpdateFitPerson = /* GraphQL */ `
-  subscription OnUpdateFitPerson {
-    onUpdateFitPerson {
+  subscription OnUpdateFitPerson(
+    $filter: ModelSubscriptionFitPersonFilterInput
+  ) {
+    onUpdateFitPerson(filter: $filter) {
       name
       days {
         nextToken
@@ -382,8 +398,10 @@ export const onUpdateFitPerson = /* GraphQL */ `
   }
 `;
 export const onDeleteFitPerson = /* GraphQL */ `
-  subscription OnDeleteFitPerson {
-    onDeleteFitPerson {
+  subscription OnDeleteFitPerson(
+    $filter: ModelSubscriptionFitPersonFilterInput
+  ) {
+    onDeleteFitPerson(filter: $filter) {
       name
       days {
         nextToken

@@ -19,10 +19,11 @@ const Fitness = ({ user, setuser }) => {
   const [day, setDay] = useState("");
 
   async function consol() {
-    await API.graphql({
-      query: exerciseByDate,
-      variables: { type: "push", sortDirection: "DESC" },
-    }).then((data) => console.log(data.data.exerciseByDate.items));
+    console.log("Cognito User", user)
+    // await API.graphql({
+    //   query: exerciseByDate,
+    //   variables: { type: "push", sortDirection: "DESC" },
+    // }).then((data) => console.log(data.data.exerciseByDate.items));
   }
   async function signOut() {
     try {
@@ -44,6 +45,7 @@ const Fitness = ({ user, setuser }) => {
           backgroundPosition: "53%",
         }}
       >
+      {/* <button onClick={consol}></button> */}
         {day === "" && (
           <>
             <div

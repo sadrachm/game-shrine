@@ -265,6 +265,8 @@ export const createMeasurements = /* GraphQL */ `
     $condition: ModelMeasurementsConditionInput
   ) {
     createMeasurements(input: $input, condition: $condition) {
+      fitPersonMeasurementsId
+      createdAt
       chest
       waist
       hip
@@ -272,9 +274,7 @@ export const createMeasurements = /* GraphQL */ `
       weight
       arm
       id
-      createdAt
       updatedAt
-      fitPersonMeasurementsId
     }
   }
 `;
@@ -284,6 +284,8 @@ export const updateMeasurements = /* GraphQL */ `
     $condition: ModelMeasurementsConditionInput
   ) {
     updateMeasurements(input: $input, condition: $condition) {
+      fitPersonMeasurementsId
+      createdAt
       chest
       waist
       hip
@@ -291,9 +293,7 @@ export const updateMeasurements = /* GraphQL */ `
       weight
       arm
       id
-      createdAt
       updatedAt
-      fitPersonMeasurementsId
     }
   }
 `;
@@ -303,6 +303,8 @@ export const deleteMeasurements = /* GraphQL */ `
     $condition: ModelMeasurementsConditionInput
   ) {
     deleteMeasurements(input: $input, condition: $condition) {
+      fitPersonMeasurementsId
+      createdAt
       chest
       waist
       hip
@@ -310,9 +312,7 @@ export const deleteMeasurements = /* GraphQL */ `
       weight
       arm
       id
-      createdAt
       updatedAt
-      fitPersonMeasurementsId
     }
   }
 `;

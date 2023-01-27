@@ -174,6 +174,8 @@ export const listLists = /* GraphQL */ `
 export const getMeasurements = /* GraphQL */ `
   query GetMeasurements($id: ID!) {
     getMeasurements(id: $id) {
+      fitPersonMeasurementsId
+      createdAt
       chest
       waist
       hip
@@ -181,9 +183,7 @@ export const getMeasurements = /* GraphQL */ `
       weight
       arm
       id
-      createdAt
       updatedAt
-      fitPersonMeasurementsId
     }
   }
 `;
@@ -195,6 +195,8 @@ export const listMeasurements = /* GraphQL */ `
   ) {
     listMeasurements(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        fitPersonMeasurementsId
+        createdAt
         chest
         waist
         hip
@@ -202,9 +204,7 @@ export const listMeasurements = /* GraphQL */ `
         weight
         arm
         id
-        createdAt
         updatedAt
-        fitPersonMeasurementsId
       }
       nextToken
     }
@@ -339,6 +339,39 @@ export const listsByDate = /* GraphQL */ `
         homeDes
         createdAt
         published
+        id
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const measureByDate = /* GraphQL */ `
+  query MeasureByDate(
+    $fitPersonMeasurementsId: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMeasurementsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    measureByDate(
+      fitPersonMeasurementsId: $fitPersonMeasurementsId
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        fitPersonMeasurementsId
+        createdAt
+        chest
+        waist
+        hip
+        thigh
+        weight
+        arm
         id
         updatedAt
       }
