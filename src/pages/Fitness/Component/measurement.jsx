@@ -1,12 +1,16 @@
-import { Box, Button, CssBaseline, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { API } from "aws-amplify";
 import { createMeasurements } from "../../../graphql/mutations";
-import { listFitPeople, listMeasurements } from "../../../graphql/queries";
-import WestIcon from "@mui/icons-material/West";
-import EastIcon from "@mui/icons-material/East";
+import {
+  listFitPeople,
+  measureByDate,
+} from "../../../graphql/queries";
+import { motion, AnimatePresence, useAnimationControls } from "framer-motion";
+import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
+import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 
 var userId = "";
 let allMeasurements = {
@@ -26,7 +30,7 @@ const Measure = ({ setDay, user }) => {
   const [arm, setArm] = useState("");
   const [waist, setWaist] = useState("");
   const [weight, setWeight] = useState("");
-  const [currInput, setCurrInput] = useState(1);
+  const [test, setTest] = useState(0);
 
   const [body, setBody] = useState({
     date: [],
@@ -51,11 +55,15 @@ const Measure = ({ setDay, user }) => {
   }
 
   async function getMeasurements() {
+    console.log();
     let measurements = await API.graphql({
-      query: listMeasurements,
-      variables: { filter: { fitPersonMeasurementsId: { eq: userId } } },
+      query: measureByDate,
+      variables: {
+        fitPersonMeasurementsId: userId,
+        sortDirection: "DESC",
+      },
     });
-    measurements = measurements.data.listMeasurements.items;
+    measurements = measurements.data.measureByDate.items;
     allMeasurements = body;
     measurements.map((el) => {
       console.log(el);
@@ -116,11 +124,8 @@ const Measure = ({ setDay, user }) => {
           {bodyPart.map((el) => {
             return (
               <tr style={{ border: "solid 2px" }}>
-                <th
-                  scope="col"
-                  style={{ border: "solid 2px", position: "sticky" }}
-                >
-                  <p style={{ color: "white" }}>{capitalize(el)}</p>
+                <th scope="col" style={{ border: "solid 2px" }}>
+                  <p className="mb-0" style={{ color: "white" }}>{capitalize(el)}</p>
                 </th>
                 {body[el].map((entry) => {
                   return (
@@ -144,37 +149,45 @@ const Measure = ({ setDay, user }) => {
       </div>
     );
   }
-  function goLeft(ev) {
-    ev.preventDefault();
-    if (currInput == 1) {
-      document.getElementById(bodyPart[currInput]).setAttribute("hidden", "");
-      document.getElementById(bodyPart[6]).removeAttribute("hidden");
-      setCurrInput(6);
+
+  const controls = useAnimationControls();
+
+  const control = () => {
+    if (test == 0) {
+      setTest(5);
     } else {
-      document.getElementById(bodyPart[currInput]).setAttribute("hidden", "");
-      document
-        .getElementById(bodyPart[currInput - 1])
-        .removeAttribute("hidden");
-      setCurrInput(currInput - 1);
+      setTest((test - 1) % 6);
     }
-  }
-  function goRight(ev) {
-    ev.preventDefault();
-    ev.stopPropagation();
-    if (currInput == 6) {
-      document.getElementById(bodyPart[currInput]).setAttribute("hidden", "");
-      document.getElementById(bodyPart[1]).removeAttribute("hidden");
-      setCurrInput(1);
-    } else {
-      document.getElementById(bodyPart[currInput]).setAttribute("hidden", "");
-      document
-        .getElementById(bodyPart[currInput + 1])
-        .removeAttribute("hidden");
-      setCurrInput(currInput + 1);
-    }
+  };
+  const container = {
+    hidden: {
+      x: "40vh",
+      transition: {
+        duration: 0.5,
+      },
+      opacity: 0,
+    },
+    show: {
+      x: "0vh",
+      opacity: 1,
+      transition: {
+        duration: .5,
+      },
+    },
+    changing: {
+      x: "-40vh",
+      opacity: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+  const dataPresent = () => {
+    if (chest && hip && thigh && arm && waist && weight) return true
+    return false
   }
   return (
-    <>
+    <div style={{ height: "100vh", maxWidth: "100%", overflowX: "hidden" }}>
       <ArrowBackIcon
         onClick={() => setDay("")}
         style={{ position: "absolute", top: "10px", left: "10px" }}
@@ -192,130 +205,197 @@ const Measure = ({ setDay, user }) => {
       >
         {renderMeasurements()}
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          width:'90%',
-          margin:'auto',
-        }}
-      >
-        <WestIcon style={{transform:"scale(1.4)"}} onClick={(ev) => goRight(ev)} />
-        <div id="chest" hidden style={{ width: "70%", margin: "auto" }}>
-          <h1 style={{ color: "white", textAlign: "center" }}>Chest</h1>
-          <TextField
-            // style={{ background: "white" }}
-
-            className="textField"
-            margin="normal"
-            name="reps"
-            label="Chest"
-            variant="filled"
-            value={chest}
-            onChange={(el) => setChest(el.target.value)}
-            type="number"
-            fullWidth
-            //   id="reps"
-          />{" "}
-        </div>
-
-        <div id="hip" hidden style={{ width: "70%", margin: "auto" }}>
-          <h1 style={{ color: "white", textAlign: "center" }}>Hips</h1>
-          <TextField
-            // style={{ background: "white" }}
-            className="textField"
-            margin="normal"
-            name="reps"
-            label="Hips"
-            variant="filled"
-            value={hip}
-            onChange={(el) => setHip(el.target.value)}
-            type="number"
-            fullWidth
-            id="reps"
+      <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+          <KeyboardArrowLeftRoundedIcon
+          className="arrowButton"
+            style={{ transform: "scale(1.4)", width:'15%'}} 
+            onClick={() => setTest((test + 1) % 6)} 
           />
-        </div>
 
-        <div id="thigh" hidden style={{ width: "70%", margin: "auto" }}>
-          <h1 style={{ color: "white", textAlign: "center" }}>Thighs</h1>
-          <TextField
-            // style={{ background: "white" }}
-            className="textField"
-            margin="normal"
-            name="reps"
-            label="Thighs"
-            variant="filled"
-            value={thigh}
-            onChange={(el) => setThigh(el.target.value)}
-            type="number"
-            fullWidth
-            id="reps"
-          />
-        </div>
 
-        <div id="waist" hidden style={{ width: "70%", margin: "auto" }}>
-          <h1 style={{ color: "white", textAlign: "center" }}>Waist</h1>
-          <TextField
-            // style={{ background: "white" }}
-            className="textField"
-            margin="normal"
-            name="reps"
-            label="Waist"
-            variant="filled"
-            value={waist}
-            onChange={(el) => setWaist(el.target.value)}
-            type="number"
-            fullWidth
-            id="reps"
-          />
+        <div className="contain" >
+          <motion.div
+            variants={container}
+            initial={{ opacity: 0 }}
+            animate={() => {
+              if (test % 6 == 0) return "show";
+              else if (test % 6 == 1) return "changing";
+              else return "hidden";
+            }}
+            className="inner"
+          >
+            <div
+            >
+              <h1 style={{ color: "white", textAlign: "center" }}>Chest</h1>
+              <TextField
+                className="textField"
+                margin="normal"
+                name="reps"
+                label="Chest"
+                variant="filled"
+                value={chest}
+                onChange={(el) => setChest(el.target.value)}
+                type="number"
+                fullWidth
+              />
+            </div>
+          </motion.div>
+          <motion.div
+            variants={container}
+            className="inner"
+            initial={{ opacity: 0 }}
+            animate={() => {
+              if (test % 6 == 1) return "show";
+              else if (test % 6 == 2) return "changing";
+              else return "hidden";
+            }}
+          >
+            <div
+            >
+              <h1 style={{ color: "white", textAlign: "center" }}>Hips</h1>
+              <TextField
+                className="textField"
+                margin="normal"
+                name="reps"
+                label="Hips"
+                variant="filled"
+                value={hip}
+                onChange={(el) => setHip(el.target.value)}
+                type="number"
+                fullWidth
+                id="reps"
+              />
+            </div>
+          </motion.div>
+          <motion.div
+            variants={container}
+            initial={{ opacity: 0 }}
+            className="inner"
+            animate={() => {
+              if (test % 6 == 2) return "show";
+              else if (test % 6 == 3) return "changing";
+              else return "hidden";
+            }}
+          >
+            <div
+            >
+              <h1 style={{ color: "white", textAlign: "center" }}>Thighs</h1>
+              <TextField
+                className="textField"
+                margin="normal"
+                name="reps"
+                label="Thighs"
+                variant="filled"
+                value={thigh}
+                onChange={(el) => setThigh(el.target.value)}
+                type="number"
+                fullWidth
+                id="reps"
+              />
+            </div>
+          </motion.div>
+          <motion.div
+            variants={container}
+            initial={{ opacity: 0 }}
+            className="inner"
+            animate={() => {
+              if (test % 6 == 3) return "show";
+              else if (test % 6 == 4) return "changing";
+              else return "hidden";
+            }}
+          >
+            <div
+            >
+              <h1 style={{ color: "white", textAlign: "center" }}>Waist</h1>
+              <TextField
+                // style={{ background: "white" }}
+                className="textField"
+                margin="normal"
+                name="reps"
+                label="Waist"
+                variant="filled"
+                value={waist}
+                onChange={(el) => setWaist(el.target.value)}
+                type="number"
+                fullWidth
+                id="reps"
+              />
+            </div>
+          </motion.div>
+          <motion.div
+            className="inner"
+            variants={container}
+            initial={{ opacity: 0 }}
+            animate={() => {
+              if (test % 6 == 4) return "show";
+              else if (test % 6 == 5) return "changing";
+              else return "hidden";
+            }}
+          >
+            <div
+            >
+              <h1 style={{ color: "white", textAlign: "center" }}>Arms</h1>
+              <TextField
+                // style={{ background: "white" }}
+                className="textField"
+                margin="normal"
+                name="reps"
+                label="Arms"
+                variant="filled"
+                value={arm}
+                onChange={(el) => setArm(el.target.value)}
+                type="number"
+                fullWidth
+                id="reps"
+              />
+            </div>
+          </motion.div>
+          <motion.div
+            className="inner"
+            variants={container}
+            initial={{ opacity: 0 }}
+            animate={() => {
+              if (test % 6 == 5) return "show";
+              else if (test % 6 == 0) return "changing";
+              else return "hidden";
+            }}
+          >
+            <div
+            >
+              <h1 style={{ color: "white", textAlign: "center" }}>Weight</h1>
+              <TextField
+                // style={{ background: "white" }}
+                className="textField"
+                margin="normal"
+                name="reps"
+                label="Weight lbs"
+                variant="filled"
+                value={weight}
+                onChange={(el) => setWeight(el.target.value)}
+                type="number"
+                fullWidth
+                id="reps"
+              />
+            </div>
+          </motion.div>
         </div>
+          <KeyboardArrowRightRoundedIcon           
+          className="arrowButton"
+          style={{ transform: "scale(1.4)", width:'15%' }}  onClick={control} />
 
-        <div id="arm" style={{ width: "70%", margin: "auto" }}>
-          <h1 style={{ color: "white", textAlign: "center" }}>Arms</h1>
-          <TextField
-            // style={{ background: "white" }}
-            className="textField"
-            margin="normal"
-            name="reps"
-            label="Arms"
-            variant="filled"
-            value={arm}
-            onChange={(el) => setArm(el.target.value)}
-            type="number"
-            fullWidth
-            id="reps"
-          />
-        </div>
-
-        <div id="weight" hidden style={{ width: "70%", margin: "auto" }}>
-          <h1 style={{ color: "white", textAlign: "center" }}>Weight</h1>
-          <TextField
-            // style={{ background: "white" }}
-            className="textField"
-            margin="normal"
-            name="reps"
-            label="Weight lbs"
-            variant="filled"
-            value={weight}
-            onChange={(el) => setWeight(el.target.value)}
-            type="number"
-            fullWidth
-            id="reps"
-          />
-        </div>
-        <EastIcon style={{transform:"scale(1.4)"}} onClick={(ev) => goLeft(ev)} />
       </div>
-      <button
+
+      <motion.button
         style={{ margin: "auto" }}
         className="button-45 mt-5"
         role="button"
-        onClick={submit}
+        {...(dataPresent() ? {disabled:false} : {disabled:true})}
+        {...(dataPresent() ? {animate:{opacity:1, transition:{duration:1}}} : {animate:{opacity:0}})}
+        onClick={()=> console.log("YES")}
       >
         Send
-      </button>
-    </>
+      </motion.button>
+    </div>
   );
 };
 

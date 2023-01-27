@@ -48,3 +48,5 @@ amplifytools.xcconfig
 #amplify-do-not-edit-end
 
 ui-components/
+
+.aws/

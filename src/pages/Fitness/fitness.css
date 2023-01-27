@@ -37,6 +37,24 @@
   box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
   color: #FFFFFF;
 } */
+.contain {
+  /* width: 300px; */
+  height: 150px;
+  margin: 0 auto;
+  /* background-color: yellow; */
+  /* important part */
+  display: grid;
+  place-items: center;
+  grid-template-areas:
+                  "inner-div";
+}
+
+.inner {
+  height: 100px;
+  width: 80%;
+  /* important part */
+  grid-area: inner-div;
+}
 
 .button-45:hover {
   background-color: #ffe3e3;
@@ -53,6 +71,9 @@
 
 .back:hover {
   color: rgb(199, 199, 199) !important;
+}
+.arrowButton:active {
+  color: lightblue;
 }
 
 .button-33 {
