@@ -164,14 +164,16 @@ const Lista = () => {
       x.splice(index, 1);
     }
 
-    setItems(x);
+    setItems(items.filter((el) => {
+      if (el !== item) return el;
+    }));
+    updateOrder();
     await API.graphql({
       query: deleteProductos,
       variables: {
         input: { id },
       },
     });
-    updateOrder();
   }
   function copy() {
     let x = items.toString(" ");
@@ -222,7 +224,7 @@ const Lista = () => {
                   onClick={() => store !== "Costco" && setStore("Costco")}
                   className="copyButton"
                   style={{
-                    backgroundColor: store !== "Costco" ? "orange" : "grey",
+                    backgroundColor: store !== "Costco" ? "#D2DAFF" : "#B1B2FF",
                     boxShadow: store!=="Costco" ? "4px 5px 5px black" : "none",
                   }}
                 >
@@ -236,7 +238,7 @@ const Lista = () => {
                   onClick={() => store !== "Super" && setStore("Super")}
                   className="copyButton"
                   style={{
-                    backgroundColor: store !== "Super" ? "orange" : "grey",
+                    backgroundColor: store !== "Super" ? "#D2DAFF" : "#B1B2FF",
                     boxShadow: store!=="Super" ? "4px 5px 5px black" : "none",
                   }}
                 >
@@ -250,7 +252,7 @@ const Lista = () => {
                   onClick={() => store !== "Otro" && setStore("Otro")}
                   className="copyButton"
                   style={{
-                    backgroundColor: store !== "Otro" ? "orange" : "grey",
+                    backgroundColor: store !== "Otro" ? "#D2DAFF" : "#B1B2FF",
                     boxShadow: store!=="Otro" ? "4px 5px 5px black" : "none",
                   }}
                 >

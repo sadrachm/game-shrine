@@ -46,34 +46,29 @@ h1 {
 .listaTitle {
     text-align: center;
 }
-.stores {
-    background-color: #ca970b;
-    position: fixed;
-    padding: 7px 0 7px 0;
-    bottom:0
-}
 
 .copyButton {
-    background-color: orange;
+    background-color: #D2DAFF;
     border-color: #292929;
     box-shadow: 4px 5px 5px black;
     text-decoration: none !important;
     outline: none !important;
     outline-offset: none !important;
+    color:black;
 }
 .copyButton:focus {
     outline: none !important;
     outline-offset: none !important;
     box-shadow: 4px 5px 5px black;
-    background-color: orange;
+    background-color: #B1B2FF;
     border-color: #292929;
 }
 .copyButton:active {
-    background-color: white !important;
+    background-color: #B1B2FF !important;
     box-shadow: none !important;
 }
 .copyButton:hover{
-    background-color: orange;
+    background-color: #B1B2FF;
     text-decoration: none !important;
     border-color: #292929;
 }
@@ -89,15 +84,21 @@ h1 {
   }
 
   .grid {
-    background-color: #9c6800;
+    background-color: #FFCEFE;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: fixed;
     bottom:0;
   }
+  .stores {
+      background-color: #7286D3;
+      position: fixed;
+      padding: 7px 0 7px 0;
+      bottom:0
+  }
   #lista {
-    background: #ffaa00 !important;
+    background: #8EA7E9 !important;
     min-height: 100vh;
     height:100%;
     padding: 30px 0;

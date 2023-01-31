@@ -4,10 +4,6 @@ import { useRaisedShadow } from "./use-raised-shadows.ts";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "react-bootstrap";
 
-interface Props {
-  item: string;
-}
-
 export const Item = ({ item, setItems, onRemove }) => {
   const y = useMotionValue(0);
   const boxShadow = useRaisedShadow(y);
@@ -22,14 +18,14 @@ export const Item = ({ item, setItems, onRemove }) => {
       exit={{ opacity: 0 }}
       key={item}
       initial={{opacity:0}}
-      style={{ boxShadow, y }}
+      style={{ boxShadow, y, backgroundColor:"#EEF1FF" }}
       
     >
-      <span style={{ color: "black" }}>{item}</span>
+      <div style={{ color: "black" }}>{item}</div>
       <Button variant="outline-danger" size="sm">
         <DeleteIcon onClick={(ev)=> {
-          ev.stopPropagation();
-          onRemove()}} />
+          onRemove()
+          }} />
       </Button>
     </Reorder.Item>
   );
