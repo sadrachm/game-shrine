@@ -44,9 +44,9 @@ const GameShrine = () => {
       <div class="headDiv"></div>
 
       <Container
-        style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}
+        style={{ width: "100%", marginLeft: "auto", marginRight: "auto", display:'flex', flexDirection:"column" }}
       >
-        <Row className="shrineStart">
+        <Row  className="shrineStart">
           <Col>
             <h1
               className="display-1 "

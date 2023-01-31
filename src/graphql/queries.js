@@ -43,9 +43,11 @@ export const getPost = /* GraphQL */ `
       content
       homeDes
       createdAt
+      ingredients
       published
       id
       updatedAt
+      fitPersonPostsId
     }
   }
 `;
@@ -65,9 +67,11 @@ export const listPosts = /* GraphQL */ `
         content
         homeDes
         createdAt
+        ingredients
         published
         id
         updatedAt
+        fitPersonPostsId
       }
       nextToken
     }
@@ -289,6 +293,9 @@ export const getFitPerson = /* GraphQL */ `
       measurements {
         nextToken
       }
+      posts {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -338,9 +345,11 @@ export const listsByDate = /* GraphQL */ `
         content
         homeDes
         createdAt
+        ingredients
         published
         id
         updatedAt
+        fitPersonPostsId
       }
       nextToken
     }
