@@ -48,9 +48,11 @@ export const onCreatePost = /* GraphQL */ `
       content
       homeDes
       createdAt
+      ingredients
       published
       id
       updatedAt
+      fitPersonPostsId
     }
   }
 `;
@@ -65,9 +67,11 @@ export const onUpdatePost = /* GraphQL */ `
       content
       homeDes
       createdAt
+      ingredients
       published
       id
       updatedAt
+      fitPersonPostsId
     }
   }
 `;
@@ -82,9 +86,11 @@ export const onDeletePost = /* GraphQL */ `
       content
       homeDes
       createdAt
+      ingredients
       published
       id
       updatedAt
+      fitPersonPostsId
     }
   }
 `;
@@ -373,6 +379,9 @@ export const onCreateFitPerson = /* GraphQL */ `
       measurements {
         nextToken
       }
+      posts {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -391,6 +400,9 @@ export const onUpdateFitPerson = /* GraphQL */ `
       measurements {
         nextToken
       }
+      posts {
+        nextToken
+      }
       id
       createdAt
       updatedAt
@@ -407,6 +419,9 @@ export const onDeleteFitPerson = /* GraphQL */ `
         nextToken
       }
       measurements {
+        nextToken
+      }
+      posts {
         nextToken
       }
       id

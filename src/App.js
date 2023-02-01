@@ -12,6 +12,10 @@ import Article from "./pages/GameShrine/article";
 import Fitness from "./pages/Fitness/fitness";
 import Login from "./pages/GameShrine/Components/login";
 import FitLogin from "./pages/Fitness/fitLogin";
+import Recipe from "./pages/Recipes/recipe";
+import SingleRecipe from "./pages/Recipes/singleRecipe";
+import CreateRecipe from "./pages/Recipes/createRecipe";
+import UpdateRecipe from "./pages/Recipes/updateRecipe";
 
 function App() {
   const [user, setuser] = useState(null);
@@ -34,11 +38,15 @@ function App() {
           <Route exact path="/home" element={<Home></Home>}></Route>
           {/* <Route exact path="/gameshrine" element={<GameShrine></GameShrine>}></Route> */}
           <Route exact path="/" element={<GameShrine></GameShrine>}></Route>
+          <Route exact path="/recipe" element={<Recipe></Recipe>}></Route>
           <Route exact path="/portfolio" element={<Portfolio />}></Route>
           <Route exact path="/admin" element={<Admin />}></Route>
           <Route exact path="/article" element={<Article />}></Route>
           {user && <Route exact path="/fitness" element={<Fitness user={user} setuser={setuser}/>}></Route>}   
           {!user && <Route exact path="/fitness" element={<FitLogin setuser={setuser}/>}></Route>}   
+          <Route exact path="/recipe/:id" element={<SingleRecipe></SingleRecipe>}></Route>
+          <Route exact path="/recipe/create" element={<CreateRecipe></CreateRecipe>}></Route>
+          <Route exact path="/recipe/update/:id" element={<UpdateRecipe></UpdateRecipe>}></Route>
           <Route exact path="/543/lista" element={<Lista />}></Route>
           
 
