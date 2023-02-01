@@ -45,8 +45,8 @@ async function getPosts () {
            <button>{el.title}</button></Link>
         })}
            <h1>Carousel fo Recent Recipes Added</h1>
-           <Link to="/recipe/123">
-           <button>Hello</button></Link>
+           <Link to="/recipe/create">
+           <button>Create New Recipe</button></Link>
         </div>
         <h1 style={{ textAlign:'center', border:'solid 1px', margin:'0'}}>Search bar</h1>
     </div>

@@ -53,9 +53,10 @@ const CreateRecipe = () => {
     console.log("name: ", inputs.title)
     console.log("ingredients: ", inputs.ingredients)
     console.log("steps: ", inputs.content)
+    console.log("id: ", inputs.fitPersonPostsId)
   }, [inputs])
   return (
-    <div>
+    <div  style={{ minHeight: "100vh",padding:'20px 0', backgroundColor: "#F8EDE3" }}>
       <h1>Recipe Creator</h1>
       {inputs.fitPersonPostsId ==="unavailable" && <h1 style={{color:'red'}}>There was an issue logging in</h1>}
       <div style={{ display: "flex", flexDirection: "column" }}>

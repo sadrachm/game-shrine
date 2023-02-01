@@ -15,6 +15,7 @@ import FitLogin from "./pages/Fitness/fitLogin";
 import Recipe from "./pages/Recipes/recipe";
 import SingleRecipe from "./pages/Recipes/singleRecipe";
 import CreateRecipe from "./pages/Recipes/createRecipe";
+import UpdateRecipe from "./pages/Recipes/updateRecipe";
 
 function App() {
   const [user, setuser] = useState(null);
@@ -45,6 +46,7 @@ function App() {
           {!user && <Route exact path="/fitness" element={<FitLogin setuser={setuser}/>}></Route>}   
           <Route exact path="/recipe/:id" element={<SingleRecipe></SingleRecipe>}></Route>
           <Route exact path="/recipe/create" element={<CreateRecipe></CreateRecipe>}></Route>
+          <Route exact path="/recipe/update/:id" element={<UpdateRecipe></UpdateRecipe>}></Route>
           <Route exact path="/543/lista" element={<Lista />}></Route>
           
 
