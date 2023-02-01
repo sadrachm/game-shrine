@@ -26,7 +26,7 @@ async function getPosts () {
     })
     let x = []
     for (let i of posts.data.listsByDate.items) {
-        x.push(i.id)
+        x.push({id:i.id, title:i.title})
     }
     setIds(x)
 }
@@ -39,10 +39,10 @@ async function getPosts () {
 }, [])
     return <div style={{minHeight:"100vh", backgroundColor:"#F8EDE3"}}>
         <div style={{aspectRatio:'1/1', height:'300px', border:'solid 1px', margin:'auto', textAlign:'center' }}>
-        {ids.map((el) => {
-            let link = "/recipe/"+el
-            return <Link to={link}>
-           <button>{link}</button></Link>
+        {ids.map((el, index) => {
+            let link = "/recipe/"+el.id
+            return <Link key={index} to={link}>
+           <button>{el.title}</button></Link>
         })}
            <h1>Carousel fo Recent Recipes Added</h1>
            <Link to="/recipe/123">
