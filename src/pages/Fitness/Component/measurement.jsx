@@ -391,7 +391,7 @@ const Measure = ({ setDay, user }) => {
         role="button"
         {...(dataPresent() ? {disabled:false} : {disabled:true})}
         {...(dataPresent() ? {animate:{opacity:1, transition:{duration:1}}} : {animate:{opacity:0}})}
-        onClick={()=> console.log("YES")}
+        onClick={submit}
       >
         Send
       </motion.button>
