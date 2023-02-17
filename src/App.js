@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+// import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Portfolio from "./pages/Portfolio/portfolio";
 import Home from "./pages/Home/home";
@@ -47,9 +47,7 @@ function App() {
           <Route exact path="/recipe/:id" element={<SingleRecipe></SingleRecipe>}></Route>
           <Route exact path="/recipe/create" element={<CreateRecipe></CreateRecipe>}></Route>
           <Route exact path="/recipe/update/:id" element={<UpdateRecipe></UpdateRecipe>}></Route>
-          <Route exact path="/543/lista" element={<Lista />}></Route>
-          
-
+          <Route exact path="/543/lista" element={<Lista />}></Route>        
         </Routes>
       </Router>
     </>

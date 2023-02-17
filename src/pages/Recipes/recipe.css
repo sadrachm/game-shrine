@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Playfair+Display:ital,wght@1,600&display=swap');
+.title,.subtitle {    
+    font-family: 'Kalam', cursive;
+    font-weight: 700;
+}
+.title {font-size: 3rem;}
+.subtitle {font-size: 2rem !important;}
+.recipeBody>div>h3 {
+    font-family: 'Kalam', cursive;
+    font-weight: 400;
+    font-size: 1.5rem ; 
+}
+
+input[type="file"] {
+    display: none;
+    
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    background-color: blue;
+    border-radius: 5px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 10px 0;
+    cursor: pointer;
+    color:#F8EDE3;
+}
+.carousel-indicators>li{
+    margin-right: 3px;
+    margin-left: 3px;
+    background-color: #fff;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    color:rgba(0, 0, 0, 0.267)
+}

@@ -7,7 +7,7 @@ import { Item } from "./item.tsx";
 export default function ListTest({ items, deleteItem, setItems }) {
   return (
     <div>
-      <Reorder.Group axis="y" onReorder={setItems} values={items}>
+      <Reorder.Group className="ReorderGroup" axis="y" onReorder={setItems} values={items}>
         <AnimatePresence>
           {items.map((item) => (
             <Item

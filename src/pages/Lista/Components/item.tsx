@@ -17,6 +17,7 @@ export const Item = ({ item, setItems, onRemove }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       key={item}
+      className="ReorderItem"
       initial={{opacity:0}}
       style={{ boxShadow, y, backgroundColor:"#EEF1FF" }}
       

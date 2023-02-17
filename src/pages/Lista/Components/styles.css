@@ -8,8 +8,8 @@
     width: 300px;
   }
   
-  ul,
-  li {
+  .ReorderGroup,
+  .ReorderItem {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -18,12 +18,12 @@
     font-size: 24px;
   }
   
-  ul {
+  .ReorderGroup {
     position: relative;
     width: 300px;
   }
   
-  li {
+  .ReorderItem {
     border-radius: 10px;
     margin-bottom: 10px;
     width: 100%;
@@ -38,7 +38,7 @@
     cursor: grab;
   }
   
-  li svg {
+  .ReorderItem>svg {
     width: 18px;
     height: 18px;
     cursor: grab;

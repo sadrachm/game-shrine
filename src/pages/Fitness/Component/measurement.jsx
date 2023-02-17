@@ -109,8 +109,6 @@ const Measure = ({ setDay, user }) => {
         values[names[i]] = value;
       }
     });
-    // console.log(values);
-    // console.log(user);
     await API.graphql({
       query: createMeasurements,
       variables: { input: values },
